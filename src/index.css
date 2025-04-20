@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #FF5A5F;
+    --secondary: #660F0F;
+  }
+  
+  body {
+    @apply bg-gray-100;
+  }
+}
+
+.clay-card {
+  @apply bg-white rounded-[2rem] p-8;
+  position: relative;
+  box-shadow: 
+    25px 25px 75px rgba(190, 190, 190, 0.5),
+    -25px -25px 75px rgba(255, 255, 255, 0.9),
+    inset 12px 12px 24px rgba(255, 255, 255, 0.9),
+    inset -12px -12px 24px rgba(190, 190, 190, 0.25);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.clay-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    30px 30px 90px rgba(190, 190, 190, 0.6),
+    -30px -30px 90px rgba(255, 255, 255, 1),
+    inset 15px 15px 30px rgba(255, 255, 255, 1),
+    inset -15px -15px 30px rgba(190, 190, 190, 0.3);
+}
+
+.clay-icon {
+  @apply rounded-2xl p-4 mb-6;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 
+    10px 10px 20px rgba(190, 190, 190, 0.35),
+    -10px -10px 20px rgba(255, 255, 255, 0.85),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.95),
+    inset -3px -3px 6px rgba(190, 190, 190, 0.3);
+}
+
+.clay-button {
+  @apply rounded-full font-semibold px-8 py-4 transition-all duration-300;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 
+    10px 10px 20px rgba(190, 190, 190, 0.35),
+    -10px -10px 20px rgba(255, 255, 255, 0.85),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.95),
+    inset -2px -2px 4px rgba(190, 190, 190, 0.3);
+}
+
+.clay-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    15px 15px 30px rgba(190, 190, 190, 0.45),
+    -15px -15px 30px rgba(255, 255, 255, 0.95),
+    inset 3px 3px 6px rgba(255, 255, 255, 1),
+    inset -3px -3px 6px rgba(190, 190, 190, 0.35);
+}
+
+.clay-button:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 
+    5px 5px 10px rgba(190, 190, 190, 0.25),
+    -5px -5px 10px rgba(255, 255, 255, 0.75),
+    inset 5px 5px 10px rgba(190, 190, 190, 0.25),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.75);
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-[#FF5A5F] to-[#660F0F] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
+}
+
+.btn-secondary {
+  @apply bg-white border-2 border-[#FF5A5F] text-[#FF5A5F] px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
+}
+
+.clay-container {
+  @apply rounded-[3rem] p-12 bg-white my-8;
+  box-shadow: 
+    30px 30px 90px rgba(190, 190, 190, 0.5),
+    -30px -30px 90px rgba(255, 255, 255, 0.9),
+    inset 15px 15px 30px rgba(255, 255, 255, 0.9),
+    inset -15px -15px 30px rgba(190, 190, 190, 0.25);
+}
+
+@media (max-width: 768px) {
+  .clay-container {
+    @apply rounded-[2rem] p-6;
+    box-shadow: 
+      20px 20px 60px rgba(190, 190, 190, 0.45),
+      -20px -20px 60px rgba(255, 255, 255, 0.85),
+      inset 10px 10px 20px rgba(255, 255, 255, 0.85),
+      inset -10px -10px 20px rgba(190, 190, 190, 0.2);
+  }
+  
+  .clay-card {
+    @apply rounded-[1.5rem] p-6;
+    box-shadow: 
+      20px 20px 60px rgba(190, 190, 190, 0.45),
+      -20px -20px 60px rgba(255, 255, 255, 0.85),
+      inset 10px 10px 20px rgba(255, 255, 255, 0.85),
+      inset -10px -10px 20px rgba(190, 190, 190, 0.2);
+  }
+}
+
+.hero-image {
+  @apply rounded-[2rem] shadow-2xl;
+  position: relative;
+  box-shadow: 
+    25px 25px 75px rgba(190, 190, 190, 0.5),
+    -25px -25px 75px rgba(255, 255, 255, 0.9);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-image:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    30px 30px 90px rgba(190, 190, 190, 0.6),
+    -30px -30px 90px rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+  .hero-image {
+    @apply w-full max-w-2xl mx-auto rounded-[1rem];
+  }
+}
+
+/* Nouveaux styles pour les sections */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+section .clay-container {
+  position: relative;
+  z-index: 1;
+}
+
+.features-section {
+  @apply bg-gray-50;
+}
+
+.features-section .hero-grid {
+  @apply grid md:grid-cols-2 gap-8 items-center;
+}
+
+.features-section .hero-text {
+  @apply space-y-8;
+}
+
+.features-section .clay-card {
+  @apply bg-white p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg;
+}
+
+.features-section .clay-icon {
+  @apply w-12 h-12 bg-gradient-to-r from-[#00C851] to-[#008000] rounded-full flex items-center justify-center text-white mb-4;
+}
+
+.difference-section {
+  @apply bg-white;
+}
+
+.difference-section .hero-grid {
+  @apply grid md:grid-cols-2 gap-8 items-center;
+}
+
+.difference-section .hero-text {
+  @apply space-y-6;
+}
+
+.difference-section .clay-card {
+  @apply bg-white p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg;
+}
+
+.how-it-works-section {
+  @apply bg-gray-50;
+}
+
+.faq-section {
+  @apply bg-white;
+}
+
+/* Styles spécifiques pour la section hero */
+.hero-section {
+  @apply min-h-[100vh] flex items-center bg-white;
+}
+
+.hero-content {
+  @apply max-w-6xl mx-auto px-4 md:px-8;
+}
+
+.hero-grid {
+  @apply grid md:grid-cols-2 gap-8 items-center;
+}
+
+.hero-text {
+  @apply space-y-6;
+}
+
+.hero-buttons {
+  @apply flex flex-col md:flex-row gap-4;
+}
+
+.hero-image-container {
+  @apply relative;
+}
+
+.hero-image {
+  @apply w-full max-w-2xl mx-auto rounded-[1rem];
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-[#FF5A5F] to-[#660F0F] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
+}
+
+.btn-secondary {
+  @apply bg-white border-2 border-[#FF5A5F] text-[#FF5A5F] px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
+}
+
+/* Suppression de l'overlay blanc */
+.hero-section::before {
+  background: none;
+}
+
+@media (max-width: 768px) {
+  .hero-grid {
+    @apply grid-cols-1;
+  }
+  
+  .hero-buttons {
+    @apply flex-col items-center;
+  }
+}
