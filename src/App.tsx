@@ -14,7 +14,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   React.useEffect(() => {
-    document.title = 'Yummeal';
+    document.title = 'Yummeal - Cuisine saine';
   }, []);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
