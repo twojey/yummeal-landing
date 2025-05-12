@@ -1,13 +1,8 @@
-// Ajoutez en haut du fichier
-declare global {
-  interface Window {
-    fbq: any;
-  }
-}
+/// <reference path="./types/facebook-pixel.d.ts" />
 
 import React, { useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Apple, Store as PlayStore, ShoppingBag, Scale, Utensils, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ShoppingBag, Scale, Utensils, Heart } from 'lucide-react';
 import AppleLogo from './Apple_logo_black.svg';
 import PlayStoreLogo from './playstore.svg';
 import Image from './babe3.png';
@@ -19,6 +14,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
 import { Routes, Route, Link } from 'react-router-dom';
 import { withUtmParams } from './utils/utm';
+import { trackDownload } from './utils/tracking';
 
 function App() {
   React.useEffect(() => {
@@ -179,27 +175,10 @@ function App() {
                           className="clay-btn clay-btn--green"
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={() => {
-                            fetch('https://yummeal-server.deno.dev/tracking', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                event: 'store_click',
-                                platform: 'apple',
-                                url: window.location.href,
-                                timestamp: new Date().toISOString()
-                              })
-                            }).catch(console.error);
-
-                            if (typeof window.fbq !== 'undefined') {
-                              window.fbq('track', 'Lead', { 
-                                event_name: 'download_click',
-                                platform: 'apple',
-                                page_url: window.location.pathname,
-                                button_location: 'hero_section'
-                              });
-                            }
-                          }}
+                          onClick={() => trackDownload({
+                            platform: 'apple',
+                            location: 'hero_section'
+                          })}
                         >
                           <img 
                             src={AppleLogo} 
@@ -213,27 +192,10 @@ function App() {
                           className="clay-btn clay-btn--white"
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={() => {
-                            fetch('https://yummeal-server.deno.dev/tracking', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                event: 'store_click',
-                                platform: 'google',
-                                url: window.location.href,
-                                timestamp: new Date().toISOString()
-                              })
-                            }).catch(console.error);
-
-                            if (typeof window.fbq !== 'undefined') {
-                              window.fbq('track', 'Lead', { 
-                                event_name: 'download_click',
-                                platform: 'google',
-                                page_url: window.location.pathname,
-                                button_location: 'hero_section'
-                              });
-                            }
-                          }}
+                          onClick={() => trackDownload({
+                            platform: 'google',
+                            location: 'hero_section'
+                          })}
                         >
                           <img 
                             src={PlayStoreLogo} 
@@ -340,27 +302,10 @@ function App() {
                     className="clay-btn clay-btn--green"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => {
-                      fetch('https://yummeal-server.deno.dev/tracking', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          event: 'store_click',
-                          platform: 'apple',
-                          url: window.location.href,
-                          timestamp: new Date().toISOString()
-                        })
-                      }).catch(console.error);
-
-                      if (typeof window.fbq !== 'undefined') {
-                        window.fbq('track', 'Lead', { 
-                          event_name: 'download_click',
-                          platform: 'apple',
-                          page_url: window.location.pathname,
-                          button_location: 'recipes_download'
-                        });
-                      }
-                    }}
+                    onClick={() => trackDownload({
+                      platform: 'apple',
+                      location: 'recipes_download'
+                    })}
                   >
                     <img 
                       src={AppleLogo} 
@@ -374,27 +319,10 @@ function App() {
                     className="clay-btn clay-btn--white"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => {
-                      fetch('https://yummeal-server.deno.dev/tracking', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          event: 'store_click',
-                          platform: 'google',
-                          url: window.location.href,
-                          timestamp: new Date().toISOString()
-                        })
-                      }).catch(console.error);
-
-                      if (typeof window.fbq !== 'undefined') {
-                        window.fbq('track', 'Lead', { 
-                          event_name: 'download_click',
-                          platform: 'google',
-                          page_url: window.location.pathname,
-                          button_location: 'recipes_download'
-                        });
-                      }
-                    }}
+                    onClick={() => trackDownload({
+                      platform: 'google',
+                      location: 'recipes_download'
+                    })}
                   >
                     <img 
                       src={PlayStoreLogo} 
@@ -492,27 +420,10 @@ function App() {
                     className="clay-btn clay-btn--green"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => {
-                      fetch('https://yummeal-server.deno.dev/tracking', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          event: 'store_click',
-                          platform: 'apple',
-                          url: window.location.href,
-                          timestamp: new Date().toISOString()
-                        })
-                      }).catch(console.error);
-
-                      if (typeof window.fbq !== 'undefined') {
-                        window.fbq('track', 'Lead', { 
-                          event_name: 'download_click',
-                          platform: 'apple',
-                          page_url: window.location.pathname,
-                          button_location: 'download_buttons'
-                        });
-                      }
-                    }}
+                    onClick={() => trackDownload({
+                      platform: 'apple',
+                      location: 'download_buttons'
+                    })}
                   >
                     <img 
                       src={AppleLogo} 
@@ -526,27 +437,10 @@ function App() {
                     className="clay-btn clay-btn--white"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => {
-                      fetch('https://yummeal-server.deno.dev/tracking', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          event: 'store_click',
-                          platform: 'google',
-                          url: window.location.href,
-                          timestamp: new Date().toISOString()
-                        })
-                      }).catch(console.error);
-
-                      if (typeof window.fbq !== 'undefined') {
-                        window.fbq('track', 'Lead', { 
-                          event_name: 'download_click',
-                          platform: 'google',
-                          page_url: window.location.pathname,
-                          button_location: 'download_buttons'
-                        });
-                      }
-                    }}
+                    onClick={() => trackDownload({
+                      platform: 'google',
+                      location: 'download_buttons'
+                    })}
                   >
                     <img 
                       src={PlayStoreLogo} 

@@ -2,6 +2,13 @@ import { trackFacebookEvent } from './facebookPixel';
 
 const API_URL = 'https://yummeal-server.deno.dev/tracking';
 
+interface TrackingEvent {
+  platform: 'apple' | 'google';
+  location: string;
+  ip?: string;
+  userAgent?: string;
+}
+
 const sendToDeno = async (eventName: string, data: Record<string, unknown>) => {
   const eventData = {
     name: eventName,
@@ -51,4 +58,31 @@ export const trackDownloadStart = (platform: string) => {
   
   sendEvent('start_download', data);
   trackFacebookEvent('Lead', data);
+};
+
+export const trackDownload = (event: TrackingEvent) => {
+  const payload = {
+    name: 'download_click',
+    properties: {
+      platform: event.platform,
+      button_location: event.location,
+      timestamp: new Date().toISOString(),
+      url: window.location.href,
+      user_agent: navigator.userAgent
+    }
+  };
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(console.error);
+
+  if (typeof window.fbq !== 'undefined') {
+    window.fbq('track', 'Lead', {
+      event_name: 'Download',
+      platform: event.platform,
+      button_location: event.location
+    });
+  }
 };
