@@ -1,6 +1,8 @@
+import { trackFacebookEvent } from './facebookPixel';
+
 const API_URL = 'https://yummeal-server.deno.dev/tracking';
 
-export const sendEvent = async (eventName: string, data: Record<string, unknown> = {}) => {
+const sendToDeno = async (eventName: string, data: Record<string, unknown>) => {
   const eventData = {
     name: eventName,
     properties: {
@@ -23,20 +25,30 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
   }
 };
 
+export const sendEvent = async (eventName: string, data: Record<string, unknown> = {}) => {
+  await sendToDeno(eventName, data);
+  trackFacebookEvent(eventName, data);
+};
+
 export const trackPageView = () => {
-  sendEvent('page_view', {
+  const data = {
     page_url: window.location.href,
     page_title: document.title,
     referrer: document.referrer || 'direct',
     screen_width: window.innerWidth,
     user_agent: navigator.userAgent
-  });
+  };
+  
+  sendEvent('PageView', data);
 };
 
 export const trackDownloadStart = (platform: string) => {
-  sendEvent('start_download', {
+  const data = {
     platform,
     button_location: window.location.pathname,
     device_type: /Mobile|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
-  });
+  };
+  
+  sendEvent('start_download', data);
+  trackFacebookEvent('Lead', data);
 };
