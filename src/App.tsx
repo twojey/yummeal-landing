@@ -1,3 +1,10 @@
+// Ajoutez en haut du fichier
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Apple, Store as PlayStore, ShoppingBag, Scale, Utensils, Heart } from 'lucide-react';
@@ -11,6 +18,7 @@ import './styles.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
 import { Routes, Route, Link } from 'react-router-dom';
+import { withUtmParams } from './utils/utm';
 
 function App() {
   React.useEffect(() => {
@@ -166,14 +174,74 @@ function App() {
                         Boostez votre confiance en atteignant vos objectifs grâce à des recettes faciles et adaptées à vos ingrédients.
                       </p>
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
-                        <button className="clay-btn clay-btn--green">
-                          <img src={AppleLogo} alt="Apple Logo" className="h-6 w-auto filter invert" />
+                        <a
+                          href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                          className="clay-btn clay-btn--green"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => {
+                            fetch('https://yummeal-server.deno.dev/tracking', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                event: 'store_click',
+                                platform: 'apple',
+                                url: window.location.href,
+                                timestamp: new Date().toISOString()
+                              })
+                            }).catch(console.error);
+
+                            if (typeof window.fbq !== 'undefined') {
+                              window.fbq('track', 'Lead', { 
+                                event_name: 'download_click',
+                                platform: 'apple',
+                                page_url: window.location.pathname,
+                                button_location: 'hero_section'
+                              });
+                            }
+                          }}
+                        >
+                          <img 
+                            src={AppleLogo} 
+                            alt="Apple Logo" 
+                            className="h-6 w-auto filter invert" 
+                          />
                           Télécharger sur l'App Store
-                        </button>
-                        <button className="clay-btn clay-btn--white">
-                          <img src={PlayStoreLogo} alt="Play Store Logo" className="h-6 w-6" />
+                        </a>
+                        <a
+                          href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                          className="clay-btn clay-btn--white"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => {
+                            fetch('https://yummeal-server.deno.dev/tracking', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                event: 'store_click',
+                                platform: 'google',
+                                url: window.location.href,
+                                timestamp: new Date().toISOString()
+                              })
+                            }).catch(console.error);
+
+                            if (typeof window.fbq !== 'undefined') {
+                              window.fbq('track', 'Lead', { 
+                                event_name: 'download_click',
+                                platform: 'google',
+                                page_url: window.location.pathname,
+                                button_location: 'hero_section'
+                              });
+                            }
+                          }}
+                        >
+                          <img 
+                            src={PlayStoreLogo} 
+                            alt="Play Store Logo" 
+                            className="h-6 w-6" 
+                          />
                           Disponible sur Google Play
-                        </button>
+                        </a>
                       </div>
                     </div>
                     <div className="hidden md:block">
@@ -267,14 +335,74 @@ function App() {
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Maîtrisez vos calories</h2>
                 <p className="text-lg text-gray-600 mb-8">Accédez à +100 000 recettes optimales pour la perte de poids</p>
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
-                  <button className="clay-btn clay-btn--green">
-                    <img src={AppleLogo} alt="Apple Logo" className="h-6 w-auto filter invert" />
+                  <a
+                    href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                    className="clay-btn clay-btn--green"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      fetch('https://yummeal-server.deno.dev/tracking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          event: 'store_click',
+                          platform: 'apple',
+                          url: window.location.href,
+                          timestamp: new Date().toISOString()
+                        })
+                      }).catch(console.error);
+
+                      if (typeof window.fbq !== 'undefined') {
+                        window.fbq('track', 'Lead', { 
+                          event_name: 'download_click',
+                          platform: 'apple',
+                          page_url: window.location.pathname,
+                          button_location: 'recipes_download'
+                        });
+                      }
+                    }}
+                  >
+                    <img 
+                      src={AppleLogo} 
+                      alt="Apple Logo" 
+                      className="h-6 w-auto filter invert" 
+                    />
                     Télécharger sur l'App Store
-                  </button>
-                  <button className="clay-btn clay-btn--white">
-                    <img src={PlayStoreLogo} alt="Play Store Logo" className="h-6 w-6" />
+                  </a>
+                  <a
+                    href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                    className="clay-btn clay-btn--white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      fetch('https://yummeal-server.deno.dev/tracking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          event: 'store_click',
+                          platform: 'google',
+                          url: window.location.href,
+                          timestamp: new Date().toISOString()
+                        })
+                      }).catch(console.error);
+
+                      if (typeof window.fbq !== 'undefined') {
+                        window.fbq('track', 'Lead', { 
+                          event_name: 'download_click',
+                          platform: 'google',
+                          page_url: window.location.pathname,
+                          button_location: 'recipes_download'
+                        });
+                      }
+                    }}
+                  >
+                    <img 
+                      src={PlayStoreLogo} 
+                      alt="Play Store Logo" 
+                      className="h-6 w-6" 
+                    />
                     Disponible sur Google Play
-                  </button>
+                  </a>
                 </div>
               </div>
             </section>
@@ -359,14 +487,74 @@ function App() {
             <section className="pt-0 pb-16 bg-white">
               <div className="max-w-3xl mx-auto text-center">
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
-                  <button className="clay-btn clay-btn--green">
-                    <img src={AppleLogo} alt="Apple Logo" className="h-6 w-auto filter invert" />
+                  <a
+                    href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                    className="clay-btn clay-btn--green"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      fetch('https://yummeal-server.deno.dev/tracking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          event: 'store_click',
+                          platform: 'apple',
+                          url: window.location.href,
+                          timestamp: new Date().toISOString()
+                        })
+                      }).catch(console.error);
+
+                      if (typeof window.fbq !== 'undefined') {
+                        window.fbq('track', 'Lead', { 
+                          event_name: 'download_click',
+                          platform: 'apple',
+                          page_url: window.location.pathname,
+                          button_location: 'download_buttons'
+                        });
+                      }
+                    }}
+                  >
+                    <img 
+                      src={AppleLogo} 
+                      alt="Apple Logo" 
+                      className="h-6 w-auto filter invert" 
+                    />
                     Télécharger sur l'App Store
-                  </button>
-                  <button className="clay-btn clay-btn--white">
-                    <img src={PlayStoreLogo} alt="Play Store Logo" className="h-6 w-6" />
+                  </a>
+                  <a
+                    href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                    className="clay-btn clay-btn--white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      fetch('https://yummeal-server.deno.dev/tracking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          event: 'store_click',
+                          platform: 'google',
+                          url: window.location.href,
+                          timestamp: new Date().toISOString()
+                        })
+                      }).catch(console.error);
+
+                      if (typeof window.fbq !== 'undefined') {
+                        window.fbq('track', 'Lead', { 
+                          event_name: 'download_click',
+                          platform: 'google',
+                          page_url: window.location.pathname,
+                          button_location: 'download_buttons'
+                        });
+                      }
+                    }}
+                  >
+                    <img 
+                      src={PlayStoreLogo} 
+                      alt="Play Store Logo" 
+                      className="h-6 w-6" 
+                    />
                     Disponible sur Google Play
-                  </button>
+                  </a>
                 </div>
               </div>
             </section>

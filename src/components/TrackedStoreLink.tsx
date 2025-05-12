@@ -11,12 +11,16 @@ const STORE_URLS = {
 };
 
 export default function TrackedStoreLink({ store, ...props }: Props) {
+  const handleClick = () => {
+    console.log('Clic sur', store, 'URL:', STORE_URLS[store]);
+    window.open(withUtmParams(STORE_URLS[store]), '_blank');
+  };
+
   return (
-    <a
-      href={withUtmParams(STORE_URLS[store])}
-      target="_blank"
-      rel="noopener noreferrer"
+    <a 
       {...props}
+      onClick={handleClick}
+      style={{ ...props.style, cursor: 'pointer' }}
     />
   );
 }
