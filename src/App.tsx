@@ -1,8 +1,9 @@
-/// <reference path="./types/facebook-pixel.d.ts" />
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Scale, Utensils, Heart } from 'lucide-react';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { trackPageView } from './utils/tracking';
+
 import AppleLogo from './Apple_logo_black.svg';
 import PlayStoreLogo from './playstore.svg';
 import Image from './babe3.png';
@@ -12,14 +13,14 @@ import MobileImage from './babe3-mobile.png';
 import './styles.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
-import { Routes, Route, Link } from 'react-router-dom';
-import { withUtmParams } from './utils/utm';
-import { trackDownload } from './utils/tracking';
 
 function App() {
-  React.useEffect(() => {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView();
     document.title = 'Yummeal - Cuisine saine';
-  }, []);
+  }, [location.pathname]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const heroRef = useRef(null);
@@ -171,14 +172,10 @@ function App() {
                       </p>
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
                         <a
-                          href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                          href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
                           className="clay-btn clay-btn--green"
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={() => trackDownload({
-                            platform: 'apple',
-                            location: 'hero_section'
-                          })}
                         >
                           <img 
                             src={AppleLogo} 
@@ -188,14 +185,10 @@ function App() {
                           Télécharger sur l'App Store
                         </a>
                         <a
-                          href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                          href="https://play.google.com/store/apps/details?id=com.yummeal"
                           className="clay-btn clay-btn--white"
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={() => trackDownload({
-                            platform: 'google',
-                            location: 'hero_section'
-                          })}
                         >
                           <img 
                             src={PlayStoreLogo} 
@@ -298,14 +291,10 @@ function App() {
                 <p className="text-lg text-gray-600 mb-8">Accédez à +100 000 recettes optimales pour la perte de poids</p>
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
-                    href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                    href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
                     className="clay-btn clay-btn--green"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackDownload({
-                      platform: 'apple',
-                      location: 'recipes_download'
-                    })}
                   >
                     <img 
                       src={AppleLogo} 
@@ -315,14 +304,10 @@ function App() {
                     Télécharger sur l'App Store
                   </a>
                   <a
-                    href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                    href="https://play.google.com/store/apps/details?id=com.yummeal"
                     className="clay-btn clay-btn--white"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackDownload({
-                      platform: 'google',
-                      location: 'recipes_download'
-                    })}
                   >
                     <img 
                       src={PlayStoreLogo} 
@@ -416,14 +401,10 @@ function App() {
               <div className="max-w-3xl mx-auto text-center">
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
-                    href={withUtmParams('https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441')}
+                    href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
                     className="clay-btn clay-btn--green"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackDownload({
-                      platform: 'apple',
-                      location: 'download_buttons'
-                    })}
                   >
                     <img 
                       src={AppleLogo} 
@@ -433,14 +414,10 @@ function App() {
                     Télécharger sur l'App Store
                   </a>
                   <a
-                    href={withUtmParams('https://play.google.com/store/apps/details?id=com.yummeal')}
+                    href="https://play.google.com/store/apps/details?id=com.yummeal"
                     className="clay-btn clay-btn--white"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackDownload({
-                      platform: 'google',
-                      location: 'download_buttons'
-                    })}
                   >
                     <img 
                       src={PlayStoreLogo} 
