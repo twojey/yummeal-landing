@@ -61,28 +61,49 @@ export const trackDownloadStart = (platform: string) => {
 };
 
 export const trackDownload = (event: TrackingEvent) => {
-  const payload = {
+  // Payload pour notre API Deno
+  const apiPayload = {
     name: 'download_click',
     properties: {
-      platform: event.platform,
       button_location: event.location,
+      platform: event.platform,
       timestamp: new Date().toISOString(),
       url: window.location.href,
       user_agent: navigator.userAgent
     }
   };
 
-  fetch(API_URL, {
+  // Envoi à notre API
+  fetch('https://yummeal-server.deno.dev/tracking', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(console.error);
+    body: JSON.stringify(apiPayload)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('API Error');
+    console.log('[TRACKING] Event envoyé à notre API');
+  })
+  .catch(error => {
+    console.error('[TRACKING] Erreur API:', error);
+    saveFailedEvent(apiPayload);
+  });
 
+  // Envoi direct à Facebook Pixel
   if (typeof window.fbq !== 'undefined') {
     window.fbq('track', 'Lead', {
-      event_name: 'Download',
-      platform: event.platform,
-      button_location: event.location
+      button_id: event.location,
+      content_name: event.platform,
+      url: window.location.href
     });
   }
 };
+
+function saveFailedEvent(event: unknown) {
+  try {
+    const failedEvents = JSON.parse(localStorage.getItem('failed_events') || '[]');
+    failedEvents.push(event);
+    localStorage.setItem('failed_events', JSON.stringify(failedEvents));
+  } catch (e) {
+    console.error('[TRACKING] Erreur de sauvegarde locale:', e);
+  }
+}
