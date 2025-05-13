@@ -38,15 +38,23 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
 };
 
 export const trackPageView = () => {
-  const data = {
+  const pageData = {
     page_url: window.location.href,
     page_title: document.title,
     referrer: document.referrer || 'direct',
     screen_width: window.innerWidth,
     user_agent: navigator.userAgent
   };
-  
-  sendEvent('PageView', data);
+
+  // Envoi uniquement à votre API Deno
+  sendToDeno('page_view', pageData);
+
+  // Uniquement via le SDK Facebook Pixel
+  if (typeof window.fbq !== 'undefined') {
+    window.fbq('track', 'PageView', {
+      page_path: window.location.pathname
+    });
+  }
 };
 
 export const trackDownloadStart = (platform: string) => {
@@ -88,7 +96,7 @@ export const trackDownload = (event: TrackingEvent) => {
     saveFailedEvent(apiPayload);
   });
 
-  // Envoi direct à Facebook Pixel
+  // Envoi via le SDK Facebook Pixel
   if (typeof window.fbq !== 'undefined') {
     window.fbq('track', 'Lead', {
       button_id: event.location,
