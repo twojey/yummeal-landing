@@ -216,6 +216,10 @@ export const trackDownloadStart = (platform: string, buttonLocation?: string): v
  * @param buttonLocation Emplacement du bouton sur la page
  */
 export const trackDownloadClick = (platform: Platform | string, buttonLocation?: string): void => {
+  console.group('%c[TRACKING] Événement download_click', 'color: #4CAF50; font-weight: bold; font-size: 12px');
+  console.log('%cPlateforme:', 'font-weight: bold', platform);
+  console.log('%cEmplacement:', 'font-weight: bold', buttonLocation || window.location.pathname);
+  
   // Données de base requises
   const data: Record<string, unknown> = {
     // Champs obligatoires
@@ -236,26 +240,48 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
     // Enrichir avec les paramètres UTM
     const utmParams = getUtmParameters();
     Object.assign(data, utmParams);
+    console.log('%cParamètres UTM:', 'font-weight: bold', utmParams);
     
     // Enrichir avec les identifiants Facebook
     const fbIds = getFacebookIds();
     if (fbIds.fbp) data.fbp = fbIds.fbp;
     if (fbIds.fbc) data.fbc = fbIds.fbc;
+    console.log('%cIdentifiants Facebook:', 'font-weight: bold', fbIds);
     
     // Envoi à l'API Deno
-    sendToDeno('download_click', data);
+    console.log('%cEnvoi à l\'API Deno', 'font-weight: bold');
+    sendToDeno('download_click', data)
+      .then(success => {
+        console.log(`%cEnvoi à l'API Deno: ${success ? '✅ Succès' : '❌ Échec'}`, 'font-weight: bold');
+      })
+      .catch(error => {
+        console.error('Erreur lors de l\'envoi à l\'API:', error);
+      });
     
     // Envoi à Facebook Pixel avec données adaptées
-    trackFacebookEvent('Lead', {
+    const fbData = {
       content_name: platform,
       content_category: 'app_download',
       button_location: data.button_location as string,
       ...utmParams
-    });
+    };
     
-    console.log('[TRACKING] Téléchargement:', platform);
+    console.log('%cEnvoi à Facebook Pixel (Lead):', 'font-weight: bold', fbData);
+    trackFacebookEvent('Lead', fbData);
+    
+    // Envoi également comme événement personnalisé pour plus de visibilité
+    console.log('%cEnvoi à Facebook Pixel (download_click):', 'font-weight: bold', fbData);
+    trackFacebookEvent('download_click', fbData);
+    
+    // Afficher les données complètes
+    console.log('%cDonnées complètes de l\'event:', 'font-weight: bold');
+    console.table(data);
+    
+    console.log('%c✅ Tracking de téléchargement terminé', 'color: #4CAF50; font-weight: bold');
   } catch (error) {
-    console.error('[TRACKING] Erreur lors du tracking de téléchargement:', error);
+    console.error('%c❌ Erreur lors du tracking de téléchargement:', 'color: #F44336; font-weight: bold', error);
+  } finally {
+    console.groupEnd();
   }
 };
 
