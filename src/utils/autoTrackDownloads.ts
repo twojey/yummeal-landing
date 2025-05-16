@@ -55,7 +55,33 @@ export const addTrackingToSpecificButtons = (): void => {
       const anchor = link as HTMLAnchorElement;
       const href = anchor.href || '';
       const platform = href.includes('apple') || href.includes('ios') ? 'apple' : 'google';
-      const buttonLocation = `hero_${platform}_button`;
+      
+      // Déterminer l'emplacement précis du bouton
+      let buttonLocation = '';
+      
+      // Vérifier si le bouton est dans la section hero
+      if (heroButtons.classList.contains('hero-buttons') || 
+          heroButtons.closest('.hero') || 
+          heroButtons.closest('[class*="hero"]')) {
+        buttonLocation = `hero_${platform}_button`;
+      } 
+      // Vérifier si le bouton est dans le footer
+      else if (heroButtons.closest('footer') || heroButtons.closest('[class*="footer"]')) {
+        buttonLocation = `footer_${platform}_button`;
+      }
+      // Vérifier si le bouton est dans le header
+      else if (heroButtons.closest('header') || heroButtons.closest('[class*="header"]')) {
+        buttonLocation = `header_${platform}_button`;
+      }
+      // Fallback: utiliser le nom de la classe du conteneur
+      else {
+        const containerClasses = Array.from(heroButtons.classList);
+        if (containerClasses.length > 0) {
+          buttonLocation = `${containerClasses[0]}_${platform}_button`;
+        } else {
+          buttonLocation = `landing_page_${platform}_button`;
+        }
+      }
       
       console.log(`[AutoTracking] Ajout manuel du tracking au bouton ${platform} (${buttonLocation})`);
       
@@ -281,26 +307,61 @@ function getSectionName(element: Element): string {
   // Remonter l'arbre DOM pour trouver la section
   let current: Element | null = element;
   let depth = 0;
-  const maxDepth = 5; // Éviter de remonter trop haut
+  const maxDepth = 8; // Augmenter la profondeur pour trouver des sections plus éloignées
+  
+  // Liste des classes et attributs qui pourraient indiquer une section
+  const sectionIndicators = [
+    'hero', 'header', 'footer', 'banner', 'section', 'main', 'nav',
+    'download', 'cta', 'action', 'buttons', 'container'
+  ];
+  
+  // Liste des éléments HTML qui sont généralement des sections
+  const sectionElements = ['section', 'header', 'footer', 'main', 'nav', 'article', 'aside'];
   
   while (current && depth < maxDepth) {
-    // Vérifier si l'élément a un ID
+    // 1. Vérifier si l'élément a un ID
     if (current.id) {
       return current.id;
     }
     
-    // Vérifier si l'élément a une classe qui pourrait indiquer une section
-    const classList = Array.from(current.classList);
-    const sectionClasses = classList.filter(cls => 
-      cls.includes('section') || 
-      cls.includes('hero') || 
-      cls.includes('footer') || 
-      cls.includes('header') ||
-      cls.includes('banner')
-    );
+    // 2. Vérifier si l'élément est un type de section
+    if (sectionElements.includes(current.tagName.toLowerCase())) {
+      // Si c'est une section avec un ID ou une classe spécifique, l'utiliser
+      if (current.id) {
+        return current.id;
+      } else if (current.classList.length > 0) {
+        return Array.from(current.classList)[0];
+      } else {
+        return current.tagName.toLowerCase();
+      }
+    }
     
-    if (sectionClasses.length > 0) {
-      return sectionClasses[0];
+    // 3. Vérifier les attributs data-* qui pourraient indiquer une section
+    for (let i = 0; i < current.attributes.length; i++) {
+      const attr = current.attributes[i];
+      if (attr.name.startsWith('data-section') || 
+          attr.name.startsWith('data-area') || 
+          attr.name.startsWith('data-location')) {
+        return attr.value;
+      }
+    }
+    
+    // 4. Vérifier si l'élément a une classe qui pourrait indiquer une section
+    if (current.classList.length > 0) {
+      const classList = Array.from(current.classList);
+      
+      // Chercher des classes spécifiques qui indiquent une section
+      for (const indicator of sectionIndicators) {
+        const matchingClass = classList.find(cls => cls.includes(indicator));
+        if (matchingClass) {
+          return matchingClass;
+        }
+      }
+      
+      // Si aucune classe spécifique n'est trouvée, utiliser la première classe
+      if (classList.length > 0 && depth > 2) { // Ne prendre la première classe que si on a déjà remonté un peu
+        return classList[0];
+      }
     }
     
     // Remonter au parent
@@ -308,6 +369,12 @@ function getSectionName(element: Element): string {
     depth++;
   }
   
-  // Fallback
-  return 'unknown_section';
+  // Si on est sur la page d'accueil
+  if (window.location.pathname === '/' || window.location.pathname === '') {
+    return 'homepage';
+  }
+  
+  // Fallback: utiliser le chemin de la page
+  const path = window.location.pathname.split('/').filter(p => p).pop();
+  return path ? path : 'landing_page';
 }
