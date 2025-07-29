@@ -150,7 +150,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={
-          <>
+          <div>
             {/* Hero Section */}
             <motion.section 
               id="hero" 
@@ -165,10 +165,10 @@ function App() {
                   <div className="hero-grid md:grid-cols-2 gap-8 items-center">
                     <div className="hero-text">
                       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00C851] to-[#008000] text-transparent bg-clip-text">
-                        Perdez du poids sans y penser
+                        Libérez-vous de la charge mentale des repas
                       </h1>
                       <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-700">
-                        Boostez votre confiance en atteignant vos objectifs grâce à des recettes faciles et adaptées à vos ingrédients.
+                        Transformez votre frigo en inspiration culinaire et retrouvez le plaisir de cuisiner sainement, sans gaspillage ni frustration.
                       </p>
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
                         <a
@@ -229,7 +229,7 @@ function App() {
             >
               <div className="max-w-6xl mx-auto">
                 <div className="clay-container">
-                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Simplifiez votre perte de poids</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Yummeal : La solution complète pour vos repas</h2>
                   <div className="grid md:grid-cols-4 gap-8">
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -240,8 +240,8 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <ShoppingBag className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Recettes sur mesure</h3>
-                      <p className="text-gray-600">Entrez les ingrédients que vous avez à la maison et recevez des recettes personnalisées, simples et rapides.</p>
+                      <h3 className="text-xl font-bold mb-4">Inspiration Instantanée & Anti-Gaspi</h3>
+                      <p className="text-gray-600">Scannez votre frigo, Yummeal génère instantanément des recettes délicieuses et équilibrées avec ce que vous avez. Fini le gaspillage !</p>
                     </motion.div>
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -252,8 +252,8 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Scale className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Suivi des calories automatisé</h3>
-                      <p className="text-gray-600">Les calories sont automatiquement suivies pour vous, sans effort ni calculs compliqués.</p>
+                      <h3 className="text-xl font-bold mb-4">Nutrition Intuitive & Équilibrée</h3>
+                      <p className="text-gray-600">Mangez sainement sans compter ! Yummeal vous guide vers une alimentation équilibrée, adaptée à vos objectifs, sans restriction ni culpabilité.</p>
                     </motion.div>
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -264,8 +264,8 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Utensils className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Des repas sains et gourmands</h3>
-                      <p className="text-gray-600">Des recettes équilibrées qui vous permettent de vous régaler sans sacrifier le goût ou la variété.</p>
+                      <h3 className="text-xl font-bold mb-4">Cuisine Simple & Savoureuse</h3>
+                      <p className="text-gray-600">Des recettes rapides (moins de 30 min) et faciles à réaliser, même sans être un cordon bleu. Retrouvez le plaisir de cuisiner !</p>
                     </motion.div>
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -276,8 +276,8 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Heart className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Mangez ce que vous aimez</h3>
-                      <p className="text-gray-600">Pas de restrictions strictes, juste des repas adaptés à vos goûts et à vos objectifs de santé.</p>
+                      <h3 className="text-xl font-bold mb-4">Adapté à Vos Besoins Spécifiques</h3>
+                      <p className="text-gray-600">Végétarien, sans gluten, gestion du poids... Yummeal s'adapte à vos préférences et régimes, pour des repas qui vous ressemblent.</p>
                     </motion.div>
                   </div>
                 </div>
@@ -287,8 +287,8 @@ function App() {
             {/* Recipes Download Section */}
             <section className="py-16 bg-white">
               <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Maîtrisez vos calories</h2>
-                <p className="text-lg text-gray-600 mb-8">Accédez à +100 000 recettes optimales pour la perte de poids</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Prêt à transformer votre quotidien ?</h2>
+                <p className="text-lg text-gray-600 mb-8">Rejoignez des milliers d'utilisateurs qui ont retrouvé la sérénité en cuisine avec Yummeal.</p>
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
                     href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
@@ -321,8 +321,8 @@ function App() {
             </section>
 
             {/* How It Works Section */}
-            <motion.section 
-              id="how-it-works" 
+            <motion.section
+              id="how-it-works"
               ref={howItWorksRef}
               className="how-it-works-section py-20 bg-gray-50"
               initial={{ opacity: 0, y: 20 }}
@@ -330,18 +330,21 @@ function App() {
               viewport={{ once: true }}
             >
               <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Comment ça marche ?</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Votre Parcours Simplifié avec Yummeal</h2>
                 <div className="grid md:grid-cols-3 gap-10">
+                  {/* Card 1 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
                     <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">1</div>
-                    <h3 className="text-xl font-semibold mb-2">Ajoutez vos ingrédients</h3>
-                    <p className="text-gray-600">Sélectionnez dans le magasin tout ce que vous avez dans votre frigo et vos placards.</p>
+                    <h3 className="text-xl font-semibold mb-2">Scannez votre frigo</h3>
+                    <p className="text-gray-600">Prenez une photo de vos ingrédients, et laissez Yummeal faire la magie.</p>
                   </div>
+                  {/* Card 2 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
                     <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">2</div>
-                    <h3 className="text-xl font-semibold mb-2">Découvrez vos recettes</h3>
-                    <p className="text-gray-600">Yummeal génère automatiquement un livre de recettes réalisables avec vos ingrédients.</p>
+                    <h3 className="text-xl font-semibold mb-2">Recettes personnalisées</h3>
+                    <p className="text-gray-600">Recevez instantanément des recettes adaptées à vos ingrédients et préférences.</p>
                   </div>
+                  {/* Card 3 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
                     <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">3</div>
                     <h3 className="text-xl font-semibold mb-2">Cuisinez & savourez</h3>
@@ -366,20 +369,21 @@ function App() {
                   <div className="space-y-8">
                     {[{
                       q: "Je n'ai pas beaucoup de temps pour cuisiner, Yummeal est-il vraiment rapide?",
-                      a: "Oui, toutes nos recettes sont pensées pour être simples et rapides, même pour les emplois du temps les plus chargés."
+                      a: "Oui, toutes nos recettes sont pensées pour être simples et rapides, même pour les emplois du temps les plus chargés. En moins de 30 minutes, un repas sain et délicieux est prêt !"
                     },
                     {
                       q: "Est-ce que je dois peser mes aliments pour l'application?",
-                      a: "Non, Yummeal suit automatiquement les calories et les portions sans que vous ayez à peser ou compter quoi que ce soit."
+                      a: "Non, Yummeal vous encourage à manger intuitivement. Nous ne comptons pas les calories ni ne vous demandons de peser vos aliments. L'objectif est de retrouver une relation saine et sereine avec la nourriture."
                     },
                     {
                       q: "Puis-je utiliser Yummeal si je suis végétarien ou sans gluten?",
-                      a: "Bien sûr ! Vous pouvez filtrer les recettes en fonction de vos préférences alimentaires et besoins spécifiques."
+                      a: "Absolument ! Yummeal s'adapte à vos préférences et régimes alimentaires (végétarien, sans gluten, sans lactose, etc.) pour vous proposer des recettes qui vous ressemblent."
                     },
                     {
                       q: "Puis-je ajouter mes propres recettes?",
-                      a: "Absolument ! Vous pouvez enregistrer vos recettes favorites et les ajouter à votre livre de recettes personnalisé."
-                    }].map((faq, index) => (
+                      a: "Oui, vous pouvez importer et sauvegarder vos recettes préférées, et même les modifier pour les adapter à vos besoins. Yummeal est votre carnet de recettes personnalisé et évolutif."
+                    }
+                    ].map((faq, index) => (
                       <motion.div 
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
@@ -429,7 +433,7 @@ function App() {
                 </div>
               </div>
             </section>
-          </>
+          </div>
         } />
         <Route path="/confidentialite" element={<PrivacyPolicy />} />
         <Route path="/cgu" element={<TermsAndConditions />} />
