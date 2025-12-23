@@ -4,10 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import { initFacebookPixel } from './utils/facebookPixel';
+import { initTikTokPixel } from './utils/tiktokPixel';
 import { setupAutoTracking, addTrackingToSpecificButtons } from './utils/autoTrackDownloads';
 
-// Initialiser le pixel Facebook avant le rendu de l'application
+// Initialiser les pixels avant le rendu de l'application
 initFacebookPixel();
+initTikTokPixel();
 
 // Configurer le tracking automatique des liens de téléchargement
 setupAutoTracking();
