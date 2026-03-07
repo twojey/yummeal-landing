@@ -1,3 +1,9 @@
+const UUID_V4_REGEX = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
+
+function isValidUuid(id: string): boolean {
+  return UUID_V4_REGEX.test(id.trim());
+}
+
 /**
  * Gestion de l'identifiant anonyme persistant pour le tracking
  * Cet identifiant est utilisé pour lier tous les événements d'une session
@@ -8,14 +14,20 @@ const ANON_ID_EXPIRY_KEY = 'yummeal_anon_id_expiry';
 const ANON_ID_EXPIRY_DAYS = 365; // Conserver l'ID pendant 1 an
 
 /**
- * Génère un nouvel identifiant anonyme unique
- * Format: timestamp + random UUID
+ * Génère un identifiant UUID v4 compatible backend
  */
 function generateAnonymousId(): string {
-  const timestamp = Date.now().toString(36);
-  const randomPart = Math.random().toString(36).substring(2, 15) +
-                     Math.random().toString(36).substring(2, 15);
-  return `anon_${timestamp}_${randomPart}`;
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+
+  // Fallback manuel (UUID v4-like)
+  const template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+  return template.replace(/[xy]/g, char => {
+    const rand = Math.random() * 16 | 0;
+    const value = char === 'x' ? rand : (rand & 0x3) | 0x8;
+    return value.toString(16);
+  });
 }
 
 /**
@@ -35,7 +47,7 @@ export function getAnonymousId(): string {
 
     if (storedId && expiryStr) {
       const expiry = parseInt(expiryStr, 10);
-      if (Date.now() < expiry) {
+      if (Date.now() < expiry && isValidUuid(storedId)) {
         console.log('[AnonymousId] ID existant récupéré:', storedId);
         return storedId;
       }
