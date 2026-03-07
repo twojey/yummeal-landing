@@ -7,6 +7,9 @@
  */
 
 import { trackFacebookEvent } from './facebookPixel';
+import { getAnonymousId } from './anonymousId';
+import { enrichEvent, normalizeEventData, isEventValid } from './eventEnricher';
+import { trackAppsFlyerEvent, getDetectedTrafficSource } from './appsflyerIntegration';
 
 // Configuration
 const API_URL = 'https://yummeal-server.deno.dev/tracking';
@@ -31,21 +34,24 @@ interface TrackingEvent {
  * @returns Promise<boolean> Succès de l'envoi
  */
 const sendToDeno = async (eventName: string, data: Record<string, unknown>): Promise<boolean> => {
-  // Préparer les données avec métadonnées standard
-  const eventData = {
-    name: eventName,
-    properties: {
-      ...data,
-      timestamp: new Date().toISOString(),
-      source: 'yummeal_website'
-    }
-  };
+  const anonId = getAnonymousId();
+
+  // Normaliser et enrichir les données
+  const normalizedData = normalizeEventData(data);
+  const eventData = enrichEvent(eventName, normalizedData);
+
+  // Valider l'événement
+  if (!isEventValid(eventName, eventData.properties)) {
+    console.warn(`[TRACKING] Événement '${eventName}' invalide, envoi annulé`);
+    return false;
+  }
 
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Anonymous-ID': anonId
       },
       body: JSON.stringify(eventData)
     });
@@ -55,8 +61,8 @@ const sendToDeno = async (eventName: string, data: Record<string, unknown>): Pro
     }
     
     return true;
-  } catch (error) {
-    console.error('[TRACKING] Erreur d\'envoi à l\'API:', error);
+  } catch {
+    console.error('[TRACKING] Erreur d\'envoi à l\'API');
     // Sauvegarder l'événement pour réessayer plus tard
     saveFailedEvent(eventData);
     return false;
@@ -69,10 +75,20 @@ const sendToDeno = async (eventName: string, data: Record<string, unknown>): Pro
  * @param data Données associées à l'événement
  */
 export const sendEvent = async (eventName: string, data: Record<string, unknown> = {}): Promise<void> => {
+  // Enrichir les données avec la source de trafic
+  const trafficSource = getDetectedTrafficSource();
+  const enrichedData = {
+    ...data,
+    traffic_source: trafficSource.source,
+    traffic_medium: trafficSource.medium,
+    traffic_campaign: trafficSource.campaign
+  };
+
   // Envoi parallèle aux différentes destinations
   await Promise.all([
-    sendToDeno(eventName, data),
-    Promise.resolve(trackFacebookEvent(eventName, data))
+    sendToDeno(eventName, enrichedData),
+    Promise.resolve(trackFacebookEvent(eventName, enrichedData)),
+    Promise.resolve(trackAppsFlyerEvent(eventName, enrichedData))
   ]);
 };
 
@@ -82,6 +98,7 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
 export const trackPageView = (): void => {
   // Collecter les données de la page
   const pageData = {
+    url: window.location.href,
     page_url: window.location.href,
     page_title: document.title,
     referrer: document.referrer || 'direct',

@@ -6,10 +6,17 @@ import './index.css';
 import { initFacebookPixel } from './utils/facebookPixel';
 import { initTikTokPixel } from './utils/tiktokPixel';
 import { setupAutoTracking, addTrackingToSpecificButtons } from './utils/autoTrackDownloads';
+import { getAnonymousId } from './utils/anonymousId';
+import { initAppsFlyer } from './utils/appsflyerIntegration';
+
+// Initialiser l'identifiant anonyme persistant
+const anonId = getAnonymousId();
+console.log('[INIT] Identifiant anonyme initialisé:', anonId);
 
 // Initialiser les pixels avant le rendu de l'application
 initFacebookPixel();
 initTikTokPixel();
+initAppsFlyer();
 
 // Configurer le tracking automatique des liens de téléchargement
 setupAutoTracking();
