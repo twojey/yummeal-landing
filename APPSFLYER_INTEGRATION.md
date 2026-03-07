@@ -23,11 +23,19 @@ Le script officiel AppsFlyer est injecté directement dans `index.html` pour gar
 ```html
 <!-- index.html -->
 <script
-  id="appsflyer-web-sdk"
-  async
-  src="https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js"
-  onload="window.dispatchEvent(new Event('appsflyer:sdk-ready'))"
+  src="/vendor/appsflyer/loader.js"
 ></script>
+```
+
+`loader.js` est généré inline dans `index.html` et tente successivement:
+
+1. **Copie locale** `public/vendor/appsflyer/web_sdk.v1.0.min.js`
+2. **CDN principal** `https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js`
+3. **CDN secondaire** `https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js`
+
+Chaque tentative déclenche l'évènement `appsflyer:sdk-ready` une fois le script disponible. Si tous les hôtes échouent, un log d'erreur explicite est émis dans la console.
+
+> Maintenance: pour mettre à jour la copie locale, exécuter `curl -L -o public/vendor/appsflyer/web_sdk.vX.Y.min.js https://sdk.appsflyer.com/web-sdk/vX.Y/sdk.min.js` puis ajuster l'ordre des sources dans `index.html` si nécessaire.
 ```
 
 Le module `initAppsFlyer()` détecte ce script injecté et se contente de configurer le SDK (fallback CDN conservé si le tag n'est pas présent ou échoue).
