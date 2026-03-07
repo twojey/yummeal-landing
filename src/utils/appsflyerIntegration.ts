@@ -8,7 +8,10 @@ import { getAnonymousId } from './anonymousId';
 // Configuration AppsFlyer
 const APPSFLYER_DEV_KEY = 'KqkTfhXvWx5Lm9nPqRsT';
 const APPSFLYER_APP_ID = 'id6744942441';
-const APPSFLYER_WEB_SDK_URL = 'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js';
+const APPSFLYER_SCRIPT_SOURCES = [
+  'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
+  'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
+];
 const ONELINK_URL = 'https://yummeal.onelink.me/iDjc/web';
 
 interface TrafficSource {
@@ -148,25 +151,37 @@ export function initAppsFlyer(): void {
   }
 
   try {
-    // Charger le SDK AppsFlyer
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = APPSFLYER_WEB_SDK_URL;
-
-    script.onload = () => {
-      configureAppsFlyer();
-    };
-
-    script.onerror = () => {
-      console.error('[AppsFlyer] Erreur lors du chargement du SDK');
-    };
-
-    document.head.appendChild(script);
-
-    console.log('[AppsFlyer] Chargement du SDK initié');
+    loadAppsFlyerSdk(0);
   } catch (error) {
     console.error('[AppsFlyer] Erreur lors de l\'initialisation:', error);
   }
+}
+
+function loadAppsFlyerSdk(sourceIndex: number): void {
+  if (sourceIndex >= APPSFLYER_SCRIPT_SOURCES.length) {
+    console.error('[AppsFlyer] Impossible de charger le SDK depuis toutes les sources configurées');
+    return;
+  }
+
+  const scriptUrl = APPSFLYER_SCRIPT_SOURCES[sourceIndex];
+  console.log(`[AppsFlyer] Chargement du SDK (source ${sourceIndex + 1}/${APPSFLYER_SCRIPT_SOURCES.length}): ${scriptUrl}`);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = scriptUrl;
+
+  script.onload = () => {
+    console.log('[AppsFlyer] SDK chargé avec succès');
+    configureAppsFlyer();
+  };
+
+  script.onerror = () => {
+    console.error('[AppsFlyer] Erreur lors du chargement du SDK', { scriptUrl });
+    script.remove();
+    loadAppsFlyerSdk(sourceIndex + 1);
+  };
+
+  document.head.appendChild(script);
 }
 
 /**
