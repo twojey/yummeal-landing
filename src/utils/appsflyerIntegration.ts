@@ -13,6 +13,11 @@ const APPSFLYER_SCRIPT_SOURCES = [
   'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
 ];
 const ONELINK_URL = 'https://yummeal.onelink.me/iDjc/web';
+const SDK_READY_EVENT = 'appsflyer:sdk-ready';
+
+let isConfigured = false;
+let sdkReadyListenerAttached = false;
+let sdkFallbackTimeout: number | null = null;
 
 interface TrafficSource {
   source: string;
@@ -150,10 +155,56 @@ export function initAppsFlyer(): void {
     return;
   }
 
+  if (isConfigured) {
+    return;
+  }
+
   try {
+    const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
+
+    if (windowWithAppsFlyer.appsFlyer) {
+      configureAppsFlyer();
+      return;
+    }
+
+    if (document.getElementById('appsflyer-web-sdk')) {
+      waitForHeadInjectedSdk();
+      return;
+    }
+
     loadAppsFlyerSdk(0);
   } catch (error) {
     console.error('[AppsFlyer] Erreur lors de l\'initialisation:', error);
+  }
+}
+
+function waitForHeadInjectedSdk(): void {
+  if (sdkReadyListenerAttached) {
+    return;
+  }
+
+  sdkReadyListenerAttached = true;
+
+  const onSdkReady = (): void => {
+    window.removeEventListener(SDK_READY_EVENT, onSdkReady);
+
+    if (typeof (window as unknown as { appsFlyer?: AppsFlyerSDK }).appsFlyer !== 'undefined') {
+      configureAppsFlyer();
+    } else {
+      // SDK tag chargé mais objet indisponible, tenter fallback
+      loadAppsFlyerSdk(1);
+    }
+  };
+
+  window.addEventListener(SDK_READY_EVENT, onSdkReady);
+
+  if (sdkFallbackTimeout === null) {
+    sdkFallbackTimeout = window.setTimeout(() => {
+      if (!isConfigured && typeof (window as unknown as { appsFlyer?: AppsFlyerSDK }).appsFlyer === 'undefined') {
+        console.warn('[AppsFlyer] SDK non initialisé après chargement initial, tentative de fallback');
+        loadAppsFlyerSdk(1);
+      }
+    }, 4000);
   }
 }
 
@@ -188,6 +239,10 @@ function loadAppsFlyerSdk(sourceIndex: number): void {
  * Configure AppsFlyer après le chargement du SDK
  */
 function configureAppsFlyer(): void {
+  if (isConfigured) {
+    return;
+  }
+
   // Vérifier que le SDK est chargé
   const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
   if (typeof windowWithAppsFlyer.appsFlyer === 'undefined') {
@@ -202,6 +257,8 @@ function configureAppsFlyer(): void {
       console.warn('[AppsFlyer] SDK non disponible');
       return;
     }
+
+    isConfigured = true;
 
     const anonId = getAnonymousId();
     const trafficSource = getTrafficSource();

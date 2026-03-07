@@ -5,6 +5,15 @@
     <link rel="icon" type="image/png" href="./src/fav-loveshot.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loveshot</title>
+    <!-- AppsFlyer Web SDK: chargé au plus tôt pour Smart Banner & attribution -->
+    <script
+      id="appsflyer-web-sdk"
+      data-appsflyer-sdk
+      async
+      src="https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js"
+      onload="window.dispatchEvent(new Event('appsflyer:sdk-ready'))"
+      onerror="console.error('[AppsFlyer] Échec du chargement du SDK initial', event)"
+    ></script>
   </head>
   <body>
     <div id="root"></div>

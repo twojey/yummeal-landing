@@ -16,7 +16,23 @@ const ONELINK_URL = 'https://yummeal.onelink.me/iDjc/web';
 
 ## Fonctionnalités principales
 
-### 1. Détection automatique de la source de trafic
+### 1. Chargement du SDK dans le `<head>`
+
+Le script officiel AppsFlyer est injecté directement dans `index.html` pour garantir son exécution avant le bootstrap React et permettre l'affichage immédiat des Smart Banners.
+
+```html
+<!-- index.html -->
+<script
+  id="appsflyer-web-sdk"
+  async
+  src="https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js"
+  onload="window.dispatchEvent(new Event('appsflyer:sdk-ready'))"
+></script>
+```
+
+Le module `initAppsFlyer()` détecte ce script injecté et se contente de configurer le SDK (fallback CDN conservé si le tag n'est pas présent ou échoue).
+
+### 2. Détection automatique de la source de trafic
 
 Le service détecte automatiquement la source de trafic depuis:
 
@@ -324,6 +340,16 @@ console.log(getDetectedTrafficSource());
 localStorage.getItem('appsflyer_attribution')
 ```
 
+## Vérification & QA
+
+1. Installer l'extension Chrome **AppsFlyer Integration Helper**
+2. Ouvrir le site (HTTPS) et vérifier:
+   - `AF('start')` détecté
+   - Smart Banner visible en mode mobile
+   - Champ `af_user_id` renseigné
+3. Inspecter `localStorage.appsflyer_attribution`
+4. Tester différents ensembles d'UTM pour valider la détection de source
+
 ## Performance
 
 - **Initialisation**: ~50ms (chargement du SDK)
@@ -348,6 +374,16 @@ Les événements incluent la source de trafic dans les propriétés envoyées à
 
 ### Avec TikTok Pixel
 Les événements sont automatiquement envoyés à TikTok Pixel avec les mêmes données.
+
+## Vérification & QA
+
+1. Installer l'extension Chrome **AppsFlyer Integration Helper**
+2. Ouvrir le site en HTTPS et vérifier:
+   - `AF('start')` détecté
+   - Smart Banner affichée (mobile)
+   - `af_user_id` renseigné
+3. Contrôler `localStorage.appsflyer_attribution`
+4. Forcer différents paramètres UTM pour valider la détection de source
 
 ## Troubleshooting
 
