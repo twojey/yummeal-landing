@@ -18,6 +18,18 @@ const PrivacyPolicy: React.FC = () => (
     <p>
       Nous mettons en œuvre des mesures de sécurité pour protéger vos informations contre tout accès non autorisé.
     </p>
+    <h2 className="text-xl font-semibold mt-6 mb-2">Éditeur du site</h2>
+    <p className="mb-2">
+      <strong>Le site Yummeal est la propriété de la société Yidla.</strong>
+    </p>
+    <ul className="list-disc pl-6 space-y-1">
+      <li><strong>Nom complet :</strong> Yidla (YIDLA)</li>
+      <li><strong>Raison sociale :</strong> YIDLA</li>
+      <li><strong>Numéro Siren :</strong> 898271184</li>
+      <li><strong>Numéro Siret :</strong> 89827118400019 (siège de l'entreprise)</li>
+      <li><strong>Numéro TVA intracommunautaire :</strong> FR13898271184</li>
+      <li><strong>Greffe :</strong> RCS Versailles</li>
+    </ul>
     <h2 className="text-xl font-semibold mt-6 mb-2">Contact</h2>
     <p>
       Pour toute question concernant la confidentialité, contactez-nous à contact@yummeal.com.
