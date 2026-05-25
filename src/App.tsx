@@ -13,6 +13,7 @@ import MobileImage from './babe3-mobile.png';
 import './styles.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
+import DeleteAccount from './DeleteAccount';
 
 function App() {
   const location = useLocation();
@@ -437,6 +438,8 @@ function App() {
         } />
         <Route path="/confidentialite" element={<PrivacyPolicy />} />
         <Route path="/cgu" element={<TermsAndConditions />} />
+        <Route path="/supprimer-mon-compte" element={<DeleteAccount />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
 
       {/* Footer */}
