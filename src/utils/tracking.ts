@@ -14,6 +14,18 @@ import { trackAppsFlyerEvent, getDetectedTrafficSource } from './appsflyerIntegr
 // Configuration
 const API_URL = 'https://yummeal-server.deno.dev/tracking';
 
+/**
+ * Génère un identifiant d'événement unique, partagé entre le pixel navigateur
+ * et le CAPI serveur (api-deno) pour que Meta déduplique les doublons
+ * (même event_id côté pixel `eventID` et côté Conversions API `event_id`).
+ */
+const generateEventId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
+};
+
 // Types
 type Platform = 'apple' | 'google';
 
@@ -75,10 +87,14 @@ const sendToDeno = async (eventName: string, data: Record<string, unknown>): Pro
  * @param data Données associées à l'événement
  */
 export const sendEvent = async (eventName: string, data: Record<string, unknown> = {}): Promise<void> => {
+  // event_id partagé pixel ↔ CAPI serveur pour la déduplication Meta
+  const eventId = generateEventId();
+
   // Enrichir les données avec la source de trafic
   const trafficSource = getDetectedTrafficSource();
   const enrichedData = {
     ...data,
+    event_id: eventId,
     traffic_source: trafficSource.source,
     traffic_medium: trafficSource.medium,
     traffic_campaign: trafficSource.campaign
@@ -87,7 +103,7 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
   // Envoi parallèle aux différentes destinations
   await Promise.all([
     sendToDeno(eventName, enrichedData),
-    Promise.resolve(trackFacebookEvent(eventName, enrichedData)),
+    Promise.resolve(trackFacebookEvent(eventName, enrichedData, eventId)),
     Promise.resolve(trackAppsFlyerEvent(eventName, enrichedData))
   ]);
 };
@@ -96,8 +112,12 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
  * Enregistre une vue de page
  */
 export const trackPageView = (): void => {
+  // event_id partagé pixel ↔ CAPI serveur pour la déduplication Meta
+  const eventId = generateEventId();
+
   // Collecter les données de la page
   const pageData = {
+    event_id: eventId,
     url: window.location.href,
     page_url: window.location.href,
     page_title: document.title,
@@ -112,10 +132,10 @@ export const trackPageView = (): void => {
   // Envoi à l'API Deno
   sendToDeno('page_view', pageData);
 
-  // Envoi à Facebook Pixel
+  // Envoi à Facebook Pixel (même eventID que le CAPI → dédup Meta)
   trackFacebookEvent('PageView', {
     page_path: window.location.pathname
-  });
+  }, eventId);
   
   console.log('[TRACKING] Page view:', window.location.pathname);
 };
@@ -237,9 +257,13 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
   console.log('%cPlateforme:', 'font-weight: bold', platform);
   console.log('%cEmplacement:', 'font-weight: bold', buttonLocation || window.location.pathname);
   
+  // event_id partagé pixel ↔ CAPI serveur pour la déduplication Meta
+  const eventId = generateEventId();
+
   // Données de base requises
   const data: Record<string, unknown> = {
     // Champs obligatoires
+    event_id: eventId,
     platform,
     button_location: buttonLocation || window.location.pathname,
     
@@ -284,11 +308,11 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
     };
     
     console.log('%cEnvoi à Facebook Pixel (Lead):', 'font-weight: bold', fbData);
-    trackFacebookEvent('Lead', fbData);
-    
+    trackFacebookEvent('Lead', fbData, eventId);
+
     // Envoi également comme événement personnalisé pour plus de visibilité
     console.log('%cEnvoi à Facebook Pixel (download_click):', 'font-weight: bold', fbData);
-    trackFacebookEvent('download_click', fbData);
+    trackFacebookEvent('download_click', fbData, eventId);
     
     // Afficher les données complètes
     console.log('%cDonnées complètes de l\'event:', 'font-weight: bold');

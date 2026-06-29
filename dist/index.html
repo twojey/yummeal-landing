@@ -5,8 +5,45 @@
     <link rel="icon" type="image/png" href="/assets/fav-loveshot-BqeGBvoS.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loveshot</title>
-    <script type="module" crossorigin src="/assets/index-3LsIPc4h.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Dx3m1RN6.css">
+    <!-- AppsFlyer Web SDK loader: local bundle + CDN fallbacks -->
+    <script>
+      (function loadAppsFlyerSdk() {
+        const APP_VERSION = '20260307';
+        const sources = [
+          `/vendor/appsflyer/web_sdk.v1.0.min.js?v=${APP_VERSION}`,
+          'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
+          'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
+        ];
+
+        const loadSource = (index) => {
+          if (index >= sources.length) {
+            console.error('[AppsFlyer] Impossible de charger le SDK (toutes les sources ont échoué)');
+            return;
+          }
+
+          const script = document.createElement('script');
+          script.id = index === 0 ? 'appsflyer-web-sdk' : undefined;
+          script.async = true;
+          script.src = sources[index];
+
+          script.onload = () => {
+            window.dispatchEvent(new Event('appsflyer:sdk-ready'));
+          };
+
+          script.onerror = (event) => {
+            console.error('[AppsFlyer] Échec du chargement du SDK', { source: sources[index], event });
+            script.remove();
+            loadSource(index + 1);
+          };
+
+          document.head.appendChild(script);
+        };
+
+        loadSource(0);
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-Cj3XpZiR.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DqXvcuiN.css">
   </head>
   <body>
     <div id="root"></div>

@@ -8,8 +8,9 @@
     <!-- AppsFlyer Web SDK loader: local bundle + CDN fallbacks -->
     <script>
       (function loadAppsFlyerSdk() {
+        const APP_VERSION = '20260307';
         const sources = [
-          '/vendor/appsflyer/web_sdk.v1.0.min.js',
+          `/vendor/appsflyer/web_sdk.v1.0.min.js?v=${APP_VERSION}`,
           'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
           'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
         ];

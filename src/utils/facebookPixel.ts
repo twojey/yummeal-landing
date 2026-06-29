@@ -5,7 +5,7 @@ declare global {
   interface Window {
     fbq: {
       (command: string, pixelId: string): void;
-      (command: string, eventName: string, params?: Record<string, unknown>): void;
+      (command: string, eventName: string, params?: Record<string, unknown>, options?: { eventID?: string }): void;
       callMethod?: (...args: unknown[]) => void;
       queue: unknown[];
       push: typeof Array.prototype.push;
@@ -17,9 +17,12 @@ declare global {
 }
 
 /**
- * ID du pixel Facebook
+ * ID du dataset Facebook (« Yummeal – associé »), partagé avec le CAPI serveur
+ * (api-deno) afin que pixel navigateur et Conversions API alimentent le MÊME
+ * dataset et puissent être dédupliqués par event_id.
+ * Ancien pixel web isolé : 860752789503495 (n'était pas le dataset des campagnes).
  */
-const FB_PIXEL_ID = '860752789503495';
+const FB_PIXEL_ID = '1635942027116574';
 
 /**
  * Vérifie si le pixel Facebook est déjà chargé
@@ -85,34 +88,43 @@ export const initFacebookPixel = (): void => {
  * Envoie un événement au Facebook Pixel
  * @param eventName Nom de l'événement à tracker
  * @param data Données supplémentaires pour l'événement
+ * @param eventId Identifiant d'événement partagé avec le CAPI serveur pour la
+ *   déduplication Meta (pixel ↔ Conversions API). Si fourni, transmis via
+ *   l'option `eventID` du 4e argument de fbq.
  */
-export const trackFacebookEvent = (eventName: string, data?: Record<string, unknown>): void => {
+export const trackFacebookEvent = (
+  eventName: string,
+  data?: Record<string, unknown>,
+  eventId?: string,
+): void => {
   // Sécurité pour les environnements non-navigateur
   if (typeof window === 'undefined') {
     return;
   }
-  
+
+  const options = eventId ? { eventID: eventId } : undefined;
+
   // Initialisation automatique si nécessaire
   if (!isPixelLoaded()) {
     console.warn('[Facebook Pixel] Tentative de tracking sans initialisation du pixel. Initialisation automatique...');
     initFacebookPixel();
-    
+
     // Attendre un court instant pour que le pixel soit chargé
     setTimeout(() => {
       if (isPixelLoaded()) {
-        window.fbq('track', eventName, data);
-        console.log(`[Facebook Pixel] Événement tracké après initialisation: ${eventName}`, data);
+        window.fbq('track', eventName, data, options);
+        console.log(`[Facebook Pixel] Événement tracké après initialisation: ${eventName}`, data, options);
       } else {
         console.error(`[Facebook Pixel] Échec de l'initialisation du pixel pour l'événement: ${eventName}`);
       }
     }, 500);
     return;
   }
-  
+
   // Envoi de l'événement
   try {
-    window.fbq('track', eventName, data);
-    console.log(`[Facebook Pixel] Événement tracké: ${eventName}`, data);
+    window.fbq('track', eventName, data, options);
+    console.log(`[Facebook Pixel] Événement tracké: ${eventName}`, data, options);
   } catch (error) {
     console.error(`[Facebook Pixel] Erreur lors du tracking de l'événement ${eventName}:`, error);
   }
