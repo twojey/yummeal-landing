@@ -179,9 +179,9 @@ function App() {
             >
               <div className="hero-content pt-16 md:pt-0">
                 <div className="max-w-6xl mx-auto">
-                  <div className="hero-grid md:grid-cols-2 gap-8 items-center">
+                  <div className="hero-grid">
                     <div className="hero-text">
-                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-6 bg-gradient-to-r from-[#FF8C42] to-[#FF5733] text-transparent bg-clip-text">
+                      <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-6 bg-gradient-to-r from-[#FF8C42] to-[#FF5733] text-transparent bg-clip-text">
                         Libérez-vous de la<br />charge mentale des repas
                       </h1>
                       <p className="text-lg md:text-xl mb-8 text-gray-700">

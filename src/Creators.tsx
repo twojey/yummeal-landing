@@ -14,9 +14,9 @@ const BENEFITS = [
   },
   {
     icon: TrendingUp,
-    title: 'Rémunéré sur vos résultats',
+    title: 'Payé·e à la performance',
     description:
-      'Un lien de suivi personnel vous permet de percevoir une commission sur les conversions générées par votre contenu.',
+      'Une avance par vidéo, un CPM sur vos vues et des bonus de palier : vous êtes rémunéré·e sur la performance réelle de votre contenu.',
   },
   {
     icon: Sparkles,
@@ -38,23 +38,23 @@ const STEPS = [
     description: 'Remplissez le formulaire de candidature en quelques minutes.',
   },
   {
-    title: 'Recevez votre lien',
-    description: 'Après validation, vous recevez votre lien de suivi personnel.',
+    title: 'Votre profil est étudié',
+    description: "L'équipe Yummeal examine votre candidature et vos réseaux.",
   },
   {
-    title: 'Créez du contenu',
-    description: 'Partagez votre expérience de Yummeal dans le format de votre choix.',
+    title: 'Rejoignez les créateurs',
+    description: 'Une fois accepté·e, vous recevez un code pour accéder à l\'espace créateurs Yummeal.',
   },
   {
-    title: 'Touchez votre commission',
-    description: 'Chaque conversion générée via votre lien est suivie et rémunérée.',
+    title: 'Publiez et soyez payé·e',
+    description: 'Postez votre contenu : avance, CPM sur vos vues et bonus de palier vous sont versés.',
   },
 ];
 
 const PROFILE = [
-  'Créateurs food, lifestyle, bien-être ou organisation du quotidien',
+  'Créateurs et créatrices food, lifestyle, bien-être ou organisation du quotidien',
   "Communauté engagée, quelle que soit sa taille — l'authenticité compte plus que le nombre",
-  'À l\'aise pour créer du contenu UGC (vidéo, témoignage, avis)',
+  'À l\'aise pour créer du contenu UGC (vidéo, témoignage, avis) sur TikTok et/ou Instagram',
 ];
 
 function ApplyButton({ className = '' }: { className?: string }) {
@@ -86,11 +86,12 @@ const Creators: React.FC = () => {
                 Programme Creators
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6">
-                Devenez créateur Yummeal
+                Devenez créateur·rice Yummeal
               </h1>
               <p className="text-lg md:text-xl mb-8 text-gray-700">
-                Partagez votre expérience de l'app avec votre communauté et touchez une
-                commission sur chaque conversion générée grâce à votre lien personnel.
+                Partagez votre expérience de l'app avec votre communauté et soyez payé·e
+                à la performance : une avance par vidéo, un CPM sur vos vues, et des
+                bonus à chaque palier atteint.
               </p>
               <div className="flex flex-col items-start gap-3">
                 <ApplyButton className="!mx-0" />

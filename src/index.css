@@ -209,11 +209,11 @@ section .clay-container {
 }
 
 .hero-content {
-  @apply max-w-6xl mx-auto px-4 md:px-8;
+  @apply max-w-6xl mx-auto;
 }
 
 .hero-grid {
-  @apply grid md:grid-cols-2 gap-8 items-center;
+  @apply grid md:grid-cols-[2fr_1fr] gap-8 items-center;
 }
 
 .hero-text {
