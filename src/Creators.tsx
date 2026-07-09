@@ -1,53 +1,80 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Megaphone, TrendingUp, Sparkles, Rocket, CheckCircle2 } from 'lucide-react';
+import {
+  Target,
+  Repeat2,
+  Trophy,
+  Crown,
+  Scissors,
+  Wallet,
+  Users,
+  CheckCircle2,
+} from 'lucide-react';
 import CreatorsHeroImage from './creators-hero.webp';
 
 const APPLY_URL = 'https://kroaze-business.vercel.app/candidater/yummeal';
 
-const BENEFITS = [
+const TIERS = [
   {
-    icon: Megaphone,
-    title: 'Un produit authentique à recommander',
+    icon: Target,
+    title: 'Teste tes idées',
+    amount: '5€ / vidéo',
     description:
-      "Yummeal répond à un vrai besoin (moins de charge mentale, moins de gaspillage) : un contenu qui sonne vrai, pas un placement de produit forcé.",
+      "Une avance calculée sur l'ensemble de tes vidéos, pas une par une : si une seule cartonne, elle couvre les autres. Le terrain idéal pour tester un format sans pression.",
   },
   {
-    icon: TrendingUp,
-    title: 'Payé·e à la performance',
+    icon: Repeat2,
+    title: 'Reproduis un carton',
+    amount: '10 à 15€ / vidéo',
     description:
-      'Une avance par vidéo, un CPM sur vos vues et des bonus de palier : vous êtes rémunéré·e sur la performance réelle de votre contenu.',
+      "Quand on te demande de répliquer un format qui a déjà fait ses preuves, l'avance grimpe. Moins de risque, format déjà validé, mieux payé.",
   },
   {
-    icon: Sparkles,
-    title: 'Liberté créative totale',
+    icon: Trophy,
+    title: 'Vise le jackpot',
+    amount: "jusqu'à 500€ / vidéo",
     description:
-      'Reels, TikTok, avis, unboxing... vous choisissez le format qui vous ressemble et parle à votre communauté.',
+      'Plus ta vidéo génère de vues qualifiées, plus tu gagnes. Un objectif clair, atteignable, qui récompense les vraies performances.',
+  },
+];
+
+const FRICTIONLESS = [
+  {
+    icon: Scissors,
+    title: 'Zéro montage',
+    description:
+      'Tu filmes tes rushs, on monte tout : coupes, sous-titres, sound design. Toi, tu te concentres sur le contenu.',
   },
   {
-    icon: Rocket,
-    title: 'Embarquez tôt',
+    icon: Wallet,
+    title: 'Paiement simplifié',
     description:
-      'Yummeal est une app française en pleine croissance : vos retours et votre contenu ont un vrai impact sur le produit.',
+      'Pas de facture à monter toi-même : tu valides en un clic, le paiement est automatisé chaque mois.',
+  },
+  {
+    icon: Users,
+    title: 'Une communauté qui progresse ensemble',
+    description:
+      'Accès à un espace privé où les concepts qui marchent sont partagés en temps réel, pour que tout le monde s\'améliore.',
   },
 ];
 
 const STEPS = [
   {
-    title: 'Postulez',
-    description: 'Remplissez le formulaire de candidature en quelques minutes.',
+    title: 'Postule',
+    description: 'Remplis le formulaire de candidature en quelques minutes.',
   },
   {
-    title: 'Votre profil est étudié',
-    description: "L'équipe Yummeal examine votre candidature et vos réseaux.",
+    title: 'Ton profil est étudié',
+    description: "L'équipe Yummeal regarde ta candidature et tes réseaux.",
   },
   {
-    title: 'Rejoignez les créateurs',
-    description: 'Une fois accepté·e, vous recevez un code pour accéder à l\'espace créateurs Yummeal.',
+    title: 'Rejoins les créateurs',
+    description: "Une fois accepté·e, tu reçois un code pour accéder à l'espace créateurs Yummeal.",
   },
   {
-    title: 'Publiez et soyez payé·e',
-    description: 'Postez votre contenu : avance, CPM sur vos vues et bonus de palier vous sont versés.',
+    title: 'Publie et sois payé·e',
+    description: 'Poste ton contenu : avance, gains sur les vues et royalties potentielles te sont versés.',
   },
 ];
 
@@ -86,17 +113,16 @@ const Creators: React.FC = () => {
                 Programme Creators
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6">
-                Devenez créateur·rice Yummeal
+                Deviens créateur·rice Yummeal
               </h1>
               <p className="text-lg md:text-xl mb-8 text-gray-700">
-                Partagez votre expérience de l'app avec votre communauté et soyez payé·e
-                à la performance : une avance par vidéo, un CPM sur vos vues, et des
-                bonus à chaque palier atteint.
+                Un revenu stable dès ta première vidéo, des concepts qui ont déjà fait leurs
+                preuves à répliquer, et des royalties à vie si tu inventes le prochain carton.
               </p>
               <div className="flex flex-col items-start gap-3">
                 <ApplyButton className="!mx-0" />
                 <p className="text-sm text-gray-500">
-                  Vous serez redirigé vers notre formulaire de candidature partenaire.
+                  Tu seras redirigé·e vers notre formulaire de candidature partenaire.
                 </p>
               </div>
             </motion.div>
@@ -118,17 +144,17 @@ const Creators: React.FC = () => {
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Rémunération */}
       <section className="py-16 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
-            Pourquoi rejoindre le programme ?
+            Comment tu es payé·e
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            Un partenariat pensé pour les créateurs, pas une simple affiliation.
+            Trois paliers, du premier essai jusqu'au format qui cartonne.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {BENEFITS.map(({ icon: Icon, title, description }) => (
+          <div className="grid sm:grid-cols-3 gap-6">
+            {TIERS.map(({ icon: Icon, title, amount, description }) => (
               <motion.div
                 key={title}
                 initial={{ opacity: 0, y: 20 }}
@@ -138,6 +164,65 @@ const Creators: React.FC = () => {
               >
                 <div
                   className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-2 rounded-full shadow-lg mb-4"
+                  style={{ width: '48px', height: '48px' }}
+                >
+                  <Icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold mb-1">{title}</h3>
+                <p className="font-heading font-bold text-[#FF8C42] mb-3">{amount}</p>
+                <p className="text-gray-600 text-sm">{description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Royalties */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-4xl mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="clay-container text-center"
+          >
+            <div
+              className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-3 rounded-full shadow-lg mb-6"
+              style={{ width: '56px', height: '56px' }}
+            >
+              <Crown className="w-7 h-7 text-white" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
+              Invente un format, touche des royalties à vie
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Si l'un de tes formats devient un carton et qu'on le fait reproduire par
+              d'autres créateurs de la communauté, tu touches{' '}
+              <span className="font-semibold text-gray-800">2 à 5% de royalties</span> sur
+              toutes les vidéos copiées à partir de ton idée. Même en vacances, tant que la
+              communauté utilise ton concept, tu es payé·e.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Zéro friction */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">
+            Une expérience sans friction
+          </h2>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {FRICTIONLESS.map(({ icon: Icon, title, description }) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="clay-card text-center flex flex-col items-center"
+              >
+                <div
+                  className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4"
                   style={{ width: '48px', height: '48px' }}
                 >
                   <Icon className="w-6 h-6 text-white" />
@@ -199,7 +284,7 @@ const Creators: React.FC = () => {
       <section className="py-16 md:py-20">
         <div className="max-w-3xl mx-auto text-center px-4">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-            Prêt à rejoindre l'aventure ?
+            Prêt·e à rejoindre l'aventure ?
           </h2>
           <p className="text-lg text-gray-600 mb-8">
             La candidature ne prend que quelques minutes.

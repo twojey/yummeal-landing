@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Scale, Utensils, Heart } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -26,18 +26,17 @@ function App() {
         : 'Yummeal - Cuisine saine';
   }, [location.pathname]);
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const heroRef = useRef(null);
-  const featuresRef = useRef(null);
-  const howItWorksRef = useRef(null);
-  const faqRef = useRef(null);
-
-  const handleScrollTo = (ref: React.RefObject<HTMLDivElement>) => {
-    setIsMobileMenuOpen(false);
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
+  // Scrolle vers la section ciblée par le hash, y compris juste après une
+  // navigation depuis une autre page (ex: /creators -> /#faq).
+  useEffect(() => {
+    if (!location.hash) return;
+    const el = document.querySelector(location.hash);
+    if (el) {
+      requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth' }));
     }
-  };
+  }, [location]);
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#FFFAF0] px-4 md:px-8">
@@ -61,39 +60,29 @@ function App() {
               </a>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a 
-                href="#hero" 
+              <Link
+                to="/#hero"
                 className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
-                onClick={() => handleScrollTo(heroRef)}
               >
                 Accueil
-              </a>
-              <a 
-                href="#features" 
+              </Link>
+              <Link
+                to="/#features"
                 className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
-                onClick={() => handleScrollTo(featuresRef)}
               >
                 Fonctionnalités
-              </a>
-              <a 
-                href="#how-it-works" 
+              </Link>
+              <Link
+                to="/#how-it-works"
                 className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
-                onClick={() => handleScrollTo(howItWorksRef)}
               >
                 Comment ça marche ?
-              </a>
-              <a 
-                href="#faq" 
+              </Link>
+              <Link
+                to="/#faq"
                 className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
-                onClick={() => handleScrollTo(faqRef)}
               >
                 FAQ
-              </a>
-              <Link
-                to="/creators"
-                className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
-              >
-                Creators
               </Link>
             </div>
             <div className="md:hidden">
@@ -124,40 +113,33 @@ function App() {
           {isMobileMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a 
-                  href="#hero" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
-                  onClick={() => handleScrollTo(heroRef)}
-                >
-                  Accueil
-                </a>
-                <a 
-                  href="#features" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
-                  onClick={() => handleScrollTo(featuresRef)}
-                >
-                  Fonctionnalités
-                </a>
-                <a 
-                  href="#how-it-works" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
-                  onClick={() => handleScrollTo(howItWorksRef)}
-                >
-                  Comment ça marche ?
-                </a>
-                <a 
-                  href="#faq" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
-                  onClick={() => handleScrollTo(faqRef)}
-                >
-                  FAQ
-                </a>
                 <Link
-                  to="/creators"
+                  to="/#hero"
                   className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Creators
+                  Accueil
+                </Link>
+                <Link
+                  to="/#features"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Fonctionnalités
+                </Link>
+                <Link
+                  to="/#how-it-works"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Comment ça marche ?
+                </Link>
+                <Link
+                  to="/#faq"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  FAQ
                 </Link>
               </div>
             </div>
@@ -171,7 +153,6 @@ function App() {
             {/* Hero Section */}
             <motion.section 
               id="hero" 
-              ref={heroRef}
               className="hero-section"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -242,7 +223,6 @@ function App() {
             {/* Features Section */}
             <motion.section 
               id="features" 
-              ref={featuresRef}
               className="features-section py-20"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -344,7 +324,6 @@ function App() {
             {/* How It Works Section */}
             <motion.section
               id="how-it-works"
-              ref={howItWorksRef}
               className="how-it-works-section py-20 bg-[#FFFAF0]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -378,7 +357,6 @@ function App() {
             {/* FAQ Section */}
             <motion.section 
               id="faq" 
-              ref={faqRef}
               className="faq-section py-20"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -476,6 +454,7 @@ function App() {
               <span className="text-gray-600"> 2025 Yummeal, tous droits réservés</span>
             </div>
             <div className="flex items-center gap-4">
+              <Link to="/creators" className="text-gray-600 hover:text-[#FF8C42]">Creators</Link>
               <Link to="/confidentialite" className="text-gray-600 hover:text-[#FF8C42]">Politique de confidentialité</Link>
               <Link to="/cgu" className="text-gray-600 hover:text-[#FF8C42]">CGU</Link>
               <div className="flex items-center gap-4">
