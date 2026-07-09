@@ -5,26 +5,6 @@ html, body {
 
 /* Ajouté pour éviter tout débordement horizontal sur mobile */
 
-.features-section .clay-icon {
-    margin-bottom: 1.5rem;
-    border-radius: 1rem;
-    padding: 1rem;
-    background: linear-gradient(145deg, #ffffff, #e6e6e6);
-    box-shadow: 10px 10px 20px rgba(190, 190, 190, 0.35), -10px -10px 20px rgba(255, 255, 255, 0.85), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(190, 190, 190, 0.3);
-    background-color: #4CAF50;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.how-it-works-section .clay-icon {
-    background-color: #4CAF50 !important;
-    background: #4CAF50 !important;
-    color: #fff !important;
-}
-
 .clay-btn {
   display: flex;
   align-items: center;

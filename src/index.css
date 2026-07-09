@@ -49,8 +49,7 @@
 
 .clay-icon {
   @apply rounded-2xl p-4 mb-6;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow: 
+  box-shadow:
     10px 10px 20px rgba(190, 190, 190, 0.35),
     -10px -10px 20px rgba(255, 255, 255, 0.85),
     inset 3px 3px 6px rgba(255, 255, 255, 0.95),
@@ -173,10 +172,6 @@ section .clay-container {
 
 .features-section .clay-card {
   @apply bg-white p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg;
-}
-
-.features-section .clay-icon {
-  @apply w-12 h-12 bg-gradient-to-r from-[#4CAF50] to-[#388E3C] rounded-full flex items-center justify-center text-white mb-4;
 }
 
 .difference-section {
