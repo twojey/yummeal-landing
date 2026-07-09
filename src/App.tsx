@@ -86,18 +86,21 @@ function App() {
               </Link>
             </div>
             <div className="md:hidden">
-              <button 
+              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-gray-600 hover:text-[#FF8C42]"
+                aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                aria-expanded={isMobileMenuOpen}
               >
-                <svg 
-                  className="h-6 w-6" 
-                  fill="none" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   {isMobileMenuOpen ? (
                     <path d="M6 18L18 6M6 6l12 12" />

@@ -1,0 +1,18 @@
+# Yummeal
+
+> Yummeal est une application mobile qui transforme le contenu de votre frigo
+> en recettes personnalisées, pour cuisiner sainement, sans y penser et sans
+> gaspiller. Disponible en français sur iOS et Android.
+
+## Pages
+
+- [Accueil](https://yummeal.app/): présentation de l'application, fonctionnalités et téléchargement
+- [Programme Creators](https://yummeal.app/creators): programme de créateurs UGC rémunérés à la performance
+- [Politique de confidentialité](https://yummeal.app/confidentialite)
+- [Conditions générales d'utilisation](https://yummeal.app/cgu)
+- [Suppression de compte](https://yummeal.app/supprimer-mon-compte)
+
+## Télécharger l'application
+
+- [App Store (iOS)](https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441)
+- [Google Play (Android)](https://play.google.com/store/apps/details?id=com.yummeal)
