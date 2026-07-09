@@ -23,6 +23,10 @@
   }
 }
 
+.font-heading {
+  font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
 .clay-card {
   @apply bg-white rounded-[2rem] p-8;
   position: relative;

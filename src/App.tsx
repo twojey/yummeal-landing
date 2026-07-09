@@ -13,13 +13,17 @@ import './styles.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
 import DeleteAccount from './DeleteAccount';
+import Creators from './Creators';
 
 function App() {
   const location = useLocation();
 
   useEffect(() => {
     trackPageView();
-    document.title = 'Yummeal - Cuisine saine';
+    document.title =
+      location.pathname === '/creators'
+        ? 'Yummeal Creators - Programme affiliés & UGC'
+        : 'Yummeal - Cuisine saine';
   }, [location.pathname]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,7 +52,7 @@ function App() {
                   alt="Yummeal Logo" 
                   className="hidden md:block h-8 w-auto"
                 />
-                <span className="hidden md:block ml-2 text-2xl font-bold text-[#FF8C42]">Yummeal</span>
+                <span className="hidden md:block ml-2 text-2xl font-bold font-heading text-[#FF8C42]">Yummeal</span>
                 <img 
                   src={MobileLogo} 
                   alt="Yummeal Logo" 
@@ -85,6 +89,12 @@ function App() {
               >
                 FAQ
               </a>
+              <Link
+                to="/creators"
+                className="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer"
+              >
+                Creators
+              </Link>
             </div>
             <div className="md:hidden">
               <button 
@@ -142,6 +152,13 @@ function App() {
                 >
                   FAQ
                 </a>
+                <Link
+                  to="/creators"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#FF8C42] hover:bg-gray-50 rounded-md cursor-pointer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Creators
+                </Link>
               </div>
             </div>
           )}
@@ -161,13 +178,13 @@ function App() {
               viewport={{ once: true }}
             >
               <div className="hero-content pt-16 md:pt-0">
-                <div className="max-w-6xl mx-auto px-4 md:px-8">
+                <div className="max-w-6xl mx-auto">
                   <div className="hero-grid md:grid-cols-2 gap-8 items-center">
                     <div className="hero-text">
-                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#FF8C42] to-[#FF5733] text-transparent bg-clip-text">
-                        Libérez-vous de la charge mentale des repas
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-6 bg-gradient-to-r from-[#FF8C42] to-[#FF5733] text-transparent bg-clip-text">
+                        Libérez-vous de la<br />charge mentale des repas
                       </h1>
-                      <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-700">
+                      <p className="text-lg md:text-xl mb-8 text-gray-700">
                         Transformez votre frigo en inspiration culinaire et retrouvez le plaisir de cuisiner sainement, sans gaspillage ni frustration.
                       </p>
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
@@ -233,7 +250,7 @@ function App() {
             >
               <div className="max-w-6xl mx-auto">
                 <div className="clay-container">
-                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Yummeal : La solution complète pour vos repas</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">Yummeal : La solution complète pour vos repas</h2>
                   <div className="grid md:grid-cols-4 gap-8">
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -244,7 +261,7 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <ShoppingBag className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Inspiration Instantanée & Anti-Gaspi</h3>
+                      <h3 className="text-xl font-semibold mb-4">Inspiration Instantanée & Anti-Gaspi</h3>
                       <p className="text-gray-600">Scannez votre frigo, Yummeal génère instantanément des recettes délicieuses et équilibrées avec ce que vous avez. Fini le gaspillage !</p>
                     </motion.div>
                     <motion.div 
@@ -256,7 +273,7 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Scale className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Nutrition Intuitive & Équilibrée</h3>
+                      <h3 className="text-xl font-semibold mb-4">Nutrition Intuitive & Équilibrée</h3>
                       <p className="text-gray-600">Mangez sainement sans compter ! Yummeal vous guide vers une alimentation équilibrée, adaptée à vos objectifs, sans restriction ni culpabilité.</p>
                     </motion.div>
                     <motion.div 
@@ -268,7 +285,7 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Utensils className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Cuisine Simple & Savoureuse</h3>
+                      <h3 className="text-xl font-semibold mb-4">Cuisine Simple & Savoureuse</h3>
                       <p className="text-gray-600">Des recettes rapides (moins de 30 min) et faciles à réaliser, même sans être un cordon bleu. Retrouvez le plaisir de cuisiner !</p>
                     </motion.div>
                     <motion.div 
@@ -280,7 +297,7 @@ function App() {
                       <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Heart className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-4">Adapté à Vos Besoins Spécifiques</h3>
+                      <h3 className="text-xl font-semibold mb-4">Adapté à Vos Besoins Spécifiques</h3>
                       <p className="text-gray-600">Végétarien, sans gluten, gestion du poids... Yummeal s'adapte à vos préférences et régimes, pour des repas qui vous ressemblent.</p>
                     </motion.div>
                   </div>
@@ -291,7 +308,7 @@ function App() {
             {/* Recipes Download Section */}
             <section className="py-16 bg-white">
               <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Prêt à transformer votre quotidien ?</h2>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4">Prêt à transformer votre quotidien ?</h2>
                 <p className="text-lg text-gray-600 mb-8">Rejoignez des milliers d'utilisateurs qui ont retrouvé la sérénité en cuisine avec Yummeal.</p>
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
@@ -334,23 +351,23 @@ function App() {
               viewport={{ once: true }}
             >
               <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Votre Parcours Simplifié avec Yummeal</h2>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">Votre Parcours Simplifié avec Yummeal</h2>
                 <div className="grid md:grid-cols-3 gap-10">
                   {/* Card 1 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">1</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold font-heading mb-4">1</div>
                     <h3 className="text-xl font-semibold mb-2">Scannez votre frigo</h3>
                     <p className="text-gray-600">Prenez une photo de vos ingrédients, et laissez Yummeal faire la magie.</p>
                   </div>
                   {/* Card 2 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">2</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold font-heading mb-4">2</div>
                     <h3 className="text-xl font-semibold mb-2">Recettes personnalisées</h3>
                     <p className="text-gray-600">Recevez instantanément des recettes adaptées à vos ingrédients et préférences.</p>
                   </div>
                   {/* Card 3 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">3</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold font-heading mb-4">3</div>
                     <h3 className="text-xl font-semibold mb-2">Cuisinez & savourez</h3>
                     <p className="text-gray-600">Suivez les instructions, cuisinez simplement et régalez-vous sans gaspiller !</p>
                   </div>
@@ -369,7 +386,7 @@ function App() {
             >
               <div className="max-w-4xl mx-auto">
                 <div className="clay-container">
-                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Questions fréquentes</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">Questions fréquentes</h2>
                   <div className="space-y-8">
                     {[{
                       q: "Je n'ai pas beaucoup de temps pour cuisiner, Yummeal est-il vraiment rapide?",
@@ -395,7 +412,7 @@ function App() {
                         viewport={{ once: true }}
                         className="clay-card p-6"
                       >
-                        <h3 className="text-xl font-bold mb-4">{faq.q}</h3>
+                        <h3 className="text-xl font-semibold mb-4">{faq.q}</h3>
                         <p className="text-gray-600">{faq.a}</p>
                       </motion.div>
                     ))}
@@ -439,6 +456,7 @@ function App() {
             </section>
           </div>
         } />
+        <Route path="/creators" element={<Creators />} />
         <Route path="/confidentialite" element={<PrivacyPolicy />} />
         <Route path="/cgu" element={<TermsAndConditions />} />
         <Route path="/supprimer-mon-compte" element={<DeleteAccount />} />
