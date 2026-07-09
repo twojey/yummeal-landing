@@ -6,10 +6,9 @@ import { trackPageView } from './utils/tracking';
 
 import AppleLogo from './Apple_logo_black.svg';
 import PlayStoreLogo from './playstore.svg';
-import Image from './babe3.png';
+import HeroImage from './hero.webp';
 import Logo from './loveshot_logo.png';
 import MobileLogo from './fav-loveshot.png';
-import MobileImage from './babe3-mobile.png';
 import './styles.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
@@ -37,7 +36,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 md:px-8">
+    <div className="min-h-screen bg-[#FFFAF0] px-4 md:px-8">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -49,7 +48,7 @@ function App() {
                   alt="Yummeal Logo" 
                   className="hidden md:block h-8 w-auto"
                 />
-                <span className="hidden md:block ml-2 text-2xl font-bold text-[#00C851]">Yummeal</span>
+                <span className="hidden md:block ml-2 text-2xl font-bold text-[#4CAF50]">Yummeal</span>
                 <img 
                   src={MobileLogo} 
                   alt="Yummeal Logo" 
@@ -60,28 +59,28 @@ function App() {
             <div className="hidden md:flex items-center space-x-8">
               <a 
                 href="#hero" 
-                className="text-gray-600 hover:text-[#00C851] transition-colors cursor-pointer"
+                className="text-gray-600 hover:text-[#4CAF50] transition-colors cursor-pointer"
                 onClick={() => handleScrollTo(heroRef)}
               >
                 Accueil
               </a>
               <a 
                 href="#features" 
-                className="text-gray-600 hover:text-[#00C851] transition-colors cursor-pointer"
+                className="text-gray-600 hover:text-[#4CAF50] transition-colors cursor-pointer"
                 onClick={() => handleScrollTo(featuresRef)}
               >
                 Fonctionnalités
               </a>
               <a 
                 href="#how-it-works" 
-                className="text-gray-600 hover:text-[#00C851] transition-colors cursor-pointer"
+                className="text-gray-600 hover:text-[#4CAF50] transition-colors cursor-pointer"
                 onClick={() => handleScrollTo(howItWorksRef)}
               >
                 Comment ça marche ?
               </a>
               <a 
                 href="#faq" 
-                className="text-gray-600 hover:text-[#00C851] transition-colors cursor-pointer"
+                className="text-gray-600 hover:text-[#4CAF50] transition-colors cursor-pointer"
                 onClick={() => handleScrollTo(faqRef)}
               >
                 FAQ
@@ -90,7 +89,7 @@ function App() {
             <div className="md:hidden">
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-gray-600 hover:text-[#00C851]"
+                className="text-gray-600 hover:text-[#4CAF50]"
               >
                 <svg 
                   className="h-6 w-6" 
@@ -117,28 +116,28 @@ function App() {
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <a 
                   href="#hero" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#00C851] hover:bg-gray-50 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#4CAF50] hover:bg-gray-50 rounded-md cursor-pointer"
                   onClick={() => handleScrollTo(heroRef)}
                 >
                   Accueil
                 </a>
                 <a 
                   href="#features" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#00C851] hover:bg-gray-50 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#4CAF50] hover:bg-gray-50 rounded-md cursor-pointer"
                   onClick={() => handleScrollTo(featuresRef)}
                 >
                   Fonctionnalités
                 </a>
                 <a 
                   href="#how-it-works" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#00C851] hover:bg-gray-50 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#4CAF50] hover:bg-gray-50 rounded-md cursor-pointer"
                   onClick={() => handleScrollTo(howItWorksRef)}
                 >
                   Comment ça marche ?
                 </a>
                 <a 
                   href="#faq" 
-                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#00C851] hover:bg-gray-50 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-base text-gray-600 hover:text-[#4CAF50] hover:bg-gray-50 rounded-md cursor-pointer"
                   onClick={() => handleScrollTo(faqRef)}
                 >
                   FAQ
@@ -165,7 +164,7 @@ function App() {
                 <div className="max-w-6xl mx-auto px-4 md:px-8">
                   <div className="hero-grid md:grid-cols-2 gap-8 items-center">
                     <div className="hero-text">
-                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00C851] to-[#008000] text-transparent bg-clip-text">
+                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-[#4CAF50] to-[#388E3C] text-transparent bg-clip-text">
                         Libérez-vous de la charge mentale des repas
                       </h1>
                       <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-700">
@@ -174,7 +173,7 @@ function App() {
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
                         <a
                           href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
-                          className="clay-btn clay-btn--green"
+                          className="clay-btn clay-btn--primary"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -187,7 +186,7 @@ function App() {
                         </a>
                         <a
                           href="https://play.google.com/store/apps/details?id=com.yummeal"
-                          className="clay-btn clay-btn--white"
+                          className="clay-btn clay-btn--secondary"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -201,17 +200,21 @@ function App() {
                       </div>
                     </div>
                     <div className="hidden md:block">
-                      <img 
-                        src={Image} 
-                        alt="Interface de l'application Yummeal"
-                        className="w-full max-w-2xl mx-auto rounded-[1rem]"
+                      <img
+                        src={HeroImage}
+                        alt="Une femme prépare un panier de courses fraîches et anti-gaspi avec Yummeal"
+                        className="w-full max-w-md mx-auto rounded-[1rem]"
+                        width={800}
+                        height={1400}
                       />
                     </div>
                     <div className="md:hidden mt-8">
-                      <img 
-                        src={MobileImage} 
-                        alt="Interface de l'application Yummeal sur mobile"
-                        className="w-full rounded-[1rem]"
+                      <img
+                        src={HeroImage}
+                        alt="Une femme prépare un panier de courses fraîches et anti-gaspi avec Yummeal"
+                        className="w-full max-w-xs mx-auto rounded-[1rem]"
+                        width={800}
+                        height={1400}
                       />
                     </div>
                   </div>
@@ -238,7 +241,7 @@ function App() {
                       viewport={{ once: true }}
                       className="clay-card text-center flex flex-col items-center"
                     >
-                      <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
+                      <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <ShoppingBag className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold mb-4">Inspiration Instantanée & Anti-Gaspi</h3>
@@ -250,7 +253,7 @@ function App() {
                       viewport={{ once: true }}
                       className="clay-card text-center flex flex-col items-center"
                     >
-                      <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
+                      <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Scale className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold mb-4">Nutrition Intuitive & Équilibrée</h3>
@@ -262,7 +265,7 @@ function App() {
                       viewport={{ once: true }}
                       className="clay-card text-center flex flex-col items-center"
                     >
-                      <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
+                      <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Utensils className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold mb-4">Cuisine Simple & Savoureuse</h3>
@@ -274,7 +277,7 @@ function App() {
                       viewport={{ once: true }}
                       className="clay-card text-center flex flex-col items-center"
                     >
-                      <div className="clay-icon inline-flex items-center justify-center bg-green-500 p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
+                      <div className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4" style={{ width: '48px', height: '48px' }}>
                         <Heart className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold mb-4">Adapté à Vos Besoins Spécifiques</h3>
@@ -293,7 +296,7 @@ function App() {
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
                     href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
-                    className="clay-btn clay-btn--green"
+                    className="clay-btn clay-btn--primary"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -306,7 +309,7 @@ function App() {
                   </a>
                   <a
                     href="https://play.google.com/store/apps/details?id=com.yummeal"
-                    className="clay-btn clay-btn--white"
+                    className="clay-btn clay-btn--secondary"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -325,7 +328,7 @@ function App() {
             <motion.section
               id="how-it-works"
               ref={howItWorksRef}
-              className="how-it-works-section py-20 bg-gray-50"
+              className="how-it-works-section py-20 bg-[#FFFAF0]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -335,19 +338,19 @@ function App() {
                 <div className="grid md:grid-cols-3 gap-10">
                   {/* Card 1 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">1</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">1</div>
                     <h3 className="text-xl font-semibold mb-2">Scannez votre frigo</h3>
                     <p className="text-gray-600">Prenez une photo de vos ingrédients, et laissez Yummeal faire la magie.</p>
                   </div>
                   {/* Card 2 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">2</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">2</div>
                     <h3 className="text-xl font-semibold mb-2">Recettes personnalisées</h3>
                     <p className="text-gray-600">Recevez instantanément des recettes adaptées à vos ingrédients et préférences.</p>
                   </div>
                   {/* Card 3 */}
                   <div className="clay-card p-8 flex flex-col items-center text-center">
-                    <div className="clay-icon bg-[#00C851] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">3</div>
+                    <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4">3</div>
                     <h3 className="text-xl font-semibold mb-2">Cuisinez & savourez</h3>
                     <p className="text-gray-600">Suivez les instructions, cuisinez simplement et régalez-vous sans gaspiller !</p>
                   </div>
@@ -407,7 +410,7 @@ function App() {
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
                     href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
-                    className="clay-btn clay-btn--green"
+                    className="clay-btn clay-btn--primary"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -420,7 +423,7 @@ function App() {
                   </a>
                   <a
                     href="https://play.google.com/store/apps/details?id=com.yummeal"
-                    className="clay-btn clay-btn--white"
+                    className="clay-btn clay-btn--secondary"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -455,12 +458,12 @@ function App() {
               <span className="text-gray-600"> 2025 Yummeal, tous droits réservés</span>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/confidentialite" className="text-gray-600 hover:text-[#00C851]">Politique de confidentialité</Link>
-              <Link to="/cgu" className="text-gray-600 hover:text-[#00C851]">CGU</Link>
+              <Link to="/confidentialite" className="text-gray-600 hover:text-[#4CAF50]">Politique de confidentialité</Link>
+              <Link to="/cgu" className="text-gray-600 hover:text-[#4CAF50]">CGU</Link>
               <div className="flex items-center gap-4">
-                <a href="#" className="text-gray-600 hover:text-[#00C851]">Facebook</a>
-                <a href="#" className="text-gray-600 hover:text-[#00C851]">Instagram</a>
-                <a href="#" className="text-gray-600 hover:text-[#00C851]">Twitter</a>
+                <a href="#" className="text-gray-600 hover:text-[#4CAF50]">Facebook</a>
+                <a href="#" className="text-gray-600 hover:text-[#4CAF50]">Instagram</a>
+                <a href="#" className="text-gray-600 hover:text-[#4CAF50]">Twitter</a>
               </div>
             </div>
           </div>

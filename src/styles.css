@@ -11,7 +11,7 @@ html, body {
     padding: 1rem;
     background: linear-gradient(145deg, #ffffff, #e6e6e6);
     box-shadow: 10px 10px 20px rgba(190, 190, 190, 0.35), -10px -10px 20px rgba(255, 255, 255, 0.85), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(190, 190, 190, 0.3);
-    background-color: #00C851;
+    background-color: #4CAF50;
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
     display: flex;
@@ -20,8 +20,8 @@ html, body {
 }
 
 .how-it-works-section .clay-icon {
-    background-color: #00C851 !important;
-    background: #00C851 !important;
+    background-color: #4CAF50 !important;
+    background: #4CAF50 !important;
     color: #fff !important;
 }
 
@@ -43,19 +43,19 @@ html, body {
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   cursor: pointer;
 }
-.clay-btn--green {
-  background: linear-gradient(145deg, #34C759, #00C851);
+.clay-btn--primary {
+  background: linear-gradient(145deg, #FF8C42, #FF5733);
   color: #fff;
 }
-.clay-btn--green:hover {
-  background: linear-gradient(145deg, #00C851, #34C759);
+.clay-btn--primary:hover {
+  background: linear-gradient(145deg, #FF5733, #FF8C42);
 }
-.clay-btn--white {
+.clay-btn--secondary {
   background: linear-gradient(145deg, #fff, #e6e6e6);
-  color: #34C759;
-  border: 2px solid #34C759;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
 }
-.clay-btn--white:hover {
-  background: linear-gradient(145deg, #34C759, #fff);
+.clay-btn--secondary:hover {
+  background: linear-gradient(145deg, #4CAF50, #fff);
   color: #fff;
 }

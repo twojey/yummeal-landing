@@ -4,12 +4,22 @@
 
 @layer base {
   :root {
-    --primary: #FF5A5F;
-    --secondary: #660F0F;
+    --color-cream: #FFFAF0;
+    --color-brand-green: #4CAF50;
+    --color-brand-green-dark: #388E3C;
+    --color-cta-orange: #FF8C42;
+    --color-accent-coral: #FF5733;
+    --color-text-dark: #333333;
   }
-  
+
   body {
-    @apply bg-gray-100;
+    @apply bg-[#FFFAF0];
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    color: #333333;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   }
 }
 
@@ -69,14 +79,6 @@
     -5px -5px 10px rgba(255, 255, 255, 0.75),
     inset 5px 5px 10px rgba(190, 190, 190, 0.25),
     inset -5px -5px 10px rgba(255, 255, 255, 0.75);
-}
-
-.btn-primary {
-  @apply bg-gradient-to-r from-[#FF5A5F] to-[#660F0F] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
-}
-
-.btn-secondary {
-  @apply bg-white border-2 border-[#FF5A5F] text-[#FF5A5F] px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
 }
 
 .clay-container {
@@ -154,7 +156,7 @@ section .clay-container {
 }
 
 .features-section {
-  @apply bg-gray-50;
+  @apply bg-[#FFFAF0];
 }
 
 .features-section .hero-grid {
@@ -170,7 +172,7 @@ section .clay-container {
 }
 
 .features-section .clay-icon {
-  @apply w-12 h-12 bg-gradient-to-r from-[#00C851] to-[#008000] rounded-full flex items-center justify-center text-white mb-4;
+  @apply w-12 h-12 bg-gradient-to-r from-[#4CAF50] to-[#388E3C] rounded-full flex items-center justify-center text-white mb-4;
 }
 
 .difference-section {
@@ -190,7 +192,7 @@ section .clay-container {
 }
 
 .how-it-works-section {
-  @apply bg-gray-50;
+  @apply bg-[#FFFAF0];
 }
 
 .faq-section {
@@ -224,14 +226,6 @@ section .clay-container {
 
 .hero-image {
   @apply w-full max-w-2xl mx-auto rounded-[1rem];
-}
-
-.btn-primary {
-  @apply bg-gradient-to-r from-[#FF5A5F] to-[#660F0F] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
-}
-
-.btn-secondary {
-  @apply bg-white border-2 border-[#FF5A5F] text-[#FF5A5F] px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105;
 }
 
 /* Suppression de l'overlay blanc */
