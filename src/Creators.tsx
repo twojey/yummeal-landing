@@ -187,7 +187,7 @@ const Creators: React.FC = () => {
             className="clay-container text-center"
           >
             <div
-              className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-3 rounded-full shadow-lg mb-6"
+              className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-3 rounded-full shadow-lg mb-6"
               style={{ width: '56px', height: '56px' }}
             >
               <Crown className="w-7 h-7 text-white" />
@@ -222,7 +222,7 @@ const Creators: React.FC = () => {
                 className="clay-card text-center flex flex-col items-center"
               >
                 <div
-                  className="clay-icon inline-flex items-center justify-center bg-[#4CAF50] p-2 rounded-full shadow-lg mb-4"
+                  className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-2 rounded-full shadow-lg mb-4"
                   style={{ width: '48px', height: '48px' }}
                 >
                   <Icon className="w-6 h-6 text-white" />
@@ -250,7 +250,7 @@ const Creators: React.FC = () => {
                 viewport={{ once: true }}
                 className="clay-card p-6 flex flex-col items-center text-center"
               >
-                <div className="clay-icon bg-[#4CAF50] text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold font-heading mb-4">
+                <div className="clay-icon bg-[#FF8C42] text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold font-heading mb-4">
                   {index + 1}
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
