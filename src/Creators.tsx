@@ -11,8 +11,26 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import CreatorsHeroImage from './creators-hero.webp';
+import { trackFacebookEvent } from './utils/facebookPixel';
+import { trackTikTokEvent } from './utils/tiktokPixel';
 
 const APPLY_URL = 'https://kroaze-business.vercel.app/candidater/yummeal';
+
+// Propage fbclid/ttclid vers la page Kroaze : les pixels officiels les
+// capturent automatiquement au chargement (cookies _fbc / _ttp), ce qui
+// permet à Meta/TikTok de relier cette étape à l'event ViewContent puis
+// CompleteRegistration côté Kroaze, malgré le changement de domaine.
+function buildApplyUrl(): string {
+  if (typeof window === 'undefined') return APPLY_URL;
+  const current = new URLSearchParams(window.location.search);
+  const forwarded = new URLSearchParams();
+  const fbclid = current.get('fbclid');
+  const ttclid = current.get('ttclid');
+  if (fbclid) forwarded.set('fbclid', fbclid);
+  if (ttclid) forwarded.set('ttclid', ttclid);
+  const qs = forwarded.toString();
+  return qs ? `${APPLY_URL}?${qs}` : APPLY_URL;
+}
 
 const TIERS = [
   {
@@ -85,12 +103,17 @@ const PROFILE = [
 ];
 
 function ApplyButton({ className = '' }: { className?: string }) {
+  const handleClick = () => {
+    trackFacebookEvent('Lead', { content_name: 'creators_apply' });
+    trackTikTokEvent('ClickButton', { content_name: 'creators_apply' });
+  };
   return (
     <a
-      href={APPLY_URL}
+      href={buildApplyUrl()}
       target="_blank"
       rel="noopener noreferrer"
       className={`clay-btn clay-btn--primary ${className}`}
+      onClick={handleClick}
     >
       Postuler au programme
     </a>
