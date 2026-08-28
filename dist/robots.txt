@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yummeal.app/sitemap-static.xml
+Sitemap: https://yummeal.app/sitemap-ingredients.xml
+Sitemap: https://yummeal.app/sitemap-recettes-avec.xml
+Sitemap: https://yummeal.app/sitemap-substitutions.xml
+Sitemap: https://yummeal.app/sitemap-urgencies.xml
+Sitemap: https://yummeal.app/sitemap-sante.xml
+Sitemap: https://yummeal.app/sitemap-anti-gaspillage.xml
+Sitemap: https://yummeal.app/sitemap-solutions.xml
+Sitemap: https://yummeal.app/sitemap-astuces.xml
+Sitemap: https://yummeal.app/sitemap-budget.xml
+Sitemap: https://yummeal.app/sitemap-regimes.xml
+Sitemap: https://yummeal.app/sitemap-guides.xml
+Sitemap: https://yummeal.app/sitemap-faq.xml
+Sitemap: https://yummeal.app/sitemap-concept.xml
+Sitemap: https://yummeal.app/sitemap-scenarios.xml

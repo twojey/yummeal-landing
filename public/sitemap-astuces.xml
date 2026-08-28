@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yummeal.com/astuces/cuisson-riz-micro-ondes/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/conserver-demi-avocat-sans-noircir/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/cuisson-riz-micro-ondes</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/faire-reverdir-salade-fletrie/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/conserver-demi-avocat-sans-noircir</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/dessaler-une-soupe-trop-salee/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/faire-reverdir-salade-fletrie</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/rattraper-une-mayonnaise-ratee/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/dessaler-une-soupe-trop-salee</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/nettoyer-poele-brulee-naturellement/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/rattraper-une-mayonnaise-ratee</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/congelation-herbes-fraiches-huile/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/nettoyer-poele-brulee-naturellement</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/astuces/cuisiner-sans-sel-mais-avec-goût/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/astuces/congelation-herbes-fraiches-huile</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/astuces/cuisiner-sans-sel-mais-avec-goût</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

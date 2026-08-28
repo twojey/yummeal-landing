@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yummeal.com/regimes/diner-leger-moins-de-300-calories/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/regimes</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/regimes/recettes-etudiant-sans-gluten/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/regimes/diner-leger-moins-de-300-calories</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/regimes/repas-sportif-express-proteine/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/regimes/recettes-etudiant-sans-gluten</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.com/regimes/idees-snack-sain-etudiant/</loc>
-    <lastmod>2026-03-07</lastmod>
+    <loc>https://yummeal.app/regimes/repas-sportif-express-proteine</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/regimes/idees-snack-sain-etudiant</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

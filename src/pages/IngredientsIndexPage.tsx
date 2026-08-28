@@ -1,0 +1,70 @@
+import { Link } from 'react-router-dom';
+import { usePageMeta } from '../hooks/usePageMeta';
+import { ingredientCategories, getIngredientsByCategory } from '../data/ingredients';
+import DownloadButtons from '../components/DownloadButtons';
+
+export default function IngredientsIndexPage() {
+  usePageMeta({
+    title: "Que faire avec... | Guides anti-gaspi par ingrédient - Yummeal",
+    description:
+      "Que faire avec un ingrédient qui traîne ou qui commence à s'abîmer ? Nos guides par catégorie pour ne plus rien jeter.",
+    canonicalPath: '/ingredients',
+  });
+
+  return (
+    <div className="min-h-screen bg-[#FFFAF0] px-4 md:px-8 pt-24 pb-16">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
+          Que faire avec... ?
+        </h1>
+        <p className="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-12">
+          Un ingrédient qui traîne, qui ramollit ou qui approche de sa date ?
+          Nos guides vous disent s'il est encore bon et comment le cuisiner
+          avant de le jeter.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          {ingredientCategories.map((category) => {
+            const items = getIngredientsByCategory(category.slug);
+            return (
+              <div key={category.slug} className="clay-card p-6">
+                <h2 className="text-xl font-semibold mb-2">
+                  <Link
+                    to={`/ingredients/${category.slug}`}
+                    className="hover:text-[#FF8C42] transition-colors"
+                  >
+                    {category.label}
+                  </Link>
+                </h2>
+                <p className="text-gray-600 mb-4">{category.description}</p>
+                <ul className="flex flex-wrap gap-2">
+                  {items.slice(0, 6).map((item) => (
+                    <li key={item.slug}>
+                      <Link
+                        to={`/ingredients/${category.slug}/${item.slug}`}
+                        className="text-sm text-[#FF8C42] hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">
+            Envie de ne plus jamais vous poser la question ?
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+            Yummeal scanne votre frigo et vous propose directement des
+            recettes adaptées à ce que vous avez déjà.
+          </p>
+          <DownloadButtons />
+        </div>
+      </div>
+    </div>
+  );
+}

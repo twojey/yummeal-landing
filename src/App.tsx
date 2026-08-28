@@ -14,12 +14,63 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
 import DeleteAccount from './DeleteAccount';
 import Creators from './Creators';
+import IngredientsIndexPage from './pages/IngredientsIndexPage';
+import IngredientCategoryPage from './pages/IngredientCategoryPage';
+import IngredientDetailPage from './pages/IngredientDetailPage';
+import RecettesAvecIndexPage from './pages/RecettesAvecIndexPage';
+import RecettesAvecArticlePage from './pages/RecettesAvecArticlePage';
+import SubstitutionsIndexPage from './pages/SubstitutionsIndexPage';
+import SubstitutionsArticlePage from './pages/SubstitutionsArticlePage';
+import UrgenciesIndexPage from './pages/UrgenciesIndexPage';
+import UrgenciesArticlePage from './pages/UrgenciesArticlePage';
+import SanteIndexPage from './pages/SanteIndexPage';
+import SanteArticlePage from './pages/SanteArticlePage';
+import AntiGaspillageIndexPage from './pages/AntiGaspillageIndexPage';
+import AntiGaspillageArticlePage from './pages/AntiGaspillageArticlePage';
+import SolutionsIndexPage from './pages/SolutionsIndexPage';
+import SolutionsArticlePage from './pages/SolutionsArticlePage';
+import AstucesIndexPage from './pages/AstucesIndexPage';
+import AstucesArticlePage from './pages/AstucesArticlePage';
+import BudgetIndexPage from './pages/BudgetIndexPage';
+import BudgetArticlePage from './pages/BudgetArticlePage';
+import RegimesIndexPage from './pages/RegimesIndexPage';
+import RegimesArticlePage from './pages/RegimesArticlePage';
+import GuidesIndexPage from './pages/GuidesIndexPage';
+import GuidesArticlePage from './pages/GuidesArticlePage';
+import FaqIndexPage from './pages/FaqIndexPage';
+import FaqArticlePage from './pages/FaqArticlePage';
+import ConceptIndexPage from './pages/ConceptIndexPage';
+import ConceptArticlePage from './pages/ConceptArticlePage';
+import ScenariosIndexPage from './pages/ScenariosIndexPage';
+import ScenariosArticlePage from './pages/ScenariosArticlePage';
 
 function App() {
   const location = useLocation();
 
   useEffect(() => {
     trackPageView();
+    // Les pages des catégories de contenu gèrent leur propre <title>/meta
+    // (usePageMeta) : cet effet tournant à chaque changement de route les
+    // écraserait sinon, car il se déclenche après celui de la page enfant.
+    const contentCategories = [
+      '/ingredients',
+      '/recettes-avec',
+      '/substitutions',
+      '/urgencies',
+      '/sante',
+      '/anti-gaspillage',
+      '/solutions',
+      '/astuces',
+      '/budget',
+      '/regimes',
+      '/guides',
+      '/faq',
+      '/concept',
+      '/scenarios',
+    ];
+    if (contentCategories.some((prefix) => location.pathname.startsWith(prefix))) {
+      return;
+    }
     document.title =
       location.pathname === '/creators'
         ? 'Yummeal Creators - Programme affiliés & UGC'
@@ -442,6 +493,41 @@ function App() {
         <Route path="/cgu" element={<TermsAndConditions />} />
         <Route path="/supprimer-mon-compte" element={<DeleteAccount />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route path="/ingredients" element={<IngredientsIndexPage />} />
+        <Route
+          path="/ingredients/:category"
+          element={<IngredientCategoryPage />}
+        />
+        <Route
+          path="/ingredients/:category/:slug"
+          element={<IngredientDetailPage />}
+        />
+        <Route path="/recettes-avec" element={<RecettesAvecIndexPage />} />
+        <Route path="/recettes-avec/:slug" element={<RecettesAvecArticlePage />} />
+        <Route path="/substitutions" element={<SubstitutionsIndexPage />} />
+        <Route path="/substitutions/:slug" element={<SubstitutionsArticlePage />} />
+        <Route path="/urgencies" element={<UrgenciesIndexPage />} />
+        <Route path="/urgencies/:slug" element={<UrgenciesArticlePage />} />
+        <Route path="/sante" element={<SanteIndexPage />} />
+        <Route path="/sante/:slug" element={<SanteArticlePage />} />
+        <Route path="/anti-gaspillage" element={<AntiGaspillageIndexPage />} />
+        <Route path="/anti-gaspillage/:slug" element={<AntiGaspillageArticlePage />} />
+        <Route path="/solutions" element={<SolutionsIndexPage />} />
+        <Route path="/solutions/:slug" element={<SolutionsArticlePage />} />
+        <Route path="/astuces" element={<AstucesIndexPage />} />
+        <Route path="/astuces/:slug" element={<AstucesArticlePage />} />
+        <Route path="/budget" element={<BudgetIndexPage />} />
+        <Route path="/budget/:slug" element={<BudgetArticlePage />} />
+        <Route path="/regimes" element={<RegimesIndexPage />} />
+        <Route path="/regimes/:slug" element={<RegimesArticlePage />} />
+        <Route path="/guides" element={<GuidesIndexPage />} />
+        <Route path="/guides/:slug" element={<GuidesArticlePage />} />
+        <Route path="/faq" element={<FaqIndexPage />} />
+        <Route path="/faq/:slug" element={<FaqArticlePage />} />
+        <Route path="/concept" element={<ConceptIndexPage />} />
+        <Route path="/concept/:slug" element={<ConceptArticlePage />} />
+        <Route path="/scenarios" element={<ScenariosIndexPage />} />
+        <Route path="/scenarios/:slug" element={<ScenariosArticlePage />} />
       </Routes>
 
       {/* Footer */}
