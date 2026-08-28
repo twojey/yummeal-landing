@@ -9,12 +9,25 @@ interface PageMeta {
 const SITE_URL = 'https://yummeal.app';
 
 /**
+ * Netlify sert les fichiers statiques prérendus depuis <route>/index.html et
+ * redirige (301) l'URL sans slash final vers la version avec slash : le
+ * canonical doit donc toujours se terminer par "/" pour matcher l'URL
+ * réellement servie, sinon Google indexe une URL qui n'existe qu'après un
+ * redirect.
+ */
+function withTrailingSlash(pathname: string): string {
+  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+}
+
+/**
  * Pas de react-helmet dans ce projet : on manipule directement le <head>.
  * Sert aussi bien au client (hydratation) qu'au prerender (voir
- * scripts/prerender.mjs, qui lit ces mêmes valeurs via un import séparé).
+ * scripts/prerender.mjs, qui lit ces mêmes valeurs via un import séparé et
+ * doit appliquer la même normalisation de slash final).
  */
 export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
   useEffect(() => {
+    const canonicalUrl = `${SITE_URL}${withTrailingSlash(canonicalPath)}`;
     document.title = title;
 
     const setMeta = (selector: string, attr: string, content: string) => {
@@ -31,11 +44,7 @@ export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
     setMeta('meta[name="description"]', 'name', description);
     setMeta('meta[property="og:title"]', 'property', title);
     setMeta('meta[property="og:description"]', 'property', description);
-    setMeta(
-      'meta[property="og:url"]',
-      'property',
-      `${SITE_URL}${canonicalPath}`
-    );
+    setMeta('meta[property="og:url"]', 'property', canonicalUrl);
 
     let canonical = document.head.querySelector<HTMLLinkElement>(
       'link[rel="canonical"]'
@@ -45,6 +54,6 @@ export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `${SITE_URL}${canonicalPath}`);
+    canonical.setAttribute('href', canonicalUrl);
   }, [title, description, canonicalPath]);
 }

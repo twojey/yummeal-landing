@@ -7,19 +7,19 @@
     <priority>1</priority>
   </url>
   <url>
-    <loc>https://yummeal.app/creators</loc>
+    <loc>https://yummeal.app/creators/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://yummeal.app/confidentialite</loc>
+    <loc>https://yummeal.app/confidentialite/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://yummeal.app/cgu</loc>
+    <loc>https://yummeal.app/cgu/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

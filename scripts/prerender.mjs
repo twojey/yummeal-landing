@@ -149,7 +149,12 @@ const routes = [...staticRoutes, ...ingredientRoutes, ...flatCategoryRoutes];
 const template = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
 
 function injectMeta(html, { title, description, path: routePath }) {
-  const canonical = `${SITE_URL}${routePath}`;
+  // Netlify sert dist/<route>/index.html et redirige (301) l'URL sans slash
+  // final vers la version avec slash : le canonical doit matcher l'URL
+  // réellement servie (voir src/hooks/usePageMeta.ts pour la même règle
+  // côté client).
+  const slashedPath = routePath.endsWith('/') ? routePath : `${routePath}/`;
+  const canonical = `${SITE_URL}${slashedPath}`;
   return html
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
