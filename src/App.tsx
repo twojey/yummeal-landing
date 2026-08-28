@@ -536,26 +536,61 @@ function App() {
       </Routes>
 
       {/* Footer */}
-      <footer className="bg-white py-12">
+      <footer className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-sm">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">Guides anti-gaspi</h3>
+              <ul className="space-y-2">
+                <li><Link to="/ingredients" className="text-gray-600 hover:text-[#FF8C42]">Que faire avec...</Link></li>
+                <li><Link to="/recettes-avec" className="text-gray-600 hover:text-[#FF8C42]">Recettes avec...</Link></li>
+                <li><Link to="/substitutions" className="text-gray-600 hover:text-[#FF8C42]">Par quoi remplacer...</Link></li>
+                <li><Link to="/urgencies" className="text-gray-600 hover:text-[#FF8C42]">Urgences cuisine</Link></li>
+                <li><Link to="/anti-gaspillage" className="text-gray-600 hover:text-[#FF8C42]">Anti-gaspillage</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">Cuisine pratique</h3>
+              <ul className="space-y-2">
+                <li><Link to="/sante" className="text-gray-600 hover:text-[#FF8C42]">Santé & alimentation</Link></li>
+                <li><Link to="/solutions" className="text-gray-600 hover:text-[#FF8C42]">Solutions du quotidien</Link></li>
+                <li><Link to="/astuces" className="text-gray-600 hover:text-[#FF8C42]">Astuces de cuisine</Link></li>
+                <li><Link to="/budget" className="text-gray-600 hover:text-[#FF8C42]">Petit budget</Link></li>
+                <li><Link to="/regimes" className="text-gray-600 hover:text-[#FF8C42]">Régimes & objectifs</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">En savoir plus</h3>
+              <ul className="space-y-2">
+                <li><Link to="/guides" className="text-gray-600 hover:text-[#FF8C42]">Guides pratiques</Link></li>
+                <li><Link to="/faq" className="text-gray-600 hover:text-[#FF8C42]">FAQ sécurité alimentaire</Link></li>
+                <li><Link to="/concept" className="text-gray-600 hover:text-[#FF8C42]">Le concept Yummeal</Link></li>
+                <li><Link to="/scenarios" className="text-gray-600 hover:text-[#FF8C42]">Scénarios d'usage</Link></li>
+                <li><Link to="/comparatif" className="text-gray-600 hover:text-[#FF8C42]">Comparatifs</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">Yummeal</h3>
+              <ul className="space-y-2">
+                <li><Link to="/creators" className="text-gray-600 hover:text-[#FF8C42]">Creators</Link></li>
+                <li><Link to="/confidentialite" className="text-gray-600 hover:text-[#FF8C42]">Politique de confidentialité</Link></li>
+                <li><Link to="/cgu" className="text-gray-600 hover:text-[#FF8C42]">CGU</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-100">
             <div className="flex items-center gap-4">
-              <img 
-                src={Logo} 
-                alt="Yummeal Logo" 
+              <img
+                src={Logo}
+                alt="Yummeal Logo"
                 className="h-8 w-auto"
               />
-              <span className="text-gray-600"> 2025 Yummeal, tous droits réservés</span>
+              <span className="text-gray-600"> 2026 Yummeal, tous droits réservés</span>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/creators" className="text-gray-600 hover:text-[#FF8C42]">Creators</Link>
-              <Link to="/confidentialite" className="text-gray-600 hover:text-[#FF8C42]">Politique de confidentialité</Link>
-              <Link to="/cgu" className="text-gray-600 hover:text-[#FF8C42]">CGU</Link>
-              <div className="flex items-center gap-4">
-                <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Facebook</a>
-                <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Instagram</a>
-                <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Twitter</a>
-              </div>
+              <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Facebook</a>
+              <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Instagram</a>
+              <a href="#" className="text-gray-600 hover:text-[#FF8C42]">Twitter</a>
             </div>
           </div>
         </div>
