@@ -427,20 +427,20 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-yazio',
     title: 'Yummeal vs Yazio',
     metaDescription:
-      "Yazio est une application de suivi nutritionnel et de comptage de calories, pas une application anti-gaspi de reconnaissance de frigo. Voici la vraie différence.",
+      "Yazio suit vos calories via une saisie manuelle (journal alimentaire, code-barres, photo du plat). Yummeal calcule automatiquement la nutrition des recettes que vous cuisinez, sans étape de saisie séparée.",
     intro:
-      "Yazio (YAZIO GmbH) est souvent cité comme concurrent de Yummeal, mais les deux applications ne répondent pas au même besoin.",
+      "Yazio (YAZIO GmbH) et Yummeal font tous les deux un suivi nutritionnel, mais pas de la même manière : l'un demande de logger chaque repas, l'autre en déduit l'essentiel de ce que vous cuisinez déjà.",
     sections: [
       {
         heading: 'Ce que fait réellement Yazio',
         body: [
-          "Yazio est d'abord un compteur de calories et un suivi nutritionnel : journal alimentaire, base de données d'aliments, scan de code-barres, suivi des macronutriments et du jeûne intermittent. Une reconnaissance photo IA existe, mais elle sert à identifier un repas déjà préparé pour en compter les calories — pas à analyser le contenu d'un frigo.",
+          "Yazio est d'abord un compteur de calories et un suivi nutritionnel : journal alimentaire à remplir, base de données d'aliments, scan de code-barres, suivi des macronutriments et du jeûne intermittent. Une reconnaissance photo IA existe, mais elle sert à identifier un repas déjà préparé pour le loguer — c'est une étape de saisie à part entière, pas un usage secondaire.",
         ],
       },
       {
-        heading: "Pourquoi ce n'est pas un concurrent direct",
+        heading: 'La différence avec Yummeal',
         body: [
-          "Yazio ne propose pas de génération de recette à partir d'ingrédients disponibles ni de gestion de frigo anti-gaspi : son objectif est le suivi nutritionnel, pas la réduction du gaspillage. Si vous cherchez à cuisiner avec ce que vous avez déjà plutôt qu'à compter des calories, Yummeal répond à un besoin différent.",
+          "Yummeal ne demande pas de tenir un journal alimentaire séparé : quand vous cuisinez une recette proposée par l'app, la nutrition (calories, macros) est calculée automatiquement à partir de cette recette, sans étape de logging manuel supplémentaire. Yazio, à l'inverse, fonctionne indépendamment de ce que vous cuisinez réellement : c'est à vous de renseigner chaque repas pour qu'il soit compté.",
         ],
       },
     ],
@@ -450,20 +450,20 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-lifesum',
     title: 'Yummeal vs Lifesum',
     metaDescription:
-      "Lifesum est une application de suivi nutritionnel et de comptage de calories, pas une application de gestion de frigo anti-gaspi. Voici la vraie différence.",
+      "Lifesum suit vos calories via une saisie manuelle ou une photo de repas dédiée. Yummeal calcule automatiquement la nutrition des recettes que vous cuisinez, sans étape de logging séparée.",
     intro:
-      "Lifesum (Lifesum AB) apparaît parfois dans des comparatifs d'apps de cuisine, alors que son cœur de métier est ailleurs.",
+      "Lifesum (Lifesum AB) et Yummeal font tous les deux du suivi nutritionnel, mais Lifesum construit ce suivi indépendamment de ce que vous cuisinez, quand Yummeal le déduit directement de vos recettes.",
     sections: [
       {
         heading: 'Ce que fait réellement Lifesum',
         body: [
-          "Lifesum est un suivi nutritionnel et calorique : photo du repas pour estimation nutritionnelle, saisie vocale, scan de code-barres, plans alimentaires et scores de bien-être. Elle ne gère ni inventaire de garde-manger ni recettes à partir des restes.",
+          "Lifesum est un suivi nutritionnel et calorique : photo du repas pour estimation nutritionnelle, saisie vocale, scan de code-barres, plans alimentaires et scores de bien-être. Il ne gère ni inventaire de garde-manger ni recettes à partir des restes — c'est un journal alimentaire à remplir, pas un outil de cuisine.",
         ],
       },
       {
-        heading: "Pourquoi ce n'est pas un concurrent direct",
+        heading: 'La différence avec Yummeal',
         body: [
-          "La comparer à Yummeal sur l'angle \"cuisiner avec ce qu'on a\" serait trompeur : ce n'est pas son mécanisme. Yummeal se positionne sur la réduction du gaspillage à partir de vos ingrédients réels, pas sur le comptage calorique.",
+          "Yummeal calcule la nutrition (calories, macros) automatiquement à partir des recettes que vous cuisinez réellement dans l'app, sans étape de saisie ou de photo de repas séparée. Lifesum, lui, ne sait rien de ce que vous cuisinez tant que vous ne l'avez pas renseigné vous-même.",
         ],
       },
     ],
@@ -519,20 +519,20 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-foodvisor',
     title: 'Yummeal vs Foodvisor',
     metaDescription:
-      "Foodvisor scanne un repas déjà préparé pour en compter les calories. Yummeal scanne le frigo pour proposer une recette. Deux usages de la reconnaissance photo alimentaire, à ne pas confondre.",
+      "Foodvisor scanne un repas déjà préparé pour en compter les calories. Yummeal scanne le frigo pour proposer une recette, et calcule la nutrition automatiquement une fois cuisinée. Deux usages de la reconnaissance photo alimentaire, à ne pas confondre.",
     intro:
-      "Foodvisor (Foodvisor SAS, France) et Yummeal utilisent tous les deux la reconnaissance photo d'aliments — mais sur des objets et pour des objectifs opposés.",
+      "Foodvisor (Foodvisor SAS, France) et Yummeal utilisent tous les deux la reconnaissance photo d'aliments — mais sur des objets différents, à des moments différents du repas.",
     sections: [
       {
         heading: 'Ce que fait réellement Foodvisor',
         body: [
-          "Foodvisor scanne en photo un repas déjà préparé, dans l'assiette, pour en estimer les calories et macronutriments (avec aussi scan de code-barres et saisie vocale). C'est un tracker nutritionnel, pas un outil de gestion de frigo.",
+          "Foodvisor scanne en photo un repas déjà préparé, dans l'assiette, pour en estimer les calories et macronutriments (avec aussi scan de code-barres et saisie vocale). C'est une étape de logging à part entière, à refaire à chaque repas, quelle que soit son origine.",
         ],
       },
       {
-        heading: "Pourquoi ce n'est pas un concurrent direct",
+        heading: 'La différence avec Yummeal',
         body: [
-          "La confusion est fréquente parce que les deux apps \"scannent en photo\", mais l'objet scanné et le but sont opposés : Foodvisor analyse un plat fini pour compter des calories, Yummeal analyse des ingrédients bruts non cuisinés pour proposer une recette anti-gaspi.",
+          "Yummeal scanne le frigo en amont (ingrédients bruts, non cuisinés) pour proposer une recette, puis calcule automatiquement la nutrition de cette recette une fois cuisinée — sans photo du plat fini ni étape de logging séparée. Foodvisor, à l'inverse, ne sait rien de vos ingrédients de départ : il analyse uniquement le résultat final, photographié après coup.",
         ],
       },
     ],
