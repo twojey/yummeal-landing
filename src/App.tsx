@@ -81,9 +81,14 @@ function App() {
   }, [location.pathname]);
 
   // Scrolle vers la section ciblée par le hash, y compris juste après une
-  // navigation depuis une autre page (ex: /creators -> /#faq).
+  // navigation depuis une autre page (ex: /creators -> /#faq). Sans hash,
+  // react-router ne remonte pas la page automatiquement lors d'une
+  // navigation client-side : on force le retour en haut.
   useEffect(() => {
-    if (!location.hash) return;
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
     const el = document.querySelector(location.hash);
     if (el) {
       requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth' }));
