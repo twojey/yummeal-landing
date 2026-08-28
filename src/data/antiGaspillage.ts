@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -48,6 +49,7 @@ export const articles: Article[] = [
     ctaTitle: 'Un frigo bien rangé, des recettes trouvées automatiquement',
     ctaText:
       "Yummeal identifie ce que vous avez dans votre frigo et vous propose directement des recettes adaptées, pour ne plus laisser un produit oublié devenir un gaspillage.",
+    tags: ['frigo', 'organisation', 'étudiant', 'anti-gaspi'],
   },
   {
     slug: 'comprendre-dates-peremption',
@@ -89,6 +91,7 @@ export const articles: Article[] = [
     ctaTitle: 'Moins de doutes sur les dates, plus de repas anti-gaspi',
     ctaText:
       "Yummeal vous aide à utiliser vos produits avant qu'ils n'approchent de leur date, en proposant des recettes adaptées à ce qui traîne déjà dans votre frigo.",
+    tags: ['dlc', 'ddm', 'date de péremption', 'conservation'],
   },
   {
     slug: 'cuisiner-fanes-carottes',
@@ -130,6 +133,7 @@ export const articles: Article[] = [
     ctaTitle: 'Ne laissez plus une fane finir à la poubelle',
     ctaText:
       "Yummeal identifie les légumes de votre frigo et vous propose des recettes qui valorisent aussi les parties qu'on jette trop souvent, comme les fanes.",
+    tags: ['fanes', 'légumes', 'carottes', 'anti-gaspi'],
   },
   {
     slug: 'astuces-economies-courses-etudiant',
@@ -175,6 +179,7 @@ export const articles: Article[] = [
     ctaTitle: 'Moins de gaspillage, plus de budget pour le reste',
     ctaText:
       "Yummeal propose des recettes à partir de ce que vous avez déjà, pour utiliser vos courses jusqu'au bout plutôt que de racheter ce qui traîne déjà chez vous.",
+    tags: ['étudiant', 'courses', 'budget', 'anti-gaspi'],
   },
   {
     slug: 'comment-conserver-oignons-coupes',
@@ -214,6 +219,7 @@ export const articles: Article[] = [
     ctaTitle: 'Un demi-oignon, une recette trouvée en quelques secondes',
     ctaText:
       "Yummeal repère les restes comme un demi-oignon dans votre frigo et vous suggère directement une recette pour l'utiliser avant qu'il ne se gâte.",
+    tags: ['oignon', 'conservation', 'restes'],
   },
 ];
 

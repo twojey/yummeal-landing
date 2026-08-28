@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -36,6 +37,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de recettes qui utilisent ce que vous avez déjà ?',
     ctaText:
       "Yummeal scanne votre frigo et vos placards et vous propose des recettes adaptées, sans avoir à deviner les proportions.",
+    tags: ['riz', 'micro-ondes', 'cuisson'],
   },
   {
     slug: 'conserver-demi-avocat-sans-noircir',
@@ -64,6 +66,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de ne plus jamais gaspiller un reste ?',
     ctaText:
       "Yummeal repère ce qu'il reste dans votre frigo et vous propose une recette pour l'utiliser avant qu'il ne soit trop tard.",
+    tags: ['avocat', 'conservation', 'oxydation'],
   },
   {
     slug: 'faire-reverdir-salade-fletrie',
@@ -92,6 +95,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de ne plus jamais vous poser la question ?',
     ctaText:
       "Yummeal scanne votre frigo et vous propose des recettes adaptées à ce que vous avez déjà, avant que ça ne s'abîme.",
+    tags: ['salade', 'légumes', 'conservation'],
   },
   {
     slug: 'dessaler-une-soupe-trop-salee',
@@ -120,6 +124,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de recettes qui tombent toujours juste ?',
     ctaText:
       "Yummeal vous propose des recettes avec les bonnes quantités, adaptées à ce que vous avez dans votre frigo.",
+    tags: ['soupe', 'sel', 'rattraper un plat'],
   },
   {
     slug: 'rattraper-une-mayonnaise-ratee',
@@ -148,6 +153,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de recettes qui marchent à tous les coups ?',
     ctaText:
       "Yummeal vous guide pas à pas avec des recettes adaptées à ce que vous avez dans votre frigo.",
+    tags: ['mayonnaise', 'sauce', 'rattraper un plat'],
   },
   {
     slug: 'nettoyer-poele-brulee-naturellement',
@@ -176,6 +182,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de cuisiner sans y penser ?',
     ctaText:
       "Yummeal vous propose des recettes adaptées à ce que vous avez déjà dans votre frigo, pour cuisiner plus simplement au quotidien.",
+    tags: ['poêle', 'nettoyage', 'bicarbonate'],
   },
   {
     slug: 'congelation-herbes-fraiches-huile',
@@ -205,6 +212,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de ne plus jamais jeter vos herbes fraîches ?',
     ctaText:
       "Yummeal repère ce qu'il vous reste au frigo et vous propose des recettes pour tout utiliser avant que ça ne s'abîme.",
+    tags: ['herbes fraîches', 'congélation', 'anti-gaspi'],
   },
   {
     slug: 'cuisiner-sans-sel-mais-avec-goût',
@@ -233,6 +241,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de manger sainement sans y penser ?',
     ctaText:
       "Yummeal vous propose des recettes équilibrées et savoureuses, adaptées à ce que vous avez dans votre frigo.",
+    tags: ['sel', 'assaisonnement', 'épices'],
   },
 ];
 

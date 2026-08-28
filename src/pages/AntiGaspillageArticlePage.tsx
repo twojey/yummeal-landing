@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/antiGaspillage';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildArticleJsonLd } from '../lib/schema';
 
 export default function AntiGaspillageArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,7 @@ export default function AntiGaspillageArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/anti-gaspillage/${slug ?? ''}`,
+    jsonLd: article ? buildArticleJsonLd(article, `/anti-gaspillage/${slug ?? ''}`) : undefined,
   });
 
   if (!article) {
@@ -50,6 +53,8 @@ export default function AntiGaspillageArticlePage() {
           <p className="text-gray-600 mb-8 max-w-xl mx-auto">{article.ctaText}</p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles category="anti-gaspillage" slug={article.slug} tags={article.tags ?? []} />
       </div>
     </div>
   );

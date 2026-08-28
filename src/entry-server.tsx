@@ -31,3 +31,12 @@ export { articles as faqArticles } from './data/faq';
 export { articles as conceptArticles } from './data/concept';
 export { articles as scenariosArticles } from './data/scenarios';
 export { articles as comparatifArticles } from './data/comparatif';
+
+export {
+  buildOrganizationJsonLd,
+  buildMobileApplicationJsonLd,
+  buildArticleJsonLd,
+  buildFaqJsonLd,
+  buildRecipeJsonLd,
+  jsonLdScriptTags,
+} from './lib/schema';

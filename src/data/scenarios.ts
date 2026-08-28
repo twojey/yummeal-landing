@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -49,6 +50,7 @@ export const articles: Article[] = [
     ctaTitle: 'Reprenez la main sur vos repas du soir',
     ctaText:
       "Scannez votre frigo et laissez Yummeal vous proposer des recettes adaptées à votre famille, avec ce que vous avez déjà.",
+    tags: ['mamans actives', 'charge mentale', 'famille', 'anti-gaspillage'],
   },
 ];
 

@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -50,6 +51,7 @@ export const articles: Article[] = [
     ctaTitle: 'Essayez le principe sur votre propre frigo',
     ctaText:
       'Le meilleur moyen de comprendre comment ça marche reste de le tester avec vos propres ingrédients.',
+    tags: ['anti-gaspi', 'scan frigo', 'fonctionnement app'],
   },
   {
     slug: 'vision-zero-dechet-cuisine-2026',
@@ -91,6 +93,7 @@ export const articles: Article[] = [
     ctaTitle: 'Rejoignez une cuisine plus anti-gaspi',
     ctaText:
       'Scannez votre frigo et laissez Yummeal vous proposer des recettes adaptées à ce que vous avez déjà.',
+    tags: ['zéro déchet', 'anti-gaspi', 'vision produit'],
   },
 ];
 

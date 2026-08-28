@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/substitutions';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildArticleJsonLd } from '../lib/schema';
 
 export default function SubstitutionsArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,9 @@ export default function SubstitutionsArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/substitutions/${slug ?? ''}`,
+    jsonLd: article
+      ? buildArticleJsonLd(article, `/substitutions/${slug ?? ''}`)
+      : undefined,
   });
 
   if (!article) {
@@ -51,6 +56,12 @@ export default function SubstitutionsArticlePage() {
           <p className="text-gray-600 mb-8 max-w-xl mx-auto">{article.ctaText}</p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles
+          category="substitutions"
+          slug={article.slug}
+          tags={article.tags ?? []}
+        />
       </div>
     </div>
   );

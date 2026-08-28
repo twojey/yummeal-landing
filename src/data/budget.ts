@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -53,6 +54,7 @@ export const articles: Article[] = [
     ctaTitle: 'Un frigo à petit budget, ça se gère encore mieux avec Yummeal',
     ctaText:
       "Yummeal identifie ce que vous avez déjà dans votre frigo et vous propose des recettes adaptées, pour ne jamais racheter ce que vous possédez déjà et limiter le gaspillage.",
+    tags: ['petit budget', 'féculents', 'protéines pas chères'],
   },
   {
     slug: 'liste-de-courses-optimisee-30-euros-semaine',
@@ -95,6 +97,7 @@ export const articles: Article[] = [
     ctaTitle: 'Laissez Yummeal vous aider à planifier',
     ctaText:
       "Yummeal scanne votre frigo et vous propose des recettes adaptées à ce que vous avez déjà, pour construire une liste de courses qui complète vos placards au lieu de les dupliquer.",
+    tags: ['liste de courses', 'planification repas', 'économies'],
   },
   {
     slug: 'proteines-moins-cheres-que-la-viande',
@@ -137,6 +140,7 @@ export const articles: Article[] = [
     ctaTitle: 'Découvrez des recettes qui varient vos sources de protéines',
     ctaText:
       "Yummeal vous propose des recettes adaptées à ce que vous avez au frigo, œufs et légumineuses compris, pour varier vos protéines sans y penser.",
+    tags: ['protéines', 'légumineuses', 'œufs', 'tofu'],
   },
   {
     slug: 'comparatif-prix-vrac-vs-emballé',
@@ -179,6 +183,7 @@ export const articles: Article[] = [
     ctaTitle: 'Cuisinez avec ce que vous avez, vrac ou pas',
     ctaText:
       "Que vos ingrédients viennent du vrac ou de l'épicerie classique, Yummeal les identifie dans votre frigo et vous propose des recettes adaptées, sans rien gaspiller.",
+    tags: ['vrac', 'emballage', 'économies'],
   },
 ];
 

@@ -6,11 +6,13 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
   {
     slug: 'pasta-tuna-cream',
+    tags: ['pâtes', 'thon', 'crème fraîche', 'rapide'],
     title: 'Recette avec pâtes, thon et crème fraîche',
     metaDescription:
       "Une boîte de thon et un fond de crème fraîche dans le frigo ? Voici une recette de pâtes au thon et à la crème, prête en 15 minutes, pour 2 personnes.",
@@ -52,6 +54,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'chicken-broccoli-rice',
+    tags: ['poulet', 'brocoli', 'riz', 'équilibré'],
     title: 'Recette avec poulet, brocoli et riz',
     metaDescription:
       "Du poulet, du brocoli et du riz au frigo : voici une recette complète et équilibrée, prête en 25 minutes pour 2 personnes.",
@@ -93,6 +96,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'egg-potato-onion',
+    tags: ['œufs', 'pommes de terre', 'oignon', 'tortilla espagnole'],
     title: 'Recette avec œufs, pommes de terre et oignon',
     metaDescription:
       "Œufs, pommes de terre et oignon au frigo : la base d'une tortilla espagnole maison, simple et généreuse, pour 2 personnes.",
@@ -133,6 +137,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'bacon-cheese-pasta',
+    tags: ['pâtes', 'bacon', 'fromage', 'crémeux'],
     title: 'Recette avec bacon, fromage et pâtes',
     metaDescription:
       "Un fond de paquet de bacon et du fromage à finir : voici une recette de pâtes bacon-fromage crémeuses, prête en 20 minutes pour 2 personnes.",
@@ -174,6 +179,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ham-cheese-tomato',
+    tags: ['jambon', 'fromage', 'tomate', 'gratin'],
     title: 'Recette avec jambon, fromage et tomate',
     metaDescription:
       "Jambon, fromage et tomate au frigo : une recette de gratin ou de tarte salée rapide, pour 2 personnes, sans pâte à préparer.",
@@ -215,6 +221,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'rice-egg-soy-sauce',
+    tags: ['riz', 'œuf', 'sauce soja', 'riz sauté'],
     title: 'Recette avec riz, œuf et sauce soja',
     metaDescription:
       "Du riz cuit, des œufs et de la sauce soja : la base d'un riz sauté façon cantine chinoise, prêt en 10 minutes pour 2 personnes.",
@@ -256,6 +263,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'oeuf-tomate-oignon',
+    tags: ['œuf', 'tomate', 'oignon', 'shakshuka'],
     title: 'Recette avec œuf, tomate et oignon',
     metaDescription:
       "Œuf, tomate et oignon au frigo : une recette de type shakshuka simplifiée, des œufs pochés dans une sauce tomate, pour 2 personnes.",
@@ -297,6 +305,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'poulet-creme-champignons',
+    tags: ['poulet', 'crème fraîche', 'champignons', 'sauce'],
     title: 'Recette avec poulet, crème et champignons',
     metaDescription:
       "Poulet, crème fraîche et champignons au frigo : une recette de poulet en sauce crémeuse, prête en 25 minutes pour 2 personnes.",
@@ -338,6 +347,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'thon-pates-mais',
+    tags: ['thon', 'pâtes', 'maïs', 'salade froide'],
     title: 'Recette avec thon, pâtes et maïs',
     metaDescription:
       "Thon, pâtes et maïs au frigo : une recette de salade de pâtes froide ou tiède, simple et rapide, pour 2 personnes.",
@@ -379,6 +389,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'pomme-de-terre-bacon-fromage',
+    tags: ['pomme de terre', 'bacon', 'fromage', 'gratin', 'tartiflette'],
     title: 'Recette avec pomme de terre, bacon et fromage',
     metaDescription:
       "Pommes de terre, bacon et fromage au frigo : une recette de gratin façon tartiflette express, prête en 40 minutes pour 2 personnes.",
@@ -419,6 +430,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'riz-lentilles-oignon',
+    tags: ['riz', 'lentilles', 'oignon', 'mujadara', 'économique'],
     title: 'Recette avec riz, lentilles et oignon',
     metaDescription:
       "Riz, lentilles et oignon au placard : une recette de riz aux lentilles façon mujadara, économique et complète, pour 2 personnes.",
@@ -459,6 +471,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'pain-jambon-fromage-chaud',
+    tags: ['pain', 'jambon', 'fromage', 'croque-monsieur'],
     title: 'Recette avec pain, jambon et fromage (croque-monsieur)',
     metaDescription:
       "Du pain, du jambon et du fromage qui traînent : voici la vraie recette du croque-monsieur maison, avec sa béchamel, pour 2 personnes.",
@@ -499,6 +512,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'carotte-brocoli-soja',
+    tags: ['carotte', 'brocoli', 'sauce soja', 'wok'],
     title: 'Recette avec carotte, brocoli et sauce soja',
     metaDescription:
       "Carotte, brocoli et sauce soja au frigo : un wok de légumes croquants, prêt en 15 minutes pour 2 personnes, en accompagnement ou en plat léger.",

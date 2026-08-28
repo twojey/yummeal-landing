@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/recettesAvec';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildRecipeJsonLd } from '../lib/schema';
 
 export default function RecettesAvecArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,9 @@ export default function RecettesAvecArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/recettes-avec/${slug ?? ''}`,
+    jsonLd: article
+      ? buildRecipeJsonLd(article, `/recettes-avec/${slug ?? ''}`)
+      : undefined,
   });
 
   if (!article) {
@@ -53,6 +58,12 @@ export default function RecettesAvecArticlePage() {
           </p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles
+          category="recettes-avec"
+          slug={article.slug}
+          tags={article.tags ?? []}
+        />
       </div>
     </div>
   );

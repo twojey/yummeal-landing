@@ -6,11 +6,13 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
   {
     slug: 'conservation-poulet-cuit',
+    tags: ['poulet cuit', 'conservation', 'sécurité alimentaire'],
     title: 'Combien de temps se conserve le poulet cuit au frigo ?',
     metaDescription:
       'Combien de temps garder du poulet cuit au réfrigérateur en toute sécurité, et comment repérer s\'il ne faut plus le manger.',
@@ -45,6 +47,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'manger-yaourt-perime-3-jours',
+    tags: ['yaourt', 'date de péremption', 'sécurité alimentaire'],
     title: 'Peut-on manger un yaourt périmé depuis 3 jours ?',
     metaDescription:
       "Un yaourt dont la date est dépassée de 3 jours est-il encore consommable ? Ce qu'il faut savoir sur les dates de durabilité minimale.",
@@ -79,6 +82,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'index-glycemique-pates-blanches',
+    tags: ['pâtes', 'index glycémique', 'nutrition'],
     title: 'Index glycémique des pâtes blanches : ce qui influence vraiment le résultat',
     metaDescription:
       "L'index glycémique des pâtes blanches n'est pas fixe : la cuisson et l'accompagnement du plat le font varier. Explications générales, sans chiffre inventé.",
@@ -112,6 +116,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'toxicite-pomme-de-terre-germee',
+    tags: ['pomme de terre', 'germée', 'solanine', 'sécurité alimentaire'],
     title: 'Pomme de terre germée ou verte : quel est le vrai risque ?',
     metaDescription:
       "Une pomme de terre qui germe ou qui verdit contient plus de solanine. Voici les règles de sécurité alimentaire généralement admises pour l'utiliser sans risque.",
@@ -147,6 +152,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'est-ce-que-le-bacon-se-congele',
+    tags: ['bacon', 'congélation', 'conservation'],
     title: 'Est-ce que le bacon se congèle bien ?',
     metaDescription:
       'Le bacon se congèle très bien, à condition de respecter quelques règles simples de conservation. Durées indicatives et bon sens au moment de la décongélation.',
@@ -180,6 +186,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'bienfaits-brocolis-vapeur',
+    tags: ['brocoli', 'cuisson vapeur', 'nutrition'],
     title: 'Pourquoi cuire le brocoli à la vapeur plutôt qu\'à l\'eau ?',
     metaDescription:
       "La cuisson vapeur du brocoli est souvent recommandée pour préserver certains nutriments. Ce que dit la nutrition, sans chiffre inventé ni conseil médical personnalisé.",

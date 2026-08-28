@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/regimes';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildArticleJsonLd } from '../lib/schema';
 
 export default function RegimesArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,7 @@ export default function RegimesArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/regimes/${slug ?? ''}`,
+    jsonLd: article ? buildArticleJsonLd(article, `/regimes/${slug ?? ''}`) : undefined,
   });
 
   if (!article) {
@@ -53,6 +56,8 @@ export default function RegimesArticlePage() {
           </p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles category="regimes" slug={article.slug} tags={article.tags ?? []} />
       </div>
     </div>
   );

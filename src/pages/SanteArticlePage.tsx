@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/sante';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildArticleJsonLd } from '../lib/schema';
 
 export default function SanteArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,9 @@ export default function SanteArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/sante/${slug ?? ''}`,
+    jsonLd: article
+      ? buildArticleJsonLd(article, `/sante/${slug ?? ''}`)
+      : undefined,
   });
 
   if (!article) {
@@ -52,6 +57,12 @@ export default function SanteArticlePage() {
           </p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles
+          category="sante"
+          slug={article.slug}
+          tags={article.tags ?? []}
+        />
       </div>
     </div>
   );

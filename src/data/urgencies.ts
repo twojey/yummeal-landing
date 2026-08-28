@@ -6,11 +6,13 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
   {
     slug: 'recettes-etudiant-moins-10-min',
+    tags: ['étudiant', 'rapide', 'pas cher', 'moins de 10 min'],
     title: 'Recettes étudiant en moins de 10 minutes',
     metaDescription:
       "Affamé, pressé, budget serré : voici 5 recettes d'étudiant prêtes en moins de 10 minutes, avec ce qu'il y a déjà dans le placard.",
@@ -64,6 +66,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'diner-express-reste-poulet',
+    tags: ['reste de poulet', 'express', 'wrap'],
     title: 'Dîner express avec un reste de poulet',
     metaDescription:
       "Un reste de poulet et 10 minutes chrono avant de manger : 3 recettes express, sans réflexion, prêtes à cuisiner tout de suite.",
@@ -101,6 +104,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'que-faire-avec-pain-rassis',
+    tags: ['pain rassis', 'pain perdu', 'anti-gaspi'],
     title: 'Que faire avec du pain rassis, tout de suite',
     metaDescription:
       "Du pain dur, faim maintenant, pas le temps d'attendre : 3 recettes précises pour transformer du pain rassis en repas en moins de 10 minutes.",
@@ -138,6 +142,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'repas-fond-de-placard-pates',
+    tags: ['pâtes', 'fond de placard', 'repas rapide'],
     title: 'Repas de fond de placard avec des pâtes',
     metaDescription:
       "Plus rien au frigo, juste un paquet de pâtes ? Voici comment composer un vrai repas en 10 minutes avec ce qui reste dans le placard.",
@@ -175,6 +180,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'sauver-plat-trop-sale',
+    tags: ['plat trop salé', 'astuce cuisine', 'rattraper un plat'],
     title: 'Comment sauver un plat trop salé',
     metaDescription:
       "Un plat trop salé au moment de servir ? Voici les techniques culinaires qui fonctionnent vraiment pour rattraper la situation, sans mythe ni recette miracle.",
@@ -219,6 +225,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'recette-fond-de-frigo-rapide',
+    tags: ['fond de frigo', 'improviser', 'anti-gaspi'],
     title: "Recette express avec le fond de votre frigo",
     metaDescription:
       "Rien de précis au frigo, juste des restes épars et pas de temps ? Voici une méthode en 3 étapes pour improviser un vrai repas en moins de 10 minutes.",

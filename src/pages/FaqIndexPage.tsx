@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { articles } from '../data/faq';
 import DownloadButtons from '../components/DownloadButtons';
+import { buildFaqJsonLd } from '../lib/schema';
 
 export default function FaqIndexPage() {
   usePageMeta({
@@ -9,6 +10,7 @@ export default function FaqIndexPage() {
     description:
       "Des réponses claires et prudentes aux questions de sécurité alimentaire les plus courantes : conservation, congélation, recuisson des restes.",
     canonicalPath: '/faq',
+    jsonLd: buildFaqJsonLd(articles),
   });
 
   return (

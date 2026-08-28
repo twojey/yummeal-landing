@@ -4,6 +4,7 @@ interface PageMeta {
   title: string;
   description: string;
   canonicalPath: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const SITE_URL = 'https://yummeal.app';
@@ -25,7 +26,7 @@ function withTrailingSlash(pathname: string): string {
  * scripts/prerender.mjs, qui lit ces mêmes valeurs via un import séparé et
  * doit appliquer la même normalisation de slash final).
  */
-export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
+export function usePageMeta({ title, description, canonicalPath, jsonLd }: PageMeta) {
   useEffect(() => {
     const canonicalUrl = `${SITE_URL}${withTrailingSlash(canonicalPath)}`;
     document.title = title;
@@ -55,5 +56,18 @@ export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', canonicalUrl);
-  }, [title, description, canonicalPath]);
+
+    document
+      .querySelectorAll('script[data-ldjson]')
+      .forEach((el) => el.remove());
+    const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+    schemas.forEach((schema) => {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-ldjson', 'true');
+      script.textContent = JSON.stringify(schema);
+      document.head.appendChild(script);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, description, canonicalPath, JSON.stringify(jsonLd)]);
 }

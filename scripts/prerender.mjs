@@ -13,11 +13,19 @@ const distDir = path.join(root, 'dist');
 
 const ssr = await import(path.join(root, 'dist-ssr', 'entry-server.js'));
 const { render, ingredients, ingredientCategories } = ssr;
+const {
+  buildOrganizationJsonLd,
+  buildMobileApplicationJsonLd,
+  buildArticleJsonLd,
+  buildFaqJsonLd,
+  buildRecipeJsonLd,
+  jsonLdScriptTags,
+} = ssr;
 
 const SITE_URL = 'https://yummeal.app';
 
 const staticRoutes = [
-  { path: '/', title: "Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo", description: "Yummeal transforme le contenu de votre frigo en recettes personnalisées : cuisinez sainement, sans gaspiller et sans y penser. Gratuit sur iOS et Android." },
+  { path: '/', title: "Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo", description: "Yummeal transforme le contenu de votre frigo en recettes personnalisées : cuisinez sainement, sans gaspiller et sans y penser. Gratuit sur iOS et Android.", jsonLd: [buildOrganizationJsonLd(), buildMobileApplicationJsonLd()] },
   { path: '/creators', title: 'Yummeal Creators - Programme affiliés & UGC', description: 'Rejoignez le programme Creators Yummeal : contenu UGC rémunéré à la performance.' },
   { path: '/confidentialite', title: 'Politique de confidentialité - Yummeal', description: 'Politique de confidentialité de l\'application Yummeal.' },
   { path: '/cgu', title: 'Conditions générales d\'utilisation - Yummeal', description: 'Conditions générales d\'utilisation de l\'application Yummeal.' },
@@ -136,16 +144,23 @@ const flatCategories = [
 
 const flatCategoryRoutes = flatCategories.flatMap((cat) => {
   const articles = ssr[cat.dataKey];
+  const indexJsonLd =
+    cat.segment === 'faq' ? buildFaqJsonLd(articles) : undefined;
   return [
     {
       path: `/${cat.segment}`,
       title: cat.indexTitle,
       description: cat.indexDescription,
+      jsonLd: indexJsonLd,
     },
     ...articles.map((a) => ({
       path: `/${cat.segment}/${a.slug}`,
       title: `${a.title} - Yummeal`,
       description: a.metaDescription,
+      jsonLd:
+        cat.segment === 'recettes-avec'
+          ? buildRecipeJsonLd(a, `/${cat.segment}/${a.slug}`)
+          : buildArticleJsonLd(a, `/${cat.segment}/${a.slug}`),
     })),
   ];
 });
@@ -154,14 +169,17 @@ const routes = [...staticRoutes, ...ingredientRoutes, ...flatCategoryRoutes];
 
 const template = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
 
-function injectMeta(html, { title, description, path: routePath }) {
+function injectMeta(html, { title, description, path: routePath, jsonLd }) {
   // Netlify sert dist/<route>/index.html et redirige (301) l'URL sans slash
   // final vers la version avec slash : le canonical doit matcher l'URL
   // réellement servie (voir src/hooks/usePageMeta.ts pour la même règle
   // côté client).
   const slashedPath = routePath.endsWith('/') ? routePath : `${routePath}/`;
   const canonical = `${SITE_URL}${slashedPath}`;
+  const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+  const ldJsonBlock = schemas.length ? jsonLdScriptTags(schemas) : '';
   return html
+    .replace('</head>', `${ldJsonBlock}\n</head>`)
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta\s+name="description"\s+content=".*?"\s*\/>/,

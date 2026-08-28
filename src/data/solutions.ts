@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -43,6 +44,7 @@ export const articles: Article[] = [
     ctaTitle: 'Un coup de main pour décider quoi cuisiner',
     ctaText:
       "Yummeal scanne ce qu'il y a dans votre frigo et vous propose directement des recettes adaptées, sans avoir à y penser en premier.",
+    tags: ['charge mentale', 'famille', 'organisation repas'],
   },
   {
     slug: 'recettes-petit-budget-fin-de-mois',
@@ -78,6 +80,7 @@ export const articles: Article[] = [
     ctaTitle: "Cuisiner avec ce que vous avez, sans y perdre de temps",
     ctaText:
       "Yummeal identifie les ingrédients de votre frigo et vous propose des recettes qui les utilisent en priorité, pour limiter les courses et le gaspillage.",
+    tags: ['petit budget', 'fin de mois', 'économies'],
   },
   {
     slug: 'cuisiner-sans-four-etudiant',
@@ -113,6 +116,7 @@ export const articles: Article[] = [
     ctaTitle: 'Des recettes adaptées à votre cuisine, four ou pas',
     ctaText:
       'Yummeal propose des recettes à partir de ce que vous avez, en tenant compte de vos moyens de cuisson disponibles.',
+    tags: ['sans four', 'étudiant', 'petite cuisine'],
   },
   {
     slug: 're-equilibrage-alimentaire-debutant',
@@ -149,6 +153,7 @@ export const articles: Article[] = [
     ctaTitle: 'Cuisiner varié, sans y passer des heures',
     ctaText:
       "Yummeal vous aide à cuisiner avec ce que vous avez, pour varier plus facilement vos repas au quotidien.",
+    tags: ['rééquilibrage alimentaire', 'habitudes', 'alimentation variée'],
   },
 ];
 

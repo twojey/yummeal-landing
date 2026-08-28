@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 const yummealDiffCta = {
@@ -38,6 +39,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['jow', 'comparatif', 'application recettes', 'liste de courses'],
   },
   {
     slug: 'yummeal-vs-marmiton',
@@ -62,6 +64,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['marmiton', 'comparatif', 'recherche par ingrédients'],
   },
   {
     slug: 'yummeal-vs-jow-vs-marmiton',
@@ -91,6 +94,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['jow', 'marmiton', 'comparatif', 'application recettes'],
   },
   {
     slug: 'meilleure-app-cuisine-frigo',
@@ -120,6 +124,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['comparatif', 'scan frigo', 'application recettes'],
   },
   {
     slug: 'yummeal-vs-supercook',
@@ -143,6 +148,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['supercook', 'comparatif', 'garde-manger'],
   },
   {
     slug: 'yummeal-vs-frigo-magic',
@@ -166,6 +172,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['frigo magic', 'comparatif', 'anti-gaspillage'],
   },
   {
     slug: 'yummeal-vs-kitchenpal',
@@ -189,6 +196,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['kitchenpal', 'comparatif', 'garde-manger', 'code-barres'],
   },
   {
     slug: 'yummeal-vs-cooklist',
@@ -212,6 +220,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['cooklist', 'comparatif', 'garde-manger'],
   },
   {
     slug: 'yummeal-vs-plantjammer',
@@ -235,6 +244,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['plantjammer', 'comparatif', 'application fermée'],
   },
   {
     slug: 'yummeal-vs-yummly',
@@ -258,6 +268,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['yummly', 'comparatif', 'application fermée'],
   },
   {
     slug: 'yummeal-vs-recipe-keeper',
@@ -282,6 +293,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['recipe keeper', 'comparatif', 'carnet de recettes'],
   },
   {
     slug: 'yummeal-vs-mealime',
@@ -306,6 +318,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['mealime', 'comparatif', 'plan de repas'],
   },
   {
     slug: 'yummeal-vs-bigoven',
@@ -329,6 +342,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['bigoven', 'comparatif', 'carnet de recettes'],
   },
   {
     slug: 'yummeal-vs-sidechef',
@@ -352,6 +366,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['sidechef', 'comparatif', 'garde-manger'],
   },
   {
     slug: 'yummeal-vs-paprika-3',
@@ -375,6 +390,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['paprika', 'comparatif', 'carnet de recettes'],
   },
   {
     slug: 'yummeal-vs-samsung-food',
@@ -399,6 +415,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['samsung food', 'comparatif', 'scan frigo'],
   },
   {
     slug: 'yummeal-vs-myfridgefood',
@@ -422,6 +439,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['myfridgefood', 'comparatif', 'garde-manger'],
   },
   {
     slug: 'yummeal-vs-yazio',
@@ -445,6 +463,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['yazio', 'comparatif', 'nutrition', 'suivi calorique'],
   },
   {
     slug: 'yummeal-vs-lifesum',
@@ -468,6 +487,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['lifesum', 'comparatif', 'nutrition', 'suivi calorique'],
   },
   {
     slug: 'yummeal-vs-toogoodtogo',
@@ -491,6 +511,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['too good to go', 'comparatif', 'anti-gaspillage'],
   },
   {
     slug: 'yummeal-vs-olio',
@@ -514,6 +535,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['olio', 'comparatif', 'anti-gaspillage'],
   },
   {
     slug: 'yummeal-vs-foodvisor',
@@ -537,6 +559,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['foodvisor', 'comparatif', 'nutrition'],
   },
   {
     slug: 'yummeal-vs-eat-this-much',
@@ -560,6 +583,7 @@ export const articles: Article[] = [
       },
     ],
     ...yummealDiffCta,
+    tags: ['eat this much', 'comparatif', 'plan de repas', 'nutrition'],
   },
 ];
 

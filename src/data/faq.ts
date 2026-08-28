@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -42,6 +43,7 @@ export const articles: Article[] = [
     ctaTitle: 'Ne perdez plus la trace de vos restes',
     ctaText:
       "Yummeal vous aide à organiser votre frigo et à réutiliser vos restes avant qu'ils ne posent question.",
+    tags: ['riz', 'conservation', 'sécurité alimentaire'],
   },
   {
     slug: 'congelation-creme-fraiche-liquide',
@@ -76,6 +78,7 @@ export const articles: Article[] = [
     ctaTitle: 'Cuisinez vos restes du frigo sans y penser',
     ctaText:
       "Yummeal vous propose des recettes adaptées à ce que vous avez déjà, y compris les fonds de pot à finir.",
+    tags: ['congélation', 'crème fraîche', 'conservation'],
   },
   {
     slug: 'duree-conservation-oeuf-dur',
@@ -110,6 +113,7 @@ export const articles: Article[] = [
     ctaTitle: "Une idée pour chaque reste de votre frigo",
     ctaText:
       "Yummeal identifie ce que vous avez sous la main, œufs durs compris, et vous propose une recette adaptée.",
+    tags: ['œuf dur', 'conservation', 'frigo'],
   },
   {
     slug: 'reconnaitre-viande-perimee-odeur',
@@ -143,6 +147,7 @@ export const articles: Article[] = [
     ctaTitle: 'Ne laissez plus vos restes de viande finir à la poubelle',
     ctaText:
       "Yummeal vous aide à repérer ce qu'il y a dans votre frigo et à le cuisiner à temps.",
+    tags: ['viande', 'péremption', 'sécurité alimentaire'],
   },
   {
     slug: 'peut-on-recuire-un-plat-deja-cuit',
@@ -177,6 +182,7 @@ export const articles: Article[] = [
     ctaTitle: 'Vos restes méritent une seconde vie',
     ctaText:
       "Yummeal vous propose des idées de recettes pour transformer vos plats déjà cuits plutôt que de les jeter.",
+    tags: ['restes', 'réchauffage', 'sécurité alimentaire'],
   },
 ];
 

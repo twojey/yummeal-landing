@@ -6,11 +6,13 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
   {
     slug: 'remplacer-creme-fraiche',
+    tags: ['crème fraîche', 'sauce', 'gratin', 'substitution'],
     title: 'Par quoi remplacer la crème fraîche ?',
     metaDescription:
       "Plus de crème fraîche pour une sauce ou un gratin ? Voici les meilleures alternatives et comment les doser.",
@@ -46,6 +48,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'alternative-beurre-cuisson',
+    tags: ['beurre', 'cuisson', 'huile', 'pâtisserie'],
     title: 'Par quoi remplacer le beurre en cuisson ?',
     metaDescription:
       "Plus de beurre pour cuire ou faire fondre en cuisine ? Voici les alternatives qui fonctionnent vraiment, selon le plat.",
@@ -81,6 +84,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'par-quoi-remplacer-oeuf',
+    tags: ['œuf', 'pâtisserie', 'liant', 'sans œuf'],
     title: 'Par quoi remplacer un œuf en cuisine ?',
     metaDescription:
       "Plus d'œufs à la maison ou recette sans œuf ? Voici les alternatives selon que l'œuf sert à lier, à faire lever ou à humidifier.",
@@ -115,6 +119,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'alternative-parmesan-pates',
+    tags: ['parmesan', 'pâtes', 'fromage râpé'],
     title: 'Par quoi remplacer le parmesan sur des pâtes ?',
     metaDescription:
       "Plus de parmesan pour vos pâtes ? Ces fromages à pâte dure et alternatives donnent un résultat proche.",
@@ -150,6 +155,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'remplacer-vin-blanc-sauce',
+    tags: ['vin blanc', 'sauce', 'sans alcool', 'déglacer'],
     title: 'Par quoi remplacer le vin blanc dans une sauce ?',
     metaDescription:
       "Pas de vin blanc pour déglacer ou parfumer une sauce ? Voici des alternatives, avec ou sans alcool.",
@@ -185,6 +191,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'par-quoi-remplacer-lait-vache',
+    tags: ['lait', 'lait végétal', 'intolérance', 'végétal'],
     title: 'Par quoi remplacer le lait de vache ?',
     metaDescription:
       "Plus de lait, intolérance ou choix végétal : voici les alternatives au lait de vache et où elles fonctionnent le mieux.",
@@ -219,6 +226,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'remplacer-huile-olive',
+    tags: ['huile d\'olive', 'huile', 'cuisson', 'assaisonnement'],
     title: "Par quoi remplacer l'huile d'olive ?",
     metaDescription:
       "Plus d'huile d'olive pour cuisiner ou assaisonner ? Voici quelles huiles utiliser selon l'usage, cru ou cuit.",
@@ -253,6 +261,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'par-quoi-remplacer-oignon',
+    tags: ['oignon', 'échalote', 'base aromatique'],
     title: "Par quoi remplacer l'oignon ?",
     metaDescription:
       "Plus d'oignon dans la cuisine ou intolérance ? Ces alternatives apportent une base aromatique proche.",
@@ -288,6 +297,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'alternative-ail-frais',
+    tags: ['ail', 'ail frais', 'poudre d\'ail', 'aromate'],
     title: "Par quoi remplacer l'ail frais ?",
     metaDescription:
       "Plus d'ail frais sous la main ? Ces alternatives permettent de garder le goût dans vos plats.",
@@ -323,6 +333,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'remplacer-pomme-de-terre-gratins',
+    tags: ['pomme de terre', 'gratin', 'légumes'],
     title: 'Par quoi remplacer la pomme de terre dans un gratin ?',
     metaDescription:
       "Plus de pommes de terre pour un gratin ? Ces légumes et féculents donnent un résultat tout aussi gourmand.",
@@ -357,6 +368,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'par-quoi-remplacer-farine-ble',
+    tags: ['farine', 'sans gluten', 'pâtisserie'],
     title: 'Par quoi remplacer la farine de blé ?',
     metaDescription:
       "Plus de farine de blé, ou recette sans gluten ? Voici les alternatives et comment ajuster les quantités.",
@@ -392,6 +404,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'alternative-levure-chimique',
+    tags: ['levure chimique', 'bicarbonate', 'gâteau', 'pâtisserie'],
     title: 'Par quoi remplacer la levure chimique ?',
     metaDescription:
       "Plus de levure chimique pour un gâteau ? Voici les alternatives qui font vraiment lever la pâte.",
@@ -425,6 +438,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'remplacer-chapelure-panure',
+    tags: ['chapelure', 'panure', 'croustillant'],
     title: 'Par quoi remplacer la chapelure pour une panure ?',
     metaDescription:
       "Plus de chapelure pour paner une escalope ou des légumes ? Voici des alternatives tout aussi croustillantes.",
@@ -459,6 +473,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'par-quoi-remplacer-moutarde',
+    tags: ['moutarde', 'vinaigrette', 'sauce'],
     title: 'Par quoi remplacer la moutarde ?',
     metaDescription:
       "Plus de moutarde pour une vinaigrette ou une marinade ? Ces alternatives apportent un goût et un liant proches.",

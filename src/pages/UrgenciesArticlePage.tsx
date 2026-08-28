@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getArticle } from '../data/urgencies';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
+import { buildArticleJsonLd } from '../lib/schema';
 
 export default function UrgenciesArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,9 @@ export default function UrgenciesArticlePage() {
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/urgencies/${slug ?? ''}`,
+    jsonLd: article
+      ? buildArticleJsonLd(article, `/urgencies/${slug ?? ''}`)
+      : undefined,
   });
 
   if (!article) {
@@ -53,6 +58,12 @@ export default function UrgenciesArticlePage() {
           </p>
           <DownloadButtons />
         </div>
+
+        <RelatedArticles
+          category="urgencies"
+          slug={article.slug}
+          tags={article.tags ?? []}
+        />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -50,6 +51,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie d\'un coup de main pour varier vos menus ?',
     ctaText:
       'Yummeal vous propose des recettes adaptées à ce que vous avez déjà au frigo, pour sortir de la routine riz-poulet sans complexifier vos courses.',
+    tags: ['batch cooking', 'organisation', 'étudiant', 'petit budget'],
   },
   {
     slug: 'ustensiles-indispensables-petite-cuisine',
@@ -93,6 +95,7 @@ export const articles: Article[] = [
     ctaTitle: 'Peu d\'ustensiles, mais des idées de recettes en illimité',
     ctaText:
       'Yummeal propose des recettes réalisables avec un équipement minimal, à partir de ce que vous avez déjà dans le frigo.',
+    tags: ['équipement cuisine', 'petit espace', 'organisation'],
   },
   {
     slug: 'lecture-etiquettes-nutritionnelles-pieges',
@@ -128,6 +131,7 @@ export const articles: Article[] = [
     ctaTitle: 'Et si vos ingrédients frais remplaçaient les étiquettes ?',
     ctaText:
       'Yummeal vous aide à cuisiner avec des produits simples que vous avez déjà, sans avoir à décoder un emballage à chaque repas.',
+    tags: ['étiquette nutritionnelle', 'nutrition', 'marketing alimentaire'],
   },
   {
     slug: 'comprendre-nutriscore-vs-realite',
@@ -169,6 +173,7 @@ export const articles: Article[] = [
     ctaTitle: 'Cuisiner à partir de vrais ingrédients plutôt que de décoder des scores',
     ctaText:
       'Yummeal vous propose des recettes à partir de produits bruts que vous avez déjà, sans avoir besoin de comparer des étiquettes en rayon.',
+    tags: ['nutri-score', 'nutrition', 'transformation alimentaire'],
   },
 ];
 

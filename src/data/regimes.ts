@@ -6,6 +6,7 @@ export interface Article {
   sections: { heading: string; body: string[] }[];
   ctaTitle: string;
   ctaText: string;
+  tags?: string[];
 }
 
 export const articles: Article[] = [
@@ -49,6 +50,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie d\'un dîner léger sans y passer la tête ?',
     ctaText:
       "Yummeal vous propose des recettes adaptées à ce que vous avez déjà au frigo, pour composer un repas équilibré en quelques minutes.",
+    tags: ['dîner léger', 'équilibre alimentaire', 'digestion', 'idées repas'],
   },
   {
     slug: 'recettes-etudiant-sans-gluten',
@@ -91,6 +93,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de recettes sans gluten adaptées à ce que vous avez ?',
     ctaText:
       "Yummeal vous aide à cuisiner avec ce qu'il y a déjà dans votre frigo ou vos placards, pour des repas simples et rapides entre deux cours.",
+    tags: ['sans gluten', 'étudiant', 'petit budget', 'recettes simples'],
   },
   {
     slug: 'repas-sportif-express-proteine',
@@ -133,6 +136,7 @@ export const articles: Article[] = [
     ctaTitle: 'Besoin d\'idées de repas rapides et protéinés au quotidien ?',
     ctaText:
       "Yummeal vous propose des recettes adaptées à votre frigo, pour manger équilibré même les jours de sport les plus chargés.",
+    tags: ['protéines', 'sport', 'repas rapide', 'organisation'],
   },
   {
     slug: 'idees-snack-sain-etudiant',
@@ -175,6 +179,7 @@ export const articles: Article[] = [
     ctaTitle: 'Envie de snacks sains sans y penser tous les jours ?',
     ctaText:
       "Yummeal vous aide à organiser vos repas et collations à partir de ce que vous avez déjà, pour éviter le réflexe distributeur.",
+    tags: ['snack', 'étudiant', 'petit budget', 'collation'],
   },
 ];
 
