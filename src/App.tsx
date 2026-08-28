@@ -43,6 +43,8 @@ import ConceptIndexPage from './pages/ConceptIndexPage';
 import ConceptArticlePage from './pages/ConceptArticlePage';
 import ScenariosIndexPage from './pages/ScenariosIndexPage';
 import ScenariosArticlePage from './pages/ScenariosArticlePage';
+import ComparatifIndexPage from './pages/ComparatifIndexPage';
+import ComparatifArticlePage from './pages/ComparatifArticlePage';
 
 function App() {
   const location = useLocation();
@@ -67,6 +69,7 @@ function App() {
       '/faq',
       '/concept',
       '/scenarios',
+      '/comparatif',
     ];
     if (contentCategories.some((prefix) => location.pathname.startsWith(prefix))) {
       return;
@@ -528,6 +531,8 @@ function App() {
         <Route path="/concept/:slug" element={<ConceptArticlePage />} />
         <Route path="/scenarios" element={<ScenariosIndexPage />} />
         <Route path="/scenarios/:slug" element={<ScenariosArticlePage />} />
+        <Route path="/comparatif" element={<ComparatifIndexPage />} />
+        <Route path="/comparatif/:slug" element={<ComparatifArticlePage />} />
       </Routes>
 
       {/* Footer */}

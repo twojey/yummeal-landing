@@ -126,6 +126,12 @@ const flatCategories = [
     indexTitle: "Scénarios d'usage | Pour qui est fait Yummeal - Yummeal",
     indexDescription: "Découvrez les situations concrètes du quotidien auxquelles Yummeal répond, selon votre profil et vos contraintes.",
   },
+  {
+    segment: 'comparatif',
+    dataKey: 'comparatifArticles',
+    indexTitle: 'Comparatifs | Yummeal face aux autres applications de cuisine',
+    indexDescription: "Des comparaisons factuelles et sourcées entre Yummeal et les autres applications de cuisine, gestion de frigo et anti-gaspillage.",
+  },
 ];
 
 const flatCategoryRoutes = flatCategories.flatMap((cat) => {

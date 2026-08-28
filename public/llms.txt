@@ -31,6 +31,7 @@
 - [FAQ sécurité alimentaire](https://yummeal.app/faq): réponses aux questions courantes de conservation et de sécurité alimentaire
 - [Le concept Yummeal](https://yummeal.app/concept): fonctionnement de l'anti-gaspi de l'application et vision du zéro déchet
 - [Scénarios d'usage](https://yummeal.app/scenarios): pour qui est fait Yummeal, selon votre profil et vos contraintes
+- [Comparatifs](https://yummeal.app/comparatif): comparaisons factuelles et sourcées entre Yummeal et les autres applications de cuisine, gestion de frigo et anti-gaspillage
 
 ## Télécharger l'application
 
