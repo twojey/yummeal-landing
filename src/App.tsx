@@ -99,19 +99,19 @@ function App() {
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <a href="#" className="flex items-center">
-                <img 
-                  src={Logo} 
-                  alt="Yummeal Logo" 
+              <Link to="/" className="flex items-center">
+                <img
+                  src={Logo}
+                  alt="Yummeal Logo"
                   className="hidden md:block h-8 w-auto"
                 />
                 <span className="hidden md:block ml-2 text-2xl font-bold font-heading text-[#FF8C42]">Yummeal</span>
-                <img 
-                  src={MobileLogo} 
-                  alt="Yummeal Logo" 
+                <img
+                  src={MobileLogo}
+                  alt="Yummeal Logo"
                   className="md:hidden h-8 w-auto"
                 />
-              </a>
+              </Link>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link
