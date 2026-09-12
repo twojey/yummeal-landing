@@ -199,11 +199,12 @@ describe('URL des fiches stores', () => {
   });
 
   /**
-   * L'application iOS n'est distribuée que dans la boutique française
-   * (vérifié le 12/09/2026 : `/pl/`, `/de/`, `/us/`… renvoient 404 et
-   * `itunes.apple.com/lookup?country=pl` renvoie 0 résultat). Tant que c'est
-   * le cas, aucune page polonaise ne doit proposer de bouton App Store, ni
-   * promettre iOS dans sa description : le lien mènerait à une 404.
+   * L'application iOS est disponible dans 2 territoires sur 175 — France et
+   * Côte d'Ivoire — et la Pologne est en `CANNOT_SELL` (vérifié le 12/09/2026
+   * via `asccli app-availability get --app-id 6744942441`, donc à la source,
+   * et non seulement par les 404 publics). Tant que c'est le cas, aucune page
+   * polonaise ne doit proposer de bouton App Store ni promettre iOS dans sa
+   * description : le lien mènerait à une 404.
    *
    * Le jour où la distribution est étendue, ce test échouera dès qu'on
    * remplira `STORE_URLS.pl.apple` — c'est voulu : il faudra alors relire

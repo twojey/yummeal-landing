@@ -35,15 +35,22 @@ export const config = {
  * TrackedStoreLink, schema.ts, AProposPage), soit exactement la duplication qui
  * avait rendu la page de suppression de compte inopérante côté backend.
  *
- * ⚠️ CONSTAT DU 12/09/2026, VÉRIFIÉ, QUI CONTRAINT LE LANCEMENT POLONAIS :
- * l'application iOS n'est distribuée QUE dans la boutique française.
- *   - `https://apps.apple.com/pl/app/.../id6744942441` renvoie 404 (comme
- *     `/de/`, `/us/`, `/gb/`, `/be/`, `/ch/`, `/ca/`) ;
- *   - `https://itunes.apple.com/lookup?id=6744942441&country=pl` renvoie
- *     `resultCount: 0`, et 1 pour `country=fr`.
- * Deux signaux indépendants concordent : la disponibilité iOS est limitée à la
- * France. C'est une décision à prendre dans App Store Connect (Pricing and
- * Availability), pas quelque chose que le site peut contourner.
+ * ⚠️ CONSTAT DU 12/09/2026 QUI CONTRAINT LE LANCEMENT POLONAIS, confirmé à la
+ * source (`asccli app-availability get --app-id 6744942441`, l'API App Store
+ * Connect) : l'application iOS est disponible dans **2 territoires sur 175**,
+ * la France et la Côte d'Ivoire. La Pologne est en `CANNOT_SELL`
+ * (`isAvailable: false`), et `isAvailableInNewTerritories` vaut `false`.
+ *
+ * Les signaux publics concordent : `apps.apple.com/pl/app/.../id6744942441`
+ * renvoie 404, et `itunes.apple.com/lookup?...&country=pl` renvoie
+ * `resultCount: 0` (1 pour `country=fr`).
+ *
+ * En revanche, les ABONNEMENTS sont déjà disponibles dans les 175 territoires,
+ * Pologne incluse, aux prix polonais réels (19,99 PLN/mois, 149,99 PLN/an —
+ * vérifiés via `asccli subscription-price-schedule get`). Ouvrir la Pologne est
+ * donc un seul interrupteur dans App Store Connect (Pricing and Availability),
+ * pas un chantier de tarification. `asccli` ne sait que LIRE cette valeur : le
+ * geste est manuel, et le site ne peut pas le contourner.
  *
  * Conséquence assumée ici : `apple` vaut `null` en polonais, et les composants
  * n'affichent alors que Google Play. Un bouton App Store sur la page de
