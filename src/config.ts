@@ -52,11 +52,17 @@ export const config = {
  * pas un chantier de tarification. `asccli` ne sait que LIRE cette valeur : le
  * geste est manuel, et le site ne peut pas le contourner.
  *
- * Conséquence assumée ici : `apple` vaut `null` en polonais, et les composants
- * n'affichent alors que Google Play. Un bouton App Store sur la page de
- * lancement polonaise enverrait le visiteur sur une 404 — c'est le pire
- * endroit possible pour un lien mort. Le jour où la distribution est étendue,
- * il suffit de remplir cette valeur.
+ * ✅ POLOGNE OUVERTE le 12/09/2026 (`PATCH /v1/territoryAvailabilities`), et
+ * la vitrine publique a propagé le soir même : `apps.apple.com/pl/app/…` sert
+ * une vraie fiche (HTTP 200, prix en zł). Vérifié à la source avec
+ * `asccli app-availability get --app-id 6744942441` → FRA, CIV, POL (3/175).
+ * `apple` n'est donc plus `null` en polonais.
+ *
+ * ⚠️ Piège de mesure, s'il faut revérifier un jour :
+ * `itunes.apple.com/lookup?id=…&country=pl` renvoie 0 **en minuscules** et 1
+ * en MAJUSCULES, pour la Pologne et pour elle seule (`fr`/`FR` et `ci`/`CI`
+ * répondent 1 dans les deux casses). Un 0 en minuscules ne prouve donc RIEN :
+ * croiser avec `asccli` et la page produit.
  *
  * Apple exige un code pays dans l'URL et sert la fiche de ce pays ; l'`id`
  * numérique identifie l'application, le slug n'est que décoratif (mais pas
@@ -87,7 +93,10 @@ const STORES_FR = {
 export const STORE_URLS: Record<'fr' | 'pl', LiensStores> = {
   fr: STORES_FR,
   pl: {
-    apple: null,
+    // Slug polonais réel, relevé sur la redirection servie par Apple :
+    // `/pl/app/fridge-recipes-yummeal/…`. Le slug est décoratif mais pas
+    // omissible (la forme sans slug renvoie 404).
+    apple: `https://apps.apple.com/pl/app/fridge-recipes-yummeal/${APP_STORE_ID}`,
     google: `https://play.google.com/store/apps/details?id=${PLAY_PACKAGE}&hl=pl`,
   },
 };

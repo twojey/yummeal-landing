@@ -134,7 +134,14 @@ describe('URL des fiches stores', () => {
   // slug redirige encore côté Apple, mais un lien périmé dans le JSON-LD
   // `sameAs` ou dans un bouton de téléchargement brouille l'identité de la
   // marque, qui est déjà disputée par des homonymes.
-  const SLUG_IOS = 'recettes-du-frigo-yummeal';
+  //
+  // ⚠️ Apple sert UN SLUG PAR VITRINE, pas un slug global : la fiche polonaise
+  // (ouverte le 12/09/2026) répond sur `/pl/app/fridge-recipes-yummeal/…`.
+  // Ce test acceptait un slug unique tant qu'il n'existait qu'une vitrine ;
+  // il liste désormais les slugs valides. Apple redirige d'ailleurs le slug
+  // d'une autre langue vers le bon (vérifié), donc ce garde-fou protège
+  // l'identité de marque, pas l'accessibilité du lien.
+  const SLUGS_IOS = new Set(['recettes-du-frigo-yummeal', 'fridge-recipes-yummeal']);
   const ID_IOS = '6744942441';
   const ID_ANDROID = 'com.yummeal';
 
@@ -186,8 +193,11 @@ describe('URL des fiches stores', () => {
         vus++;
         const url = m[0];
         if (!url.includes(ID_IOS)) fautifs.push(`${p.route} -> id manquant : ${url}`);
-        else if (/\/app\/[^/]+\//.test(url) && !url.includes(SLUG_IOS))
-          fautifs.push(`${p.route} -> slug périmé : ${url}`);
+        else {
+          const slug = url.match(/\/app\/([^/]+)\//);
+          if (slug && !SLUGS_IOS.has(slug[1]))
+            fautifs.push(`${p.route} -> slug périmé : ${url}`);
+        }
       }
       for (const m of p.html.matchAll(/https:\/\/play\.google\.com\/[^\s'"`)<]+/g)) {
         vus++;
@@ -199,40 +209,36 @@ describe('URL des fiches stores', () => {
   });
 
   /**
-   * L'application iOS est disponible dans 2 territoires sur 175 — France et
-   * Côte d'Ivoire — et la Pologne est en `CANNOT_SELL` (vérifié le 12/09/2026
-   * via `asccli app-availability get --app-id 6744942441`, donc à la source,
-   * et non seulement par les 404 publics). Tant que c'est le cas, aucune page
-   * polonaise ne doit proposer de bouton App Store ni promettre iOS dans sa
-   * description : le lien mènerait à une 404.
+   * ✅ La Pologne a été OUVERTE le 12/09/2026 : `asccli app-availability get
+   * --app-id 6744942441` renvoie FRA, CIV, POL (3/175) et la fiche polonaise
+   * est réellement servie (HTTP 200, prix en zł). Ce test protégeait
+   * auparavant l'invariant inverse — « aucun lien App Store sur /pl » — et sa
+   * prémisse est devenue fausse. Il a donc été RETOURNÉ, pas supprimé.
    *
-   * Le jour où la distribution est étendue, ce test échouera dès qu'on
-   * remplira `STORE_URLS.pl.apple` — c'est voulu : il faudra alors relire
-   * aussi la meta description polonaise, que ce test protège.
+   * L'invariant qui reste utile : un visiteur polonais ne doit jamais être
+   * envoyé sur la vitrine d'un AUTRE pays. Apple sert la fiche du code pays
+   * présent dans l'URL ; un lien `/fr/` sur une page polonaise afficherait des
+   * prix en euros et une fiche en français. C'est exactement le genre de
+   * régression qu'une traduction recopiée introduit sans qu'on la voie.
    */
-  test('aucune page polonaise ne promet une boutique où l’app n’est pas distribuée', { skip: SANS_BUILD }, () => {
+  test('une page polonaise n’envoie jamais vers la vitrine App Store d’un autre pays', { skip: SANS_BUILD }, () => {
     const pagesPl = distPages().filter((p) => p.route === '/pl' || p.route.startsWith('/pl/'));
     assert.ok(pagesPl.length > 0, 'aucune page polonaise dans dist/ — le test ne teste rien');
+    const fautifs = [];
     for (const p of pagesPl) {
-      // On teste les liens CLIQUABLES (`href=`), pas toute occurrence de
-      // l'URL : le `sameAs` du JSON-LD cite la fiche App Store pour
-      // identifier l'entité « Yummeal », ce qui reste juste sur une page
-      // polonaise. Ce qui ne doit pas exister, c'est un bouton.
-      const liensApple = [...p.html.matchAll(/href="(https:\/\/apps\.apple\.com[^"]*)"/g)];
-      assert.deepEqual(
-        liensApple.map((m) => m[1]),
-        [],
-        `${p.route} affiche un lien App Store cliquable alors que l'app n'est pas distribuée en Pologne`
-      );
-      const desc = p.html.match(/<meta\s+name="description"\s+content="([^"]*)"/);
-      if (desc) {
-        assert.equal(
-          /\biOS\b/i.test(desc[1]),
-          false,
-          `${p.route} promet iOS dans sa meta description : « ${desc[1]} »`
-        );
+      // Liens CLIQUABLES uniquement : le `sameAs` du JSON-LD cite la fiche
+      // pour identifier l'entité « Yummeal », pas pour y envoyer quelqu'un.
+      for (const m of p.html.matchAll(/href="(https:\/\/apps\.apple\.com[^"]*)"/g)) {
+        if (!/^https:\/\/apps\.apple\.com\/pl\//.test(m[1])) {
+          fautifs.push(`${p.route} -> ${m[1]}`);
+        }
       }
     }
+    assert.deepEqual(
+      fautifs,
+      [],
+      `lien App Store hors vitrine polonaise (prix en euros, fiche en français) :\n${fautifs.join('\n')}`
+    );
   });
 });
 

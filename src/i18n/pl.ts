@@ -59,13 +59,13 @@ export const pl: Dictionnaire = {
 
   accueil: {
     title: 'Yummeal – gotuj z tego, co masz w lodówce',
-    // « na Androida » et PAS « na iOS i Androida » : l'application iOS n'est
-    // pas distribuée dans la boutique polonaise (constat vérifié, voir
-    // STORE_URLS dans src/config.ts). Annoncer iOS dans la meta description
-    // serait une promesse démentie au clic — et c'est le texte que Google
-    // affiche. À corriger le jour où la distribution est étendue.
+    // « na iOS i Androida » depuis le 12/09/2026 : la Pologne a été ouverte
+    // côté App Store et la fiche polonaise est réellement servie (voir
+    // STORE_URLS dans src/config.ts). Avant cette date on n'annonçait QUE
+    // l'Android, parce qu'un clic iOS tombait sur une 404 — et c'est ce texte
+    // que Google affiche, donc une promesse démentie au clic s'y voit.
     description:
-      'Zrób zdjęcie lodówki, a Yummeal podpowie, co ugotować z tego, co masz — bez marnowania jedzenia. Pobierz Yummeal za darmo na Androida.',
+      'Zrób zdjęcie lodówki, a Yummeal podpowie, co ugotować z tego, co masz — bez marnowania jedzenia. Pobierz Yummeal za darmo na iOS i Androida.',
     h1Ligne1: 'Koniec ze stresem',
     h1Ligne2: '„co dziś na obiad?”',
     accroche:
@@ -165,12 +165,12 @@ export const pl: Dictionnaire = {
       'Aplikacja mobilna wydawana przez YIDLA (Francja): przepisy, które zrobisz z tego, co już masz. Co robi i czego nie robi.',
     h1: 'O Yummeal',
     intro:
-      'Yummeal to aplikacja mobilna, która wychodzi od tego, co już masz w domu, i podpowiada, co ugotować. Wydaje ją francuska firma YIDLA, a aplikacja jest dostępna od 2025 roku.',
+      'Yummeal to aplikacja mobilna na iOS i Androida, która wychodzi od tego, co już masz w domu, i podpowiada, co ugotować. Wydaje ją francuska firma YIDLA, a aplikacja jest dostępna od 2025 roku.',
     // Trois faits changent par rapport au français, et ce n'est pas une
     // traduction approximative :
-    //  - PLATEFORMES : on n'annonce QUE l'Androida, parce que l'application
-    //    iOS n'est pas distribuée dans la boutique polonaise (constat vérifié,
-    //    voir STORE_URLS dans src/config.ts) ;
+    //  - PLATEFORMES : iOS ET Android depuis l'ouverture de la Pologne le
+    //    12/09/2026 (voir STORE_URLS dans src/config.ts). Avant cette date on
+    //    n'annonçait que l'Android, la fiche iOS polonaise n'existant pas ;
     //  - PRIX : 19,99 zł/mois et 149,99 zł/an sont les prix polonais réels,
     //    alignés Apple/Play. Traduire « 4,99 € » aurait annoncé un prix que le
     //    visiteur ne verra jamais ;
