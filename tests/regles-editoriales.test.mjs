@@ -79,6 +79,27 @@ const INTERDITS = [
       // gratuit sur iOS » — l'inverse exact de ce que la règle protège.
       /t[ée]l[ée]chargement (?:est )?gratuit|essai gratuit|offre gratuite|version gratuite d[eu]|audit (?:SEO )?gratuit|recette gratuite|[ée]chantillon-gratuit/i,
   },
+  {
+    cle: 'darmo-scope',
+    /**
+     * La même règle, en polonais. Elle n'existait pas : la règle d'honnêteté
+     * du freemium ne protégeait que le français, alors que le site publie
+     * maintenant des pages polonaises. « darmowa aplikacja » y serait aussi
+     * trompeur que « application gratuite » ici.
+     *
+     * Tournures tolérées, parce qu'elles scopent réellement :
+     *  - « Pobierz … za darmo » / « Pobranie jest darmowe » (le
+     *    téléchargement), formulations déjà validées dans les fiches Play ;
+     *  - « darmowy okres próbny » (l'essai gratuit).
+     */
+    motif: /\bdarmo\b|\bdarmow[aeyi]\w*/gi,
+    pourquoi:
+      '« za darmo » doit porter sur le TÉLÉCHARGEMENT (« Pobierz Yummeal za ' +
+      'darmo », « Pobranie jest darmowe »), jamais sur l’application en ' +
+      'général : l’usage complet est par abonnement',
+    exception:
+      /Pobierz[^.]{0,40}za darmo|Pobranie (?:jest )?darmowe|darmow\w* okres pr[óo]bny|za darmo na Androida/i,
+  },
 ];
 
 /** Retrouve une règle par son nom, pour que les tests ne dépendent pas de l'ordre. */
@@ -272,6 +293,37 @@ describe('le garde-fou lui-même', () => {
   for (const valeur of doitPasser) {
     test(`tolère « ${valeur.slice(0, 46)}… »`, () => {
       assert.equal(detecte(valeur), false, 'faux positif : ce libellé est légitime');
+    });
+  }
+
+  // Même vérification pour la règle polonaise. Sans ces cas, rien ne
+  // prouverait qu'elle attrape autre chose que le vide.
+  const detectePl = (valeur) => {
+    const regle = regleParCle('darmo-scope');
+    regle.motif.lastIndex = 0;
+    return regle.motif.test(valeur) && !regle.exception.test(valeur);
+  };
+  const plDoitEchouer = [
+    'Yummeal jest darmowy na Androida',
+    'Darmowa aplikacja do gotowania z lodówki',
+    'Wszystkie przepisy za darmo, bez subskrypcji',
+  ];
+  const plDoitPasser = [
+    'Pobierz Yummeal za darmo i sprawdź, co możesz ugotować',
+    'Pobranie jest darmowe. Pełne korzystanie działa w subskrypcji',
+    'Zacznij darmowy okres próbny',
+  ];
+  for (const valeur of plDoitEchouer) {
+    test(`détecte (pl) « ${valeur.slice(0, 42)}… »`, () => {
+      assert.ok(
+        detectePl(valeur),
+        'la règle laisse passer une promesse « darmo » qui porte sur l’application'
+      );
+    });
+  }
+  for (const valeur of plDoitPasser) {
+    test(`tolère (pl) « ${valeur.slice(0, 42)}… »`, () => {
+      assert.equal(detectePl(valeur), false, 'faux positif : ce libellé est légitime');
     });
   }
 });

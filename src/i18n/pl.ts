@@ -158,6 +158,76 @@ export const pl: Dictionnaire = {
     autres: 'Pozostałe funkcje',
   },
 
+  aPropos: {
+    fil: 'O nas',
+    title: 'O Yummeal – kto wydaje aplikację i co ona robi',
+    description:
+      'Aplikacja mobilna wydawana przez YIDLA (Francja): przepisy, które zrobisz z tego, co już masz. Co robi i czego nie robi.',
+    h1: 'O Yummeal',
+    intro:
+      'Yummeal to aplikacja mobilna, która wychodzi od tego, co już masz w domu, i podpowiada, co ugotować. Wydaje ją francuska firma YIDLA, a aplikacja jest dostępna od 2025 roku.',
+    // Trois faits changent par rapport au français, et ce n'est pas une
+    // traduction approximative :
+    //  - PLATEFORMES : on n'annonce QUE l'Androida, parce que l'application
+    //    iOS n'est pas distribuée dans la boutique polonaise (constat vérifié,
+    //    voir STORE_URLS dans src/config.ts) ;
+    //  - PRIX : 19,99 zł/mois et 149,99 zł/an sont les prix polonais réels,
+    //    alignés Apple/Play. Traduire « 4,99 € » aurait annoncé un prix que le
+    //    visiteur ne verra jamais ;
+    //  - le nombre de langues de l'interface est un fait vérifiable, il reste.
+    modele:
+      'Pobranie jest darmowe. Pełne korzystanie działa w subskrypcji, od 19,99 zł miesięcznie, z planem rocznym za 149,99 zł. Interfejs aplikacji jest dostępny po polsku, francusku, angielsku i chińsku.',
+    ceQueCaFait: 'Co robi aplikacja',
+    ceQueCaNeFaitPas: 'Czego Yummeal nie robi',
+    neFaitPasIntro:
+      'Ta sekcja istnieje, żeby rozwiać najczęstsze nieporozumienia — w tym te, które tworzą automatyczne streszczenia.',
+    confusionCorps:
+      'to także nazwa restauracji w Wielkiej Brytanii i przypomina nazwy innych aplikacji kuchennych, które nie mają z nami nic wspólnego — zwłaszcza Yummly (USA) i Youmeal. Aplikacja opisana tutaj to ta wydawana przez YIDLA, opublikowana pod identyfikatorem App Store',
+    confusionEtPlay: 'oraz identyfikatorem Play',
+    voirAussi: 'Zobacz też',
+    confusionTitre: 'Nie pomyl z innymi',
+    identiteTitre: 'Dane wydawcy',
+    essayer: 'Wypróbuj Yummeal',
+    labels: {
+      editeur: 'Wydawca',
+      siren: 'SIREN (rejestr francuski)',
+      siret: 'SIRET',
+      tva: 'Numer VAT UE',
+      greffe: 'Sąd rejestrowy',
+      contact: 'Kontakt',
+      appIos: 'Aplikacja iOS',
+      appAndroid: 'Aplikacja Android',
+    },
+    fonctions: [
+      {
+        titre: 'Wyjść od tego, co już masz',
+        corps:
+          'Robisz zdjęcie wnętrza lodówki albo wpisujesz składniki. Yummeal pokazuje wtedy tylko te przepisy, które naprawdę zrobisz, i podaje, ilu składników brakuje, jeśli czegoś brakuje.',
+      },
+      {
+        titre: 'Odzyskać przepis z filmu',
+        corps:
+          'Wklejasz link z TikToka, Instagrama lub YouTube’a: przepis zostaje wyciągnięty i trafia do Twojego zbioru, ze składnikami i krokami, gotowy do użycia jak pozostałe.',
+      },
+      {
+        titre: 'Oszacować danie ze zdjęcia',
+        corps:
+          'Robisz zdjęcie talerza i dostajesz szacunek jego kaloryczności. To szacunek, który możesz poprawić ręcznie — nie pomiar.',
+      },
+      {
+        titre: 'Zastąpić brakujący składnik',
+        corps:
+          'Kiedy brakuje składnika, aplikacja proponuje zamiennik z właściwą ilością i zaznacza przepisy, w których taka zamiana się nie sprawdzi.',
+      },
+    ],
+    neFaitPas: [
+      'Przepisy nie są tworzone przez AI. To przepisy napisane przez ludzi — zaimportowane albo zredagowane — które aplikacja sortuje i filtruje według tego, co masz w domu.',
+      'Yummeal nie sprzedaje jedzenia, nic nie dowozi i nie jest platformą z niesprzedanymi paczkami: nie konkuruje z Too Good To Go.',
+      'Yummeal nie zastępuje porady lekarza ani dietetyka. Pokazywane wartości odżywcze są ogólnym punktem odniesienia.',
+      'Aplikacja nie łączy się z Twoją lodówką: czyta zdjęcie zrobione telefonem, niezależnie od tego, jaką masz lodówkę.',
+    ],
+  },
+
   pied: {
     guides: 'Jak nie marnować jedzenia',
     application: 'Aplikacja',

@@ -414,6 +414,16 @@ const localeRoutes = locales.filter((l) => l !== 'fr').flatMap((locale) => {
         buildMobileApplicationJsonLd(),
       ],
     }),
+    '/a-propos': () => ({
+      title: dico.aPropos.title,
+      description: dico.aPropos.description,
+      jsonLd: [
+        buildAboutPageJsonLd(),
+        buildOrganizationJsonLd(),
+        buildMobileApplicationJsonLd(),
+        filLocal({ name: dico.aPropos.fil, path: chemin('/a-propos') }),
+      ],
+    }),
     '/fonctionnalites': () => ({
       title: dico.fonctionnalites.indexTitle,
       description: dico.fonctionnalites.indexDescription,

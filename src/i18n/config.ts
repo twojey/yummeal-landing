@@ -18,11 +18,9 @@
  * 40 000 mots de polonais non relu ferait plus de mal que de bien sur un
  * marché où la marque démarre.
  *
- * PROCHAINE PAGE À AJOUTER : `/a-propos` — c'est elle qu'un moteur génératif
- * cite pour répondre « qu'est-ce que Yummeal », y compris en polonais.
- * Ajouter le chemin ici APRÈS avoir écrit la traduction — les tests vérifient
- * que chaque chemin listé est bien prérendu, et que chaque page traduite ne
- * laisse pas fuiter de français.
+ * Ajouter un chemin ici APRÈS avoir écrit sa traduction : les tests vérifient
+ * que chaque chemin listé est bien prérendu, qu'il a bien ses métadonnées
+ * dans le prerender, et qu'il ne laisse pas fuiter de français.
  */
 
 export const LOCALE_DEFAUT = 'fr' as const;
@@ -54,6 +52,9 @@ export const NOM_LOCALE: Record<Locale, string> = {
 const CHEMINS_TRADUITS: Record<Exclude<Locale, 'fr'>, readonly string[]> = {
   pl: [
     '', // accueil — priorité du lancement polonais
+    // La page d'identité : celle qu'un moteur génératif cite pour répondre
+    // « qu'est-ce que Yummeal », y compris en polonais.
+    '/a-propos',
     // Les trois pages produit + leur index : les seules pages à intention
     // transactionnelle du site, donc celles qu'une traduction rentabilise.
     '/fonctionnalites',

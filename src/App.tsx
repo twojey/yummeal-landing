@@ -209,6 +209,7 @@ function App() {
             react-router traite `/pl` et `/pl/` comme la même route ; côté
             Netlify c'est `/pl/index.html` qui est servi. */}
         <Route path="/pl" element={<HomePage />} />
+        <Route path="/pl/a-propos" element={<AProposPage />} />
         <Route path="/pl/fonctionnalites" element={<FonctionnalitesIndexPage />} />
         <Route
           path="/pl/fonctionnalites/:slug"

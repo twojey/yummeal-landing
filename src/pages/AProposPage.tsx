@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import DownloadButtons from '../components/DownloadButtons';
-import { STORE_URLS_DEFAUT } from '../config';
+import { STORE_URLS } from '../config';
+import { useLocale } from '../i18n/useLocale';
+import { cheminLocalise } from '../i18n/config';
 import {
   buildAboutPageJsonLd,
   buildBreadcrumbJsonLd,
@@ -29,95 +31,82 @@ import {
  * tarifs réels) : c'est ce qui rend la page citable.
  */
 
-const FONCTIONS: Array<{ titre: string; corps: string; to?: string }> = [
-  {
-    titre: 'Partir de ce que vous avez déjà',
-    to: '/fonctionnalites/scanner-frigo',
-    corps:
-      "Vous photographiez l'intérieur de votre frigo, ou vous saisissez vos ingrédients. Yummeal ne propose alors que les recettes réellement réalisables, en indiquant combien d'ingrédients manquent quand il en manque.",
-  },
-  {
-    titre: 'Récupérer une recette vue passer',
-    to: '/fonctionnalites/import-recette-tiktok',
-    corps:
-      "Vous collez un lien TikTok, Instagram ou YouTube : la recette est extraite et rangée dans votre carnet, avec ses ingrédients et ses étapes, utilisable comme les autres.",
-  },
-  {
-    titre: 'Estimer un plat depuis une photo',
-    to: '/fonctionnalites/photo-de-plat',
-    corps:
-      "Vous photographiez une assiette et obtenez une estimation de son contenu calorique. C'est une estimation, corrigeable à la main — pas une mesure.",
-  },
-  {
-    titre: 'Remplacer un ingrédient manquant',
-    corps:
-      "Quand un ingrédient manque, l'application propose une substitution avec le bon dosage, et signale les recettes où le remplacement ne tient pas.",
-  },
-];
-
-const NON_FONCTIONS: string[] = [
-  "Les recettes ne sont pas générées par une IA. Ce sont des recettes écrites par des humains, importées ou rédigées, que l'application trie et filtre selon ce que vous avez.",
-  "Yummeal ne vend pas de nourriture, ne livre rien et n'est pas une place de marché de paniers invendus : ce n'est pas un concurrent de Too Good To Go ou de Phenix.",
-  "Yummeal ne remplace pas un avis médical ni diététique. Les repères nutritionnels affichés sont généraux.",
-  "L'application ne se connecte pas à votre réfrigérateur : elle lit une photo prise avec votre téléphone, quel que soit votre frigo.",
-];
-
-const IDENTITE: Array<{ label: string; valeur: React.ReactNode }> = [
-  { label: 'Éditeur', valeur: 'YIDLA' },
-  { label: 'SIREN', valeur: '898 271 184' },
-  { label: 'SIRET', valeur: '898 271 184 00019' },
-  { label: 'TVA intracommunautaire', valeur: 'FR13898271184' },
-  { label: 'Greffe', valeur: 'RCS Versailles' },
-  {
-    label: 'Contact',
-    valeur: (
-      <a
-        href="mailto:contact@yummeal.com"
-        className="text-[#FF8C42] underline"
-      >
-        contact@yummeal.com
-      </a>
-    ),
-  },
-  {
-    label: 'Application iOS',
-    valeur: (
-      <a
-        href={STORE_URLS_DEFAUT.apple}
-        className="text-[#FF8C42] underline"
-        rel="noopener"
-      >
-        App Store — id6744942441
-      </a>
-    ),
-  },
-  {
-    label: 'Application Android',
-    valeur: (
-      <a
-        href={STORE_URLS_DEFAUT.google}
-        className="text-[#FF8C42] underline"
-        rel="noopener"
-      >
-        Google Play — com.yummeal
-      </a>
-    ),
-  },
-];
+/**
+ * Les fiches des fonctionnalités renvoient vers les pages produit. Le lien
+ * est positionnel (l'ordre du tableau), pas textuel : il reste juste quand la
+ * traduction change les mots. `null` = pas de page dédiée.
+ */
+const SLUGS_FONCTIONS = [
+  'scanner-frigo',
+  'import-recette-tiktok',
+  'photo-de-plat',
+  null,
+] as const;
 
 export default function AProposPage() {
+  const { locale, t } = useLocale();
+  const a = t.aPropos;
+  const racine = cheminLocalise('', locale);
+
+  const identite: Array<{ label: string; valeur: React.ReactNode }> = [
+    { label: a.labels.editeur, valeur: 'YIDLA' },
+    { label: a.labels.siren, valeur: '898 271 184' },
+    { label: a.labels.siret, valeur: '898 271 184 00019' },
+    { label: a.labels.tva, valeur: 'FR13898271184' },
+    { label: a.labels.greffe, valeur: 'RCS Versailles' },
+    {
+      label: a.labels.contact,
+      valeur: (
+        <a href="mailto:contact@yummeal.com" className="text-[#FF8C42] underline">
+          contact@yummeal.com
+        </a>
+      ),
+    },
+    {
+      // L'identifiant App Store est l'information utile ici — c'est lui qui
+      // distingue cette application de ses homonymes. Le LIEN, en revanche,
+      // mène à une 404 pour un visiteur polonais : l'application iOS n'est
+      // distribuée que dans la boutique française (voir STORE_URLS dans
+      // src/config.ts). Dans cette langue on garde donc le fait et on retire
+      // le lien, au lieu de proposer un clic qui échoue.
+      label: a.labels.appIos,
+      valeur: STORE_URLS[locale].apple ? (
+        <a
+          href={STORE_URLS[locale].apple ?? undefined}
+          className="text-[#FF8C42] underline"
+          rel="noopener"
+        >
+          App Store — id6744942441
+        </a>
+      ) : (
+        <span>App Store — id6744942441</span>
+      ),
+    },
+    {
+      label: a.labels.appAndroid,
+      valeur: (
+        <a
+          href={STORE_URLS[locale].google}
+          className="text-[#FF8C42] underline"
+          rel="noopener"
+        >
+          Google Play — com.yummeal
+        </a>
+      ),
+    },
+  ];
+
   usePageMeta({
-    title: 'À propos de Yummeal — qui édite l’application et ce qu’elle fait',
-    description:
-      "Application mobile éditée par YIDLA (France) : des recettes réalisables avec ce que vous avez déjà. Ce qu'elle fait, et ce qu'elle ne fait pas.",
-    canonicalPath: '/a-propos',
+    title: a.title,
+    description: a.description,
+    canonicalPath: cheminLocalise('/a-propos', locale),
     jsonLd: [
       buildAboutPageJsonLd(),
       buildOrganizationJsonLd(),
       buildMobileApplicationJsonLd(),
       buildBreadcrumbJsonLd([
-        { name: 'Accueil', path: '/' },
-        { name: 'À propos', path: '/a-propos' },
+        { name: t.nav.accueil, path: racine },
+        { name: a.fil, path: cheminLocalise('/a-propos', locale) },
       ]),
     ],
   });
@@ -126,72 +115,53 @@ export default function AProposPage() {
     <div className="min-h-screen bg-[#FFFAF0] px-4 md:px-8 pt-24 pb-16">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-          À propos de Yummeal
+          {a.h1}
         </h1>
-        <p className="text-lg text-gray-700 mb-4">
-          Yummeal est une application mobile pour iOS et Android qui part de ce
-          que vous avez déjà chez vous pour vous dire quoi cuisiner. Elle est
-          éditée en France par la société YIDLA et disponible depuis 2025.
-        </p>
-        <p className="text-gray-700 mb-12">
-          Le téléchargement est gratuit. L'usage complet fonctionne par
-          abonnement, à partir de 4,99 € par mois, avec des formules
-          semestrielle et annuelle. L'interface de l'application existe en
-          français, anglais, chinois et polonais.
-        </p>
+        <p className="text-lg text-gray-700 mb-4">{a.intro}</p>
+        <p className="text-gray-700 mb-12">{a.modele}</p>
 
-        <h2 className="text-2xl font-bold mb-6">
-          Ce que fait l'application
-        </h2>
+        <h2 className="text-2xl font-bold mb-6">{a.ceQueCaFait}</h2>
         <div className="grid md:grid-cols-2 gap-6 mb-14">
-          {FONCTIONS.map((f) => (
-            <div key={f.titre} className="clay-card p-6">
-              <h3 className="text-lg font-semibold mb-2">
-                {f.to ? (
-                  <Link
-                    to={f.to}
-                    className="hover:text-[#FF8C42] transition-colors"
-                  >
-                    {f.titre}
-                  </Link>
-                ) : (
-                  f.titre
-                )}
-              </h3>
-              <p className="text-gray-600">{f.corps}</p>
-            </div>
-          ))}
+          {a.fonctions.map((f, i) => {
+            const slug = SLUGS_FONCTIONS[i];
+            return (
+              <div key={f.titre} className="clay-card p-6">
+                <h3 className="text-lg font-semibold mb-2">
+                  {slug ? (
+                    <Link
+                      to={cheminLocalise(`/fonctionnalites/${slug}`, locale)}
+                      className="hover:text-[#FF8C42] transition-colors"
+                    >
+                      {f.titre}
+                    </Link>
+                  ) : (
+                    f.titre
+                  )}
+                </h3>
+                <p className="text-gray-600">{f.corps}</p>
+              </div>
+            );
+          })}
         </div>
 
-        <h2 className="text-2xl font-bold mb-3">
-          Ce que Yummeal ne fait pas
-        </h2>
-        <p className="text-gray-700 mb-5">
-          Cette section existe pour lever les confusions les plus fréquentes,
-          y compris celles que produisent les résumés automatiques.
-        </p>
+        <h2 className="text-2xl font-bold mb-3">{a.ceQueCaNeFaitPas}</h2>
+        <p className="text-gray-700 mb-5">{a.neFaitPasIntro}</p>
         <ul className="list-disc pl-6 space-y-3 text-gray-700 mb-14">
-          {NON_FONCTIONS.map((n) => (
+          {a.neFaitPas.map((n) => (
             <li key={n.slice(0, 40)}>{n}</li>
           ))}
         </ul>
 
-        <h2 className="text-2xl font-bold mb-3">
-          Ne pas confondre
-        </h2>
+        <h2 className="text-2xl font-bold mb-3">{a.confusionTitre}</h2>
         <p className="text-gray-700 mb-14">
-          « Yummeal » est aussi le nom d'un restaurant au Royaume-Uni et
-          ressemble à celui d'autres applications de cuisine sans lien avec
-          nous, notamment <strong>Yummly</strong> (États-Unis) et{' '}
-          <strong>Youmeal</strong>. L'application décrite ici est celle éditée
-          par YIDLA, publiée sous l'identifiant App Store{' '}
-          <span className="font-mono">6744942441</span> et l'identifiant Play{' '}
+          <strong>« Yummeal »</strong> {a.confusionCorps}{' '}
+          <span className="font-mono">6744942441</span> {a.confusionEtPlay}{' '}
           <span className="font-mono">com.yummeal</span>.
         </p>
 
-        <h2 className="text-2xl font-bold mb-6">Identité de l'éditeur</h2>
+        <h2 className="text-2xl font-bold mb-6">{a.identiteTitre}</h2>
         <dl className="mb-14 divide-y divide-gray-200">
-          {IDENTITE.map((item) => (
+          {identite.map((item) => (
             <div
               key={item.label}
               className="py-3 flex flex-col sm:flex-row sm:gap-6"
@@ -204,28 +174,60 @@ export default function AProposPage() {
           ))}
         </dl>
 
+        {/* Les silos éditoriaux (/concept, /alternatives) et les pages légales
+            n'existent qu'en français. On ne renvoie donc pas un lecteur
+            polonais vers eux sans le prévenir : dans sa langue, on lie les
+            pages produit traduites, et les pages légales portent la mention
+            « po francusku » — voir le pied de page, même règle. */}
         <p className="text-gray-700 mb-10">
-          Voir aussi{' '}
-          <Link to="/concept" className="text-[#FF8C42] underline">
-            le concept derrière l'application
-          </Link>
-          ,{' '}
-          <Link to="/alternatives" className="text-[#FF8C42] underline">
-            les comparatifs avec d'autres applications
-          </Link>
-          , les{' '}
-          <Link to="/cgu" className="text-[#FF8C42] underline">
-            conditions générales
-          </Link>{' '}
-          et la{' '}
-          <Link to="/confidentialite" className="text-[#FF8C42] underline">
-            politique de confidentialité
-          </Link>
-          .
+          {a.voirAussi}{' '}
+          {locale === 'fr' ? (
+            <>
+              <Link to="/concept" className="text-[#FF8C42] underline">
+                le concept derrière l’application
+              </Link>
+              ,{' '}
+              <Link to="/alternatives" className="text-[#FF8C42] underline">
+                les comparatifs avec d’autres applications
+              </Link>
+              , les{' '}
+              <Link to="/cgu" className="text-[#FF8C42] underline">
+                conditions générales
+              </Link>{' '}
+              et la{' '}
+              <Link to="/confidentialite" className="text-[#FF8C42] underline">
+                politique de confidentialité
+              </Link>
+              .
+            </>
+          ) : (
+            <>
+              <Link
+                to={cheminLocalise('/fonctionnalites', locale)}
+                className="text-[#FF8C42] underline"
+              >
+                {t.fonctionnalites.indexH1}
+              </Link>
+              {'. '}
+              <Link to="/cgu" className="text-[#FF8C42] underline" hrefLang="fr-FR">
+                {t.pied.cgu}
+              </Link>{' '}
+              <span className="text-gray-500">({t.pied.enFrancais})</span>
+              {', '}
+              <Link
+                to="/confidentialite"
+                className="text-[#FF8C42] underline"
+                hrefLang="fr-FR"
+              >
+                {t.pied.confidentialite}
+              </Link>{' '}
+              <span className="text-gray-500">({t.pied.enFrancais})</span>.
+            </>
+          )}
         </p>
 
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Essayer Yummeal</h2>
+          <h2 className="text-2xl font-bold mb-4">{a.essayer}</h2>
           <DownloadButtons />
         </div>
       </div>

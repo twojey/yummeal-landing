@@ -142,6 +142,69 @@ export const fr = {
     autres: 'Les autres fonctionnalités',
   },
 
+  aPropos: {
+    fil: 'À propos',
+    title: 'À propos de Yummeal — qui édite l’application et ce qu’elle fait',
+    description:
+      "Application mobile éditée par YIDLA (France) : des recettes réalisables avec ce que vous avez déjà. Ce qu'elle fait, et ce qu'elle ne fait pas.",
+    h1: 'À propos de Yummeal',
+    intro:
+      'Yummeal est une application mobile pour iOS et Android qui part de ce que vous avez déjà chez vous pour vous dire quoi cuisiner. Elle est éditée en France par la société YIDLA et disponible depuis 2025.',
+    // ⚠️ Le prix et les plateformes sont des FAITS, et ils diffèrent par
+    // marché : cette phrase est traduite, pas recopiée (voir pl.ts).
+    modele:
+      'Le téléchargement est gratuit. L’usage complet fonctionne par abonnement, à partir de 4,99 € par mois, avec des formules semestrielle et annuelle. L’interface de l’application existe en français, anglais, chinois et polonais.',
+    ceQueCaFait: 'Ce que fait l’application',
+    ceQueCaNeFaitPas: 'Ce que Yummeal ne fait pas',
+    neFaitPasIntro:
+      'Cette section existe pour lever les confusions les plus fréquentes, y compris celles que produisent les résumés automatiques.',
+    confusionCorps:
+      'est aussi le nom d’un restaurant au Royaume-Uni et ressemble à celui d’autres applications de cuisine sans lien avec nous, notamment Yummly (États-Unis) et Youmeal. L’application décrite ici est celle éditée par YIDLA, publiée sous l’identifiant App Store',
+    confusionEtPlay: 'et l’identifiant Play',
+    voirAussi: 'Voir aussi',
+    confusionTitre: 'Ne pas confondre',
+    identiteTitre: 'Identité de l’éditeur',
+    essayer: 'Essayer Yummeal',
+    labels: {
+      editeur: 'Éditeur',
+      siren: 'SIREN',
+      siret: 'SIRET',
+      tva: 'TVA intracommunautaire',
+      greffe: 'Greffe',
+      contact: 'Contact',
+      appIos: 'Application iOS',
+      appAndroid: 'Application Android',
+    },
+    fonctions: [
+      {
+        titre: 'Partir de ce que vous avez déjà',
+        corps:
+          "Vous photographiez l'intérieur de votre frigo, ou vous saisissez vos ingrédients. Yummeal ne propose alors que les recettes réellement réalisables, en indiquant combien d'ingrédients manquent quand il en manque.",
+      },
+      {
+        titre: 'Récupérer une recette vue passer',
+        corps:
+          "Vous collez un lien TikTok, Instagram ou YouTube : la recette est extraite et rangée dans votre carnet, avec ses ingrédients et ses étapes, utilisable comme les autres.",
+      },
+      {
+        titre: 'Estimer un plat depuis une photo',
+        corps:
+          "Vous photographiez une assiette et obtenez une estimation de son contenu calorique. C'est une estimation, corrigeable à la main — pas une mesure.",
+      },
+      {
+        titre: 'Remplacer un ingrédient manquant',
+        corps:
+          "Quand un ingrédient manque, l'application propose une substitution avec le bon dosage, et signale les recettes où le remplacement ne tient pas.",
+      },
+    ],
+    neFaitPas: [
+      "Les recettes ne sont pas générées par une IA. Ce sont des recettes écrites par des humains, importées ou rédigées, que l'application trie et filtre selon ce que vous avez.",
+      "Yummeal ne vend pas de nourriture, ne livre rien et n'est pas une place de marché de paniers invendus : ce n'est pas un concurrent de Too Good To Go ou de Phenix.",
+      "Yummeal ne remplace pas un avis médical ni diététique. Les repères nutritionnels affichés sont généraux.",
+      "L'application ne se connecte pas à votre réfrigérateur : elle lit une photo prise avec votre téléphone, quel que soit votre frigo.",
+    ],
+  },
+
   pied: {
     guides: 'Guides anti-gaspi',
     application: "L'application",
