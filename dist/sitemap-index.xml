@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap><loc>https://yummeal.app/sitemap-static.xml</loc><lastmod>2026-08-28</lastmod></sitemap>
+  <sitemap><loc>https://yummeal.app/sitemap-pl.xml</loc><lastmod>2026-09-12</lastmod></sitemap>
   <sitemap><loc>https://yummeal.app/sitemap-fonctionnalites.xml</loc><lastmod>2026-09-12</lastmod></sitemap>
   <sitemap><loc>https://yummeal.app/sitemap-ingredients.xml</loc><lastmod>2026-08-28</lastmod></sitemap>
   <sitemap><loc>https://yummeal.app/sitemap-recettes-avec.xml</loc><lastmod>2026-08-28</lastmod></sitemap>

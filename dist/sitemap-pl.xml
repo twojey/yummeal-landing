@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap de la version polonaise. Un sitemap par langue plutôt qu'un seul
+  fichier mélangé : quand une langue bouge (elle va beaucoup bouger au
+  lancement), c'est son seul `lastmod` qui change dans l'index, et Google ne
+  recrawle pas les 148 URL françaises pour rien.
+
+  Les équivalences entre langues sont déclarées dans le <head> de chaque page
+  (balises hreflang réciproques, générées par scripts/prerender.mjs depuis
+  src/i18n/config.ts). Elles ne sont donc PAS répétées ici : les dupliquer en
+  annotations xhtml:link créerait une deuxième source de vérité, et la
+  première contradiction entre les deux invaliderait les deux.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yummeal.app/pl/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1</priority>
+  </url>
+</urlset>
