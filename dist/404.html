@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Feuille de style tierce chargée sans bloquer le rendu : elle
+         retardait le First Contentful Paint du temps de DNS + TLS + fetch vers
+         fonts.googleapis.com, alors que le contenu est déjà prérendu et prêt à
+         s'afficher. `media="print"` la sort du chemin critique, l'onload la
+         réactive ; le <noscript> couvre le cas sans JS. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <title>Page introuvable - Yummeal</title>
+    <meta name="description" content="Cette page n'existe pas ou a été déplacée." />
+    <link rel="canonical" href="https://yummeal.app/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Yummeal" />
+    <meta property="og:title" content="Page introuvable - Yummeal" />
+    <meta property="og:description" content="Cette page n'existe pas ou a été déplacée." />
+    <meta property="og:url" content="https://yummeal.app/" />
+    <meta property="og:image" content="https://yummeal.app/images/yummeal_logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Page introuvable - Yummeal" />
+    <meta name="twitter:description" content="Cette page n'existe pas ou a été déplacée." />
+    <!-- AppsFlyer Web SDK loader: local bundle + CDN fallbacks -->
+    <script>
+      (function loadAppsFlyerSdk() {
+        const APP_VERSION = '20260307';
+        const sources = [
+          `/vendor/appsflyer/web_sdk.v1.0.min.js?v=${APP_VERSION}`,
+          'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
+          'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
+        ];
+
+        const loadSource = (index) => {
+          if (index >= sources.length) {
+            console.error('[AppsFlyer] Impossible de charger le SDK (toutes les sources ont échoué)');
+            return;
+          }
+
+          const script = document.createElement('script');
+          script.id = index === 0 ? 'appsflyer-web-sdk' : undefined;
+          script.async = true;
+          script.src = sources[index];
+
+          script.onload = () => {
+            window.dispatchEvent(new Event('appsflyer:sdk-ready'));
+          };
+
+          script.onerror = (event) => {
+            console.error('[AppsFlyer] Échec du chargement du SDK', { source: sources[index], event });
+            script.remove();
+            loadSource(index + 1);
+          };
+
+          document.head.appendChild(script);
+        };
+
+        loadSource(0);
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DTaf3ygC.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-DyxKecF9.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-DI8vrhlP.js">
+    <link rel="modulepreload" crossorigin href="/assets/icons-DToZlIM6.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-esXGLrDs.css">
+  <meta name="robots" content="noindex,follow" />
+
+</head>
+  <body>
+    <div id="root"><div class="min-h-screen bg-[#FFFAF0] px-4 md:px-8"><nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md"><div class="max-w-6xl mx-auto px-4 md:px-8"><div class="flex items-center justify-between h-16"><div class="flex items-center"><a class="flex items-center" href="/"><img src="/assets/fav-loveshot-nTEXU_jv.png" alt="Yummeal" width="32" height="32" class="hidden md:block h-8 w-auto"/><span class="hidden md:block ml-2 text-2xl font-bold font-heading text-[#FF8C42]">Yummeal</span><img src="/assets/fav-loveshot-nTEXU_jv.png" alt="Yummeal" width="32" height="32" class="md:hidden h-8 w-auto"/></a></div><div class="hidden md:flex items-center space-x-8"><a class="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer" href="/#hero">Accueil</a><a class="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer" href="/#features">Fonctionnalités</a><a class="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer" href="/#how-it-works">Comment ça marche ?</a><a class="text-gray-600 hover:text-[#FF8C42] transition-colors cursor-pointer" href="/#faq">FAQ</a></div><div class="md:hidden"><button class="text-gray-600 hover:text-[#FF8C42]" aria-label="Ouvrir le menu" aria-expanded="false"><svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></div></div></nav><div class="min-h-screen bg-[#FFFAF0] px-4 md:px-8 pt-24 pb-16"><div class="max-w-3xl mx-auto"><p class="text-sm uppercase tracking-widest text-[#FF8C42] font-semibold mb-3">Erreur 404</p><h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">Cette page n&#x27;existe pas</h1><p class="text-lg text-gray-700 mb-10">Le lien est peut-être ancien, ou l&#x27;adresse comporte une faute de frappe. Voici par où reprendre.</p><div class="grid md:grid-cols-2 gap-6 mb-12"><div class="clay-card p-6"><h2 class="text-xl font-semibold mb-2"><a class="hover:text-[#FF8C42] transition-colors" href="/ingredients">Que faire avec... ?</a></h2><p class="text-gray-600">Un ingrédient traîne au frigo et vous ne savez pas quoi en faire</p></div><div class="clay-card p-6"><h2 class="text-xl font-semibold mb-2"><a class="hover:text-[#FF8C42] transition-colors" href="/recettes-avec">Recettes avec...</a></h2><p class="text-gray-600">Vous avez deux ou trois ingrédients précis sous la main</p></div><div class="clay-card p-6"><h2 class="text-xl font-semibold mb-2"><a class="hover:text-[#FF8C42] transition-colors" href="/substitutions">Par quoi remplacer...</a></h2><p class="text-gray-600">Il vous manque un ingrédient au milieu d&#x27;une recette</p></div><div class="clay-card p-6"><h2 class="text-xl font-semibold mb-2"><a class="hover:text-[#FF8C42] transition-colors" href="/anti-gaspillage">Anti-gaspillage</a></h2><p class="text-gray-600">Conservation, dates de péremption, organisation du frigo</p></div></div><p class="text-gray-700">Vous pouvez aussi revenir à<!-- --> <a class="text-[#FF8C42] underline font-medium" href="/">l&#x27;accueil</a>.</p></div></div><footer class="bg-white py-12 border-t border-gray-100"><div class="max-w-6xl mx-auto px-4 md:px-8"><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10 text-sm"><div><h3 class="font-semibold text-gray-800 mb-3">Guides anti-gaspi</h3><ul class="space-y-2"><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/ingredients">Que faire avec...</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/recettes-avec">Recettes avec...</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/substitutions">Par quoi remplacer...</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/urgencies">Urgences cuisine</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/anti-gaspillage">Anti-gaspillage</a></li></ul></div><div><h3 class="font-semibold text-gray-800 mb-3">L&#x27;application</h3><ul class="space-y-2"><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/fonctionnalites/scanner-frigo">Scanner son frigo</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/fonctionnalites/import-recette-tiktok">Importer une recette TikTok</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/fonctionnalites/photo-de-plat">Estimer un plat en photo</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/fonctionnalites">Toutes les fonctionnalités</a></li></ul></div><div><h3 class="font-semibold text-gray-800 mb-3">Cuisine pratique</h3><ul class="space-y-2"><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/sante">Santé &amp; alimentation</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/solutions">Solutions du quotidien</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/astuces">Astuces de cuisine</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/budget">Petit budget</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/regimes">Régimes &amp; objectifs</a></li></ul></div><div><h3 class="font-semibold text-gray-800 mb-3">En savoir plus</h3><ul class="space-y-2"><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/guides">Guides pratiques</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/faq">FAQ sécurité alimentaire</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/concept">Le concept Yummeal</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/scenarios">Scénarios d&#x27;usage</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/comparatif">Comparatifs</a></li></ul></div><div><h3 class="font-semibold text-gray-800 mb-3">Yummeal</h3><ul class="space-y-2"><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/fonctionnalites">Fonctionnalités</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/a-propos">À propos</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/creators">Creators</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/confidentialite">Politique de confidentialité</a></li><li><a class="text-gray-600 hover:text-[#FF8C42]" href="/cgu">CGU</a></li></ul></div></div><div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-100"><div class="flex items-center gap-4"><img src="/assets/fav-loveshot-nTEXU_jv.png" alt="Yummeal" width="32" height="32" loading="lazy" class="h-8 w-auto"/><span class="text-gray-600"> 2026 Yummeal, tous droits réservés</span></div><div class="flex items-center gap-4"><a href="#" class="text-gray-600 hover:text-[#FF8C42]">Facebook</a><a href="#" class="text-gray-600 hover:text-[#FF8C42]">Instagram</a><a href="#" class="text-gray-600 hover:text-[#FF8C42]">Twitter</a></div></div></div></footer></div></div>
+  </body>
+</html>

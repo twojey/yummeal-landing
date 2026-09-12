@@ -7,10 +7,18 @@
 ## Pages
 
 - [Accueil](https://yummeal.app/): présentation de l'application, fonctionnalités et téléchargement
+- [À propos](https://yummeal.app/a-propos): qui édite l'application (YIDLA, France), ce qu'elle fait, ce qu'elle ne fait pas, et les homonymes à ne pas confondre
 - [Programme Creators](https://yummeal.app/creators): programme de créateurs UGC rémunérés à la performance
 - [Politique de confidentialité](https://yummeal.app/confidentialite)
 - [Conditions générales d'utilisation](https://yummeal.app/cgu)
 - [Suppression de compte](https://yummeal.app/supprimer-mon-compte)
+
+## Fonctionnalités de l'application
+
+- [Fonctionnalités](https://yummeal.app/fonctionnalites): les trois mécanismes, avec leurs limites
+- [Scanner son frigo en photo](https://yummeal.app/fonctionnalites/scanner-frigo): reconnaissance des ingrédients depuis une photo prise au téléphone, liste corrigeable, recettes réellement réalisables avec le nombre d'ingrédients manquants
+- [Importer une recette TikTok ou Instagram](https://yummeal.app/fonctionnalites/import-recette-tiktok): extraction des ingrédients et des étapes depuis un lien TikTok, Instagram ou YouTube
+- [Estimer un plat depuis une photo](https://yummeal.app/fonctionnalites/photo-de-plat): estimation calorique corrigeable à partir d'une photo d'assiette
 
 ## Guides anti-gaspi par ingrédient
 
@@ -35,5 +43,5 @@
 
 ## Télécharger l'application
 
-- [App Store (iOS)](https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441)
+- [App Store (iOS)](https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441)
 - [Google Play (Android)](https://play.google.com/store/apps/details?id=com.yummeal)
