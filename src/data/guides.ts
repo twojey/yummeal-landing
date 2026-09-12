@@ -12,7 +12,7 @@ export interface Article {
 export const articles: Article[] = [
   {
     slug: 'batch-cooking-etudiant-2-heures',
-    title: 'Batch cooking étudiant : un menu complet pour la semaine en 2 heures',
+    title: 'Batch cooking étudiant : une semaine de menus en 2 heures',
     metaDescription:
       'Comment préparer une semaine de repas en 2 heures avec un petit budget étudiant : méthode, liste de courses type et organisation.',
     intro:
@@ -101,7 +101,7 @@ export const articles: Article[] = [
     slug: 'lecture-etiquettes-nutritionnelles-pieges',
     title: 'Lire une étiquette nutritionnelle sans se faire piéger',
     metaDescription:
-      'Comment lire un tableau de valeurs nutritionnelles, repérer les pièges de présentation (portion, "sans sucres ajoutés"...) et comparer deux produits correctement.',
+      'Lire un tableau de valeurs nutritionnelles, repérer les pièges de présentation (portion, « sans sucres ajoutés ») et comparer deux produits.',
     intro:
       "Le tableau des valeurs nutritionnelles au dos d'un emballage donne des informations fiables, mais sa présentation peut facilement induire en erreur si l'on ne sait pas où regarder.",
     sections: [
@@ -135,7 +135,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'comprendre-nutriscore-vs-realite',
-    title: 'Comprendre le Nutri-Score : ce qu\'il mesure vraiment, et ce qu\'il ne mesure pas',
+    title: 'Nutri-Score : ce qu\'il mesure vraiment, et ce qu\'il ignore',
     metaDescription:
       "Comment est calculé le Nutri-Score, sur quelle base, et quelles sont ses limites documentées : transformation, portion réelle, catégorie de comparaison.",
     intro:

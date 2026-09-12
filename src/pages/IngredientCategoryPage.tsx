@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getCategory, getIngredientsByCategory } from '../data/ingredients';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
 
 export default function IngredientCategoryPage() {
   const { category: categorySlug } = useParams<{ category: string }>();
@@ -56,6 +57,12 @@ export default function IngredientCategoryPage() {
           </p>
           <DownloadButtons />
         </div>
+      <RelatedArticles
+          category="ingredients"
+          slug={`categorie-${category.slug}`}
+          tags={[]}
+          title={category.label}
+        />
       </div>
     </div>
   );

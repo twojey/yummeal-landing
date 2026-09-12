@@ -101,7 +101,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'proteines-moins-cheres-que-la-viande',
-    title: 'Les protéines qui coûtent structurellement moins cher que la viande',
+    title: 'Les protéines qui coûtent moins cher que la viande',
     metaDescription:
       "Légumineuses, œufs, tofu : pourquoi certaines sources de protéines restent durablement moins chères que la viande, indépendamment des prix du moment.",
     intro:
@@ -143,7 +143,7 @@ export const articles: Article[] = [
     tags: ['protéines', 'légumineuses', 'œufs', 'tofu'],
   },
   {
-    slug: 'comparatif-prix-vrac-vs-emballé',
+    slug: 'comparatif-prix-vrac-vs-emballe',
     title: 'Vrac ou emballé : pourquoi le vrac reste généralement moins cher',
     metaDescription:
       "Pourquoi les produits en vrac sont, par principe, moins chers que leur équivalent emballé, sans avoir besoin de comparer des prix précis.",

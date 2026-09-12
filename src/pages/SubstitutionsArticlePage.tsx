@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/substitutions';
+import { articles, getArticle } from '../data/substitutions';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function SubstitutionsArticlePage() {
@@ -57,10 +58,23 @@ export default function SubstitutionsArticlePage() {
           <DownloadButtons />
         </div>
 
+        <SiloSiblings
+
+          segment="substitutions"
+
+          heading="Les autres substitutions"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
         <RelatedArticles
           category="substitutions"
           slug={article.slug}
           tags={article.tags ?? []}
+        title={article.title}
         />
       </div>
     </div>

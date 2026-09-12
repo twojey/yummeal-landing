@@ -22,7 +22,7 @@ interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
  * URLs des stores d'applications
  */
 const STORE_URLS = {
-  apple: 'https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441',
+  apple: 'https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441',
   google: 'https://play.google.com/store/apps/details?id=com.yummeal'
 };
 

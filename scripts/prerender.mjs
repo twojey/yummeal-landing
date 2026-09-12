@@ -12,42 +12,126 @@ const root = path.resolve(__dirname, '..');
 const distDir = path.join(root, 'dist');
 
 const ssr = await import(path.join(root, 'dist-ssr', 'entry-server.js'));
-const { render, ingredients, ingredientCategories } = ssr;
+const { render, ingredients, ingredientCategories, fonctionnalites } = ssr;
 const {
   buildOrganizationJsonLd,
+  buildAboutPageJsonLd,
+  buildWebSiteJsonLd,
   buildMobileApplicationJsonLd,
   buildArticleJsonLd,
   buildFaqJsonLd,
   buildRecipeJsonLd,
+  buildBreadcrumbJsonLd,
+  buildCollectionPageJsonLd,
+  buildIngredientJsonLd,
+  buildFonctionnaliteJsonLd,
   jsonLdScriptTags,
 } = ssr;
 
 const SITE_URL = 'https://yummeal.app';
 
+/**
+ * Longueur au-delà de laquelle Google tronque le title en SERP. Le suffixe
+ * " - Yummeal" est systématiquement ce qui se fait couper : sur les pages
+ * longues il consomme 10 caractères pour rien, donc on le retire plutôt que
+ * de le laisser tronquer le contenu utile.
+ */
+const TITLE_MAX = 65;
+const TITLE_SUFFIX = ' - Yummeal';
+
+function boundedTitle(base) {
+  const withSuffix = `${base}${TITLE_SUFFIX}`;
+  return withSuffix.length > TITLE_MAX ? base : withSuffix;
+}
+
+const HOME_CRUMB = { name: 'Accueil', path: '/' };
+
+function crumbs(...steps) {
+  return buildBreadcrumbJsonLd([HOME_CRUMB, ...steps]);
+}
+
 const staticRoutes = [
-  { path: '/', title: "Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo", description: "Yummeal transforme le contenu de votre frigo en recettes personnalisées : cuisinez sainement, sans gaspiller et sans y penser. Gratuit sur iOS et Android.", jsonLd: [buildOrganizationJsonLd(), buildMobileApplicationJsonLd()] },
-  { path: '/creators', title: 'Yummeal Creators - Programme affiliés & UGC', description: 'Rejoignez le programme Creators Yummeal : contenu UGC rémunéré à la performance.' },
-  { path: '/confidentialite', title: 'Politique de confidentialité - Yummeal', description: 'Politique de confidentialité de l\'application Yummeal.' },
-  { path: '/cgu', title: 'Conditions générales d\'utilisation - Yummeal', description: 'Conditions générales d\'utilisation de l\'application Yummeal.' },
+  { path: '/', title: "Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo", description: "Yummeal transforme votre frigo en recettes réalisables : cuisinez sainement, sans gaspiller. Téléchargement gratuit sur iOS et Android.", jsonLd: [buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildMobileApplicationJsonLd()] },
+  // Page d'identité de la marque : celle qu'un moteur génératif cite pour
+  // répondre « qu'est-ce que Yummeal ». Elle n'existait pas.
+  { path: '/a-propos', title: 'À propos de Yummeal — qui édite l\u2019application et ce qu\u2019elle fait', description: "Application mobile éditée par YIDLA (France) : des recettes réalisables avec ce que vous avez déjà. Ce qu'elle fait, et ce qu'elle ne fait pas.", jsonLd: [buildAboutPageJsonLd(), buildOrganizationJsonLd(), buildMobileApplicationJsonLd(), crumbs({ name: 'À propos', path: '/a-propos' })] },
+  { path: '/creators', title: 'Yummeal Creators - Programme affiliés & UGC', description: 'Rejoignez le programme Creators Yummeal : contenu UGC rémunéré à la performance.', jsonLd: crumbs({ name: 'Creators', path: '/creators' }) },
+  { path: '/confidentialite', title: 'Politique de confidentialité - Yummeal', description: 'Politique de confidentialité de l\'application Yummeal.', jsonLd: crumbs({ name: 'Confidentialité', path: '/confidentialite' }) },
+  { path: '/cgu', title: 'Conditions générales d\'utilisation - Yummeal', description: 'Conditions générales d\'utilisation de l\'application Yummeal.', jsonLd: crumbs({ name: 'CGU', path: '/cgu' }) },
+  // Page exigée par Apple et par Google Play. Elle n'était pas prérendue :
+  // tout bot qui n'exécute pas le JS recevait le HTML de l'accueil, canonical
+  // vers "/" inclus — donc une obligation de conformité invisible, et une URL
+  // déclarée dans llms.txt qui servait autre chose que ce qu'elle annonce.
+  { path: '/supprimer-mon-compte', title: 'Supprimer mon compte Yummeal', description: "Supprimez définitivement votre compte Yummeal et les données associées depuis cette page, après identification.", jsonLd: crumbs({ name: 'Supprimer mon compte', path: '/supprimer-mon-compte' }) },
+  // NB : /delete-account n'est PAS prérendue. C'est un alias anglophone de la
+  // même page, servi en 301 vers /supprimer-mon-compte/ par netlify.toml —
+  // prérendre les deux aurait créé un duplicata avec un H1 français sous un
+  // title anglais. La route React reste déclarée pour la navigation interne.
 ];
+
+const INGREDIENTS_CRUMB = { name: 'Que faire avec...', path: '/ingredients' };
+const categoryBySlug = new Map(ingredientCategories.map((c) => [c.slug, c]));
+
+const ingredientsIndexDescription =
+  "Que faire avec un ingrédient qui traîne ou qui commence à s'abîmer ? Nos guides par catégorie pour ne plus rien jeter.";
 
 const ingredientRoutes = [
   {
     path: '/ingredients',
     title: 'Que faire avec... | Guides anti-gaspi par ingrédient - Yummeal',
-    description:
-      "Que faire avec un ingrédient qui traîne ou qui commence à s'abîmer ? Nos guides par catégorie pour ne plus rien jeter.",
+    description: ingredientsIndexDescription,
+    jsonLd: [
+      buildCollectionPageJsonLd(
+        {
+          name: 'Que faire avec... ?',
+          description: ingredientsIndexDescription,
+          path: '/ingredients',
+        },
+        ingredientCategories.map((c) => ({
+          name: c.label,
+          path: `/ingredients/${c.slug}`,
+        }))
+      ),
+      crumbs(INGREDIENTS_CRUMB),
+    ],
   },
-  ...ingredientCategories.map((c) => ({
-    path: `/ingredients/${c.slug}`,
-    title: `Que faire avec des ${c.label.toLowerCase()} ? - Yummeal`,
-    description: c.description,
-  })),
-  ...ingredients.map((i) => ({
-    path: `/ingredients/${i.categorySlug}/${i.slug}`,
-    title: `Que faire avec : ${i.name} ? - Yummeal`,
-    description: i.metaDescription,
-  })),
+  ...ingredientCategories.map((c) => {
+    const children = ingredients.filter((i) => i.categorySlug === c.slug);
+    return {
+      path: `/ingredients/${c.slug}`,
+      title: `Que faire avec des ${c.label.toLowerCase()} ? - Yummeal`,
+      description: c.description,
+      jsonLd: [
+        buildCollectionPageJsonLd(
+          { name: c.label, description: c.description, path: `/ingredients/${c.slug}` },
+          children.map((i) => ({
+            name: i.name,
+            path: `/ingredients/${i.categorySlug}/${i.slug}`,
+          }))
+        ),
+        crumbs(INGREDIENTS_CRUMB, { name: c.label, path: `/ingredients/${c.slug}` }),
+      ],
+    };
+  }),
+  ...ingredients.map((i) => {
+    const path = `/ingredients/${i.categorySlug}/${i.slug}`;
+    const cat = categoryBySlug.get(i.categorySlug);
+    return {
+      path,
+      title: boundedTitle(`Que faire avec : ${i.name} ?`),
+      description: i.metaDescription,
+      jsonLd: [
+        buildIngredientJsonLd(i, path),
+        crumbs(
+          INGREDIENTS_CRUMB,
+          ...(cat
+            ? [{ name: cat.label, path: `/ingredients/${cat.slug}` }]
+            : []),
+          { name: i.name, path }
+        ),
+      ],
+    };
+  }),
 ];
 
 // Catégories "plates" (index + /:slug), toutes construites sur le même
@@ -59,25 +143,25 @@ const flatCategories = [
   {
     segment: 'recettes-avec',
     dataKey: 'recettesAvecArticles',
-    indexTitle: 'Recettes avec... | Idées de recettes selon vos ingrédients - Yummeal',
+    indexTitle: 'Recettes avec... | Idées selon vos ingrédients - Yummeal',
     indexDescription: "Vous avez des ingrédients précis au frigo et vous cherchez une recette pour les utiliser ? Retrouvez nos recettes complètes classées par ingrédients.",
   },
   {
     segment: 'substitutions',
     dataKey: 'substitutionsArticles',
-    indexTitle: 'Par quoi remplacer... | Guides de substitution en cuisine - Yummeal',
+    indexTitle: 'Par quoi remplacer... | Substitutions en cuisine - Yummeal',
     indexDescription: "Plus d'un ingrédient sous la main ? Nos guides vous disent par quoi le remplacer et dans quelles proportions.",
   },
   {
     segment: 'urgencies',
     dataKey: 'urgenciesArticles',
-    indexTitle: 'Urgences cuisine | Recettes express quand vous êtes coincé - Yummeal',
+    indexTitle: 'Urgences cuisine | Recettes express en 10 minutes - Yummeal',
     indexDescription: "Rien au frigo, pas de temps, un plat raté ? Nos guides d'urgence cuisine pour trouver une solution concrète en moins de 10 minutes.",
   },
   {
     segment: 'sante',
     dataKey: 'santeArticles',
-    indexTitle: 'Santé & alimentation | Sécurité alimentaire et nutrition - Yummeal',
+    indexTitle: 'Santé & alimentation | Conservation et nutrition - Yummeal',
     indexDescription: "Conservation des aliments, sécurité alimentaire, repères nutritionnels généraux : nos guides pour cuisiner et manger l'esprit tranquille.",
   },
   {
@@ -142,10 +226,45 @@ const flatCategories = [
   },
 ];
 
+/** Nom court du silo, pour le fil d'Ariane (le indexTitle est trop long). */
+const SILO_LABELS = {
+  'recettes-avec': 'Recettes avec...',
+  substitutions: 'Par quoi remplacer...',
+  urgencies: 'Urgences cuisine',
+  sante: 'Santé & alimentation',
+  'anti-gaspillage': 'Anti-gaspillage',
+  solutions: 'Solutions cuisine',
+  astuces: 'Astuces de cuisine',
+  budget: 'Petit budget',
+  regimes: 'Régimes & objectifs',
+  guides: 'Guides pratiques',
+  faq: 'FAQ sécurité alimentaire',
+  concept: 'Le concept Yummeal',
+  scenarios: "Scénarios d'usage",
+  comparatif: 'Comparatifs',
+};
+
 const flatCategoryRoutes = flatCategories.flatMap((cat) => {
   const articles = ssr[cat.dataKey];
-  const indexJsonLd =
-    cat.segment === 'faq' ? buildFaqJsonLd(articles) : undefined;
+  const siloLabel = SILO_LABELS[cat.segment] ?? cat.segment;
+  const siloCrumb = { name: siloLabel, path: `/${cat.segment}` };
+
+  // Un index de silo n'est QUE une liste : une CollectionPage qui déclare ses
+  // enfants décrit exactement ce que la page contient. Les 21 index du site
+  // n'avaient aucun balisage.
+  const indexJsonLd = [
+    buildCollectionPageJsonLd(
+      {
+        name: siloLabel,
+        description: cat.indexDescription,
+        path: `/${cat.segment}`,
+      },
+      articles.map((a) => ({ name: a.title, path: `/${cat.segment}/${a.slug}` }))
+    ),
+    crumbs(siloCrumb),
+  ];
+  if (cat.segment === 'faq') indexJsonLd.push(buildFaqJsonLd(articles));
+
   return [
     {
       path: `/${cat.segment}`,
@@ -153,33 +272,99 @@ const flatCategoryRoutes = flatCategories.flatMap((cat) => {
       description: cat.indexDescription,
       jsonLd: indexJsonLd,
     },
-    ...articles.map((a) => ({
-      path: `/${cat.segment}/${a.slug}`,
-      title: `${a.title} - Yummeal`,
-      description: a.metaDescription,
-      jsonLd:
+    ...articles.map((a) => {
+      const path = `/${cat.segment}/${a.slug}`;
+      const core =
         cat.segment === 'recettes-avec'
-          ? buildRecipeJsonLd(a, `/${cat.segment}/${a.slug}`)
-          : buildArticleJsonLd(a, `/${cat.segment}/${a.slug}`),
-    })),
+          ? buildRecipeJsonLd(a, path)
+          : buildArticleJsonLd(a, path);
+      const jsonLd = [core, crumbs(siloCrumb, { name: a.title, path })];
+      // Les pages de comparaison sont l'endroit où la décision se prend :
+      // l'application y était absente du balisage, elle n'existait que sur
+      // l'accueil.
+      if (cat.segment === 'comparatif') jsonLd.push(buildMobileApplicationJsonLd());
+      return {
+        path,
+        title: boundedTitle(a.title),
+        description: a.metaDescription,
+        jsonLd,
+      };
+    }),
   ];
 });
 
-const routes = [...staticRoutes, ...ingredientRoutes, ...flatCategoryRoutes];
+// Pages produit fonctionnelles. Les requêtes « application qui fait Y » sont
+// gagnées par des pages produit, pas par des articles de blog — et le site n'en
+// avait aucune. Ce sont aussi ses seules pages à intention transactionnelle.
+const FONCTIONNALITES_CRUMB = { name: 'Fonctionnalités', path: '/fonctionnalites' };
+const fonctionnalitesIndexDescription =
+  "Les trois mécanismes de Yummeal et leurs limites : scanner son frigo, importer une recette TikTok, estimer un plat en photo.";
+
+const fonctionnaliteRoutes = [
+  {
+    path: '/fonctionnalites',
+    title: 'Fonctionnalités de Yummeal — les trois mécanismes',
+    description: fonctionnalitesIndexDescription,
+    jsonLd: [
+      buildCollectionPageJsonLd(
+        {
+          name: 'Fonctionnalités',
+          description: fonctionnalitesIndexDescription,
+          path: '/fonctionnalites',
+        },
+        fonctionnalites.map((f) => ({
+          name: f.h1,
+          path: `/fonctionnalites/${f.slug}`,
+        }))
+      ),
+      crumbs(FONCTIONNALITES_CRUMB),
+    ],
+  },
+  ...fonctionnalites.map((f) => ({
+    path: `/fonctionnalites/${f.slug}`,
+    title: boundedTitle(f.title),
+    description: f.metaDescription,
+    jsonLd: [
+      buildFonctionnaliteJsonLd(f, `/fonctionnalites/${f.slug}`),
+      buildMobileApplicationJsonLd(),
+      crumbs(FONCTIONNALITES_CRUMB, {
+        name: f.h1,
+        path: `/fonctionnalites/${f.slug}`,
+      }),
+    ],
+  })),
+];
+
+const routes = [
+  ...staticRoutes,
+  ...fonctionnaliteRoutes,
+  ...ingredientRoutes,
+  ...flatCategoryRoutes,
+];
 
 const template = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
 
-function injectMeta(html, { title, description, path: routePath, jsonLd }) {
+function injectMeta(
+  html,
+  { title, description, path: routePath, jsonLd, canonicalOverride, noindex }
+) {
   // Netlify sert dist/<route>/index.html et redirige (301) l'URL sans slash
   // final vers la version avec slash : le canonical doit matcher l'URL
   // réellement servie (voir src/hooks/usePageMeta.ts pour la même règle
   // côté client).
   const slashedPath = routePath.endsWith('/') ? routePath : `${routePath}/`;
-  const canonical = `${SITE_URL}${slashedPath}`;
+  const canonical = `${SITE_URL}${canonicalOverride ?? slashedPath}`;
   const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   const ldJsonBlock = schemas.length ? jsonLdScriptTags(schemas) : '';
+  // Tout ce qui n'est pas l'accueil est un article ou une page de contenu :
+  // laisser og:type="website" partout faisait passer 163 pages pour la home
+  // du site auprès de chaque partageur de lien.
+  const ogType = routePath === '/' ? 'website' : 'article';
+  const robotsTag = noindex
+    ? '<meta name="robots" content="noindex,follow" />\n'
+    : '';
   return html
-    .replace('</head>', `${ldJsonBlock}\n</head>`)
+    .replace('</head>', `${robotsTag}${ldJsonBlock}\n</head>`)
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta\s+name="description"\s+content=".*?"\s*\/>/,
@@ -188,6 +373,10 @@ function injectMeta(html, { title, description, path: routePath, jsonLd }) {
     .replace(
       /<link rel="canonical" href=".*?" \/>/,
       `<link rel="canonical" href="${canonical}" />`
+    )
+    .replace(
+      /<meta property="og:type" content=".*?" \/>/,
+      `<meta property="og:type" content="${ogType}" />`
     )
     .replace(
       /<meta property="og:title" content=".*?" \/>/,
@@ -200,6 +389,17 @@ function injectMeta(html, { title, description, path: routePath, jsonLd }) {
     .replace(
       /<meta property="og:url" content=".*?" \/>/,
       `<meta property="og:url" content="${canonical}" />`
+    )
+    // Les twitter:* n'étaient jamais réécrits : les 163 pages profondes
+    // portaient le titre et la description de l'accueil dans toute carte
+    // partagée hors Open Graph.
+    .replace(
+      /<meta name="twitter:title" content=".*?" \/>/,
+      `<meta name="twitter:title" content="${title}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content=".*?"\s*\/>/,
+      `<meta name="twitter:description" content="${description}" />`
     );
 }
 
@@ -221,4 +421,26 @@ for (const route of routes) {
   count++;
 }
 
-console.log(`[prerender] ${count} pages statiques générées dans dist/`);
+// Vraie page 404. Sans elle, le catch-all SPA de netlify.toml répondait 200 +
+// l'accueil pour l'infini des URL inexistantes : chaque faute de frappe, chaque
+// vieux lien externe et chaque scan de crawler créait un duplicata de la home
+// avec un code succès. Netlify sert dist/404.html avec le statut 404 pour toute
+// URL qu'aucune règle ne capture — la règle catch-all reste en place pour les
+// routes SPA légitimes, mais celle-ci est déclarée APRÈS elle (voir
+// netlify.toml) et attrape le reste.
+const notFoundHtml = injectMeta(
+  template.replace(
+    '<div id="root"></div>',
+    `<div id="root">${render('/404-page-introuvable')}</div>`
+  ),
+  {
+    path: '/404',
+    title: 'Page introuvable - Yummeal',
+    description: "Cette page n'existe pas ou a été déplacée.",
+    canonicalOverride: '/',
+    noindex: true,
+  }
+);
+fs.writeFileSync(path.join(distDir, '404.html'), notFoundHtml);
+
+console.log(`[prerender] ${count} pages statiques générées dans dist/ (+ 404.html)`);

@@ -2,7 +2,91 @@
   publish = "dist"
   command = "npm run build"
 
+# Toute route réelle est prérendue en dist/<route>/index.html par
+# scripts/prerender.mjs, y compris la page d'erreur (dist/404.html). Netlify
+# sert un fichier statique existant AVANT d'appliquer une règle de redirection
+# non forcée : cette règle n'attrape donc que les URL qui ne correspondent à
+# aucune page générée.
+#
+# Elle remplace l'ancien catch-all `/* -> /index.html 200`, qui répondait 200 +
+# l'accueil pour l'infini des URL inexistantes — des soft-404 aux yeux de
+# Google, et un duplicata de la home pour chaque faute de frappe, chaque vieux
+# lien externe et chaque scan de crawler.
+#
+# ⚠️ Ne pas ajouter `force = true` : le prérendu serait court-circuité et
+# chaque page profonde renverrait la 404.
+# Alias anglophone de la page de suppression de compte (celui que peuvent
+# pointer les fiches stores). Une 301 plutôt qu'une seconde page prérendue :
+# deux URL servant le même écran auraient été un duplicata, avec un H1
+# français sous un title anglais.
+[[redirects]]
+  from = "/delete-account"
+  to = "/supprimer-mon-compte/"
+  status = 301
+
+[[redirects]]
+  from = "/delete-account/*"
+  to = "/supprimer-mon-compte/"
+  status = 301
+
+# Slugs normalisés en ASCII. Un caractère accentué dans une URL est valide mais
+# fragile : il se percent-encode différemment selon le client, s'affiche cassé
+# quand le lien est partagé, et n'apporte rien au « slug en langage naturel »
+# que les moteurs valorisent. Les deux formes sont redirigées, brute et encodée.
+[[redirects]]
+  from = "/astuces/cuisiner-sans-sel-mais-avec-goût/*"
+  to = "/astuces/cuisiner-sans-sel-mais-avec-gout/"
+  status = 301
+
+[[redirects]]
+  from = "/astuces/cuisiner-sans-sel-mais-avec-go%C3%BBt/*"
+  to = "/astuces/cuisiner-sans-sel-mais-avec-gout/"
+  status = 301
+
+[[redirects]]
+  from = "/budget/comparatif-prix-vrac-vs-emballé/*"
+  to = "/budget/comparatif-prix-vrac-vs-emballe/"
+  status = 301
+
+[[redirects]]
+  from = "/budget/comparatif-prix-vrac-vs-emball%C3%A9/*"
+  to = "/budget/comparatif-prix-vrac-vs-emballe/"
+  status = 301
+
+# Slugs de /recettes-avec francisés : six recettes portaient un slug anglais
+# sur un contenu français, alors que le reste du silo était déjà en français.
+[[redirects]]
+  from = "/recettes-avec/pasta-tuna-cream/*"
+  to = "/recettes-avec/pates-thon-creme/"
+  status = 301
+
+[[redirects]]
+  from = "/recettes-avec/chicken-broccoli-rice/*"
+  to = "/recettes-avec/poulet-brocoli-riz/"
+  status = 301
+
+[[redirects]]
+  from = "/recettes-avec/egg-potato-onion/*"
+  to = "/recettes-avec/oeuf-pomme-de-terre-oignon/"
+  status = 301
+
+[[redirects]]
+  from = "/recettes-avec/bacon-cheese-pasta/*"
+  to = "/recettes-avec/bacon-fromage-pates/"
+  status = 301
+
+[[redirects]]
+  from = "/recettes-avec/ham-cheese-tomato/*"
+  to = "/recettes-avec/jambon-fromage-tomate/"
+  status = 301
+
+[[redirects]]
+  from = "/recettes-avec/rice-egg-soy-sauce/*"
+  to = "/recettes-avec/riz-oeuf-sauce-soja/"
+  status = 301
+
+# Catch-all : doit rester EN DERNIER.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

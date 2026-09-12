@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/antiGaspillage';
+import { articles, getArticle } from '../data/antiGaspillage';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function AntiGaspillageArticlePage() {
@@ -54,7 +55,20 @@ export default function AntiGaspillageArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="anti-gaspillage" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="anti-gaspillage"
+
+          heading="Les autres guides anti-gaspillage"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="anti-gaspillage" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

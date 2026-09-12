@@ -6,14 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Feuille de style tierce chargée sans bloquer le rendu : elle
+         retardait le First Contentful Paint du temps de DNS + TLS + fetch vers
+         fonts.googleapis.com, alors que le contenu est déjà prérendu et prêt à
+         s'afficher. `media="print"` la sort du chemin critique, l'onload la
+         réactive ; le <noscript> couvre le cas sans JS. -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <title>Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo</title>
     <meta
       name="description"
-      content="Yummeal transforme le contenu de votre frigo en recettes personnalisées : cuisinez sainement, sans gaspiller et sans y penser. Gratuit sur iOS et Android."
+      content="Yummeal transforme votre frigo en recettes réalisables : cuisinez sainement, sans gaspiller. Téléchargement gratuit sur iOS et Android."
     />
     <link rel="canonical" href="https://yummeal.app/" />
     <meta property="og:type" content="website" />

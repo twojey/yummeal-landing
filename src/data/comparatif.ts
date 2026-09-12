@@ -70,7 +70,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-jow-vs-marmiton',
     title: 'Yummeal vs Jow vs Marmiton',
     metaDescription:
-      "Trois applications françaises de cuisine, trois mécanismes différents : génération de menu (Jow), recherche par ingrédients saisis (Marmiton), scan photo du frigo (Yummeal).",
+      "Trois mécanismes différents : génération de menu (Jow), recherche par ingrédients saisis (Marmiton), scan photo du frigo (Yummeal).",
     intro:
       "Jow, Marmiton et Yummeal sont trois applications françaises de cuisine fréquemment comparées, mais elles répondent à trois besoins différents.",
     sections: [
@@ -98,7 +98,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'meilleure-app-cuisine-frigo',
-    title: 'Quelle est la meilleure application pour cuisiner avec son frigo ?',
+    title: 'Meilleure application pour cuisiner avec son frigo',
     metaDescription:
       "Panorama honnête des applications qui aident à cuisiner avec ce qu'on a déjà : saisie manuelle, scan de code-barres ou reconnaissance photo du frigo réel.",
     intro:
@@ -202,7 +202,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-cooklist',
     title: 'Yummeal vs Cooklist',
     metaDescription:
-      "Cooklist importe vos achats via les cartes de fidélité de supermarchés américains. Yummeal reconnaît le contenu réel de votre frigo par photo, sans dépendre d'une enseigne partenaire.",
+      "Cooklist importe vos achats via les cartes de fidélité de supermarchés américains. Yummeal reconnaît votre frigo par photo, sans enseigne partenaire.",
     intro:
       "Cooklist (Cooklist, Inc.) reconstitue un garde-manger numérique à partir des données d'achat de supermarchés américains partenaires.",
     sections: [
@@ -396,7 +396,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-samsung-food',
     title: 'Yummeal vs Samsung Food',
     metaDescription:
-      "Samsung Food propose un scan photo du frigo réservé aux abonnés payants, en complément d'un catalogue de recettes. Chez Yummeal, le scan du frigo est le cœur du produit dès l'usage gratuit.",
+      "Samsung Food réserve son scan photo du frigo aux abonnés payants, en complément d'un catalogue. Chez Yummeal, ce scan est le mécanisme central.",
     intro:
       "Samsung Food (ex-Whisk, racheté par Samsung) a bien une fonctionnalité de reconnaissance photo du frigo — la comparaison la plus nuancée de cette liste.",
     sections: [
@@ -410,7 +410,7 @@ export const articles: Article[] = [
       {
         heading: 'La différence avec Yummeal',
         body: [
-          "Cette fonctionnalité existe donc chez Samsung Food, mais elle est réservée aux abonnés payants Food+ et reste une fonctionnalité secondaire greffée sur un produit centré sur la gestion de recettes et de menus. Chez Yummeal, la reconnaissance du frigo par photo est le mécanisme central de l'application, accessible dès l'usage gratuit.",
+          "Cette fonctionnalité existe donc chez Samsung Food, mais elle est réservée aux abonnés payants Food+ et reste une fonctionnalité secondaire greffée sur un produit centré sur la gestion de recettes et de menus. Chez Yummeal, la reconnaissance du frigo par photo est le mécanisme central de l'application, pas une fonctionnalité greffée.",
         ],
       },
     ],
@@ -421,7 +421,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-myfridgefood',
     title: 'Yummeal vs MyFridgeFood',
     metaDescription:
-      "MyFridgeFood fonctionne par sélection manuelle d'ingrédients dans des listes par catégorie, sans mise à jour récente connue. Yummeal reconnaît vos ingrédients par photo.",
+      "MyFridgeFood fonctionne par sélection manuelle dans des listes par catégorie. Yummeal reconnaît vos ingrédients par photo.",
     intro:
       "MyFridgeFood est l'application la plus proche de Yummeal dans l'intention (\"utiliser ce qu'on a déjà\"), mais pas dans le mécanisme.",
     sections: [
@@ -445,7 +445,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-yazio',
     title: 'Yummeal vs Yazio',
     metaDescription:
-      "Yazio suit vos calories via une saisie manuelle (journal alimentaire, code-barres, photo du plat). Yummeal calcule automatiquement la nutrition des recettes que vous cuisinez, sans étape de saisie séparée.",
+      "Yazio suit vos calories par saisie manuelle, code-barres ou photo. Yummeal calcule la nutrition des recettes cuisinées, sans étape de saisie.",
     intro:
       "Yazio (YAZIO GmbH) et Yummeal font tous les deux un suivi nutritionnel, mais pas de la même manière : l'un demande de logger chaque repas, l'autre en déduit l'essentiel de ce que vous cuisinez déjà.",
     sections: [
@@ -469,7 +469,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-lifesum',
     title: 'Yummeal vs Lifesum',
     metaDescription:
-      "Lifesum suit vos calories via une saisie manuelle ou une photo de repas dédiée. Yummeal calcule automatiquement la nutrition des recettes que vous cuisinez, sans étape de logging séparée.",
+      "Lifesum suit vos calories par saisie manuelle ou photo de repas. Yummeal calcule la nutrition des recettes cuisinées, sans étape de saisie.",
     intro:
       "Lifesum (Lifesum AB) et Yummeal font tous les deux du suivi nutritionnel, mais Lifesum construit ce suivi indépendamment de ce que vous cuisinez, quand Yummeal le déduit directement de vos recettes.",
     sections: [
@@ -493,7 +493,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-toogoodtogo',
     title: 'Yummeal vs Too Good To Go',
     metaDescription:
-      "Too Good To Go vend des paniers surprise d'invendus de commerçants. Yummeal aide à cuisiner ce que vous avez déjà chez vous. Deux logiques anti-gaspi différentes.",
+      "Too Good To Go vend des paniers d'invendus de commerçants. Yummeal aide à cuisiner ce que vous avez déjà chez vous.",
     intro:
       "Too Good To Go et Yummeal partagent la finalité \"anti-gaspillage\", mais sur des maillons complètement différents de la chaîne alimentaire.",
     sections: [
@@ -517,7 +517,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-olio',
     title: 'Yummeal vs Olio',
     metaDescription:
-      "Olio est une plateforme de partage de denrées entre particuliers et commerces. Yummeal aide à cuisiner ce que vous avez déjà chez vous. Deux approches anti-gaspi différentes.",
+      "Olio est une plateforme de partage de denrées entre particuliers. Yummeal aide à cuisiner ce que vous avez déjà chez vous.",
     intro:
       "Olio (Olio Exchange Limited) et Yummeal sont parfois mis dans la même case \"anti-gaspi\", mais leurs mécanismes n'ont rien en commun.",
     sections: [
@@ -541,7 +541,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-foodvisor',
     title: 'Yummeal vs Foodvisor',
     metaDescription:
-      "Foodvisor scanne un repas déjà préparé pour en compter les calories. Yummeal scanne le frigo pour proposer une recette, et calcule la nutrition automatiquement une fois cuisinée. Deux usages de la reconnaissance photo alimentaire, à ne pas confondre.",
+      "Foodvisor scanne un repas déjà préparé pour compter ses calories. Yummeal scanne le frigo pour proposer une recette. Deux usages de la photo à ne pas confondre.",
     intro:
       "Foodvisor (Foodvisor SAS, France) et Yummeal utilisent tous les deux la reconnaissance photo d'aliments — mais sur des objets différents, à des moments différents du repas.",
     sections: [
@@ -565,7 +565,7 @@ export const articles: Article[] = [
     slug: 'yummeal-vs-eat-this-much',
     title: 'Yummeal vs Eat This Much',
     metaDescription:
-      "Eat This Much génère un plan de repas à partir d'objectifs nutritionnels déclarés. Yummeal génère une recette à partir de ce qu'il y a réellement dans votre frigo.",
+      "Eat This Much part d'objectifs nutritionnels déclarés. Yummeal part de ce qu'il y a réellement dans votre frigo.",
     intro:
       "Eat This Much (Eat This Much Inc.) et Yummeal partent de deux logiques opposées pour arriver à une recette.",
     sections: [

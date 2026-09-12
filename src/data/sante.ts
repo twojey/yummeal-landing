@@ -83,7 +83,7 @@ export const articles: Article[] = [
   {
     slug: 'index-glycemique-pates-blanches',
     tags: ['pâtes', 'index glycémique', 'nutrition'],
-    title: 'Index glycémique des pâtes blanches : ce qui influence vraiment le résultat',
+    title: 'Index glycémique des pâtes : ce qui change vraiment',
     metaDescription:
       "L'index glycémique des pâtes blanches n'est pas fixe : la cuisson et l'accompagnement du plat le font varier. Explications générales, sans chiffre inventé.",
     intro:
@@ -189,7 +189,7 @@ export const articles: Article[] = [
     tags: ['brocoli', 'cuisson vapeur', 'nutrition'],
     title: 'Pourquoi cuire le brocoli à la vapeur plutôt qu\'à l\'eau ?',
     metaDescription:
-      "La cuisson vapeur du brocoli est souvent recommandée pour préserver certains nutriments. Ce que dit la nutrition, sans chiffre inventé ni conseil médical personnalisé.",
+      "La vapeur est souvent recommandée pour préserver certains nutriments du brocoli. Ce que dit la nutrition, sans chiffre inventé.",
     intro:
       "Le brocoli est un légume régulièrement cité pour ses qualités nutritionnelles, et la façon dont il est cuit influence en partie ce qu'il apporte dans l'assiette.",
     sections: [

@@ -5,12 +5,18 @@ export default function DownloadButtons() {
   return (
     <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
       <a
-        href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
+        href="https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441"
         className="clay-btn clay-btn--primary"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src={AppleLogo} alt="Apple Logo" className="h-6 w-auto filter invert" />
+        <img
+          src={AppleLogo}
+          alt=""
+          width={24}
+          height={24}
+          className="h-6 w-auto filter invert"
+        />
         Télécharger sur l'App Store
       </a>
       <a
@@ -19,7 +25,13 @@ export default function DownloadButtons() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src={PlayStoreLogo} alt="Play Store Logo" className="h-6 w-6" />
+        <img
+          src={PlayStoreLogo}
+          alt=""
+          width={24}
+          height={24}
+          className="h-6 w-6"
+        />
         Disponible sur Google Play
       </a>
     </div>

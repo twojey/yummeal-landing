@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/faq';
+import { articles, getArticle } from '../data/faq';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function FaqArticlePage() {
@@ -54,7 +55,20 @@ export default function FaqArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="faq" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="faq"
+
+          heading="Les autres questions fréquentes"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="faq" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

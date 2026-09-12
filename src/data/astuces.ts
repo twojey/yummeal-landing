@@ -12,7 +12,7 @@ export interface Article {
 export const articles: Article[] = [
   {
     slug: 'cuisson-riz-micro-ondes',
-    title: 'Cuire du riz au micro-ondes : la méthode simple et sans surveillance',
+    title: 'Cuire du riz au micro-ondes, sans surveillance',
     metaDescription:
       'Comment cuire du riz au micro-ondes, sans casserole ni surveillance, avec les bonnes proportions eau-riz et le bon temps de cuisson.',
     intro:
@@ -215,7 +215,7 @@ export const articles: Article[] = [
     tags: ['herbes fraîches', 'congélation', 'anti-gaspi'],
   },
   {
-    slug: 'cuisiner-sans-sel-mais-avec-goût',
+    slug: 'cuisiner-sans-sel-mais-avec-gout',
     title: 'Cuisiner avec moins de sel sans perdre en goût',
     metaDescription:
       "Comment relever un plat sans sel grâce à l'acidité, aux herbes et aux épices, pour compenser sans compromis sur le goût.",

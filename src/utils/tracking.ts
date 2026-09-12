@@ -10,9 +10,10 @@ import { trackFacebookEvent } from './facebookPixel';
 import { getAnonymousId } from './anonymousId';
 import { enrichEvent, normalizeEventData, isEventValid } from './eventEnricher';
 import { trackAppsFlyerEvent, getDetectedTrafficSource } from './appsflyerIntegration';
+import { API_BASE_URL } from '../config';
 
 // Configuration
-const API_URL = 'https://yummeal-server.deno.dev/tracking';
+const API_URL = `${API_BASE_URL}/tracking`;
 
 /**
  * Génère un identifiant d'événement unique, partagé entre le pixel navigateur

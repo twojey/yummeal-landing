@@ -45,6 +45,10 @@ import ScenariosIndexPage from './pages/ScenariosIndexPage';
 import ScenariosArticlePage from './pages/ScenariosArticlePage';
 import ComparatifIndexPage from './pages/ComparatifIndexPage';
 import ComparatifArticlePage from './pages/ComparatifArticlePage';
+import AProposPage from './pages/AProposPage';
+import FonctionnalitesIndexPage from './pages/FonctionnalitesIndexPage';
+import FonctionnalitePage from './pages/FonctionnalitePage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   const location = useLocation();
@@ -107,13 +111,17 @@ function App() {
               <Link to="/" className="flex items-center">
                 <img
                   src={Logo}
-                  alt="Yummeal Logo"
+                  alt="Yummeal"
+                  width={32}
+                  height={32}
                   className="hidden md:block h-8 w-auto"
                 />
                 <span className="hidden md:block ml-2 text-2xl font-bold font-heading text-[#FF8C42]">Yummeal</span>
                 <img
                   src={MobileLogo}
-                  alt="Yummeal Logo"
+                  alt="Yummeal"
+                  width={32}
+                  height={32}
                   className="md:hidden h-8 w-auto"
                 />
               </Link>
@@ -232,7 +240,7 @@ function App() {
                       </p>
                       <div className="hero-buttons flex flex-col gap-4 w-full max-w-xs md:max-w-md">
                         <a
-                          href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
+                          href="https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441"
                           className="clay-btn clay-btn--primary"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -354,7 +362,7 @@ function App() {
                 <p className="text-lg text-gray-600 mb-8">Rejoignez des milliers d'utilisateurs qui ont retrouvé la sérénité en cuisine avec Yummeal.</p>
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
-                    href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
+                    href="https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441"
                     className="clay-btn clay-btn--primary"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -466,7 +474,7 @@ function App() {
               <div className="max-w-3xl mx-auto text-center">
                 <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
                   <a
-                    href="https://apps.apple.com/fr/app/yummeal-cuisiner-sain/id6744942441"
+                    href="https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441"
                     className="clay-btn clay-btn--primary"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -496,6 +504,9 @@ function App() {
             </section>
           </div>
         } />
+        <Route path="/a-propos" element={<AProposPage />} />
+        <Route path="/fonctionnalites" element={<FonctionnalitesIndexPage />} />
+        <Route path="/fonctionnalites/:slug" element={<FonctionnalitePage />} />
         <Route path="/creators" element={<Creators />} />
         <Route path="/confidentialite" element={<PrivacyPolicy />} />
         <Route path="/cgu" element={<TermsAndConditions />} />
@@ -538,12 +549,15 @@ function App() {
         <Route path="/scenarios/:slug" element={<ScenariosArticlePage />} />
         <Route path="/comparatif" element={<ComparatifIndexPage />} />
         <Route path="/comparatif/:slug" element={<ComparatifArticlePage />} />
+        {/* Aucune route `*` n'existait : une URL inconnue rendait un écran
+            blanc. Elle sert aussi de source à dist/404.html (prerender). */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       {/* Footer */}
       <footer className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10 text-sm">
             <div>
               <h3 className="font-semibold text-gray-800 mb-3">Guides anti-gaspi</h3>
               <ul className="space-y-2">
@@ -552,6 +566,18 @@ function App() {
                 <li><Link to="/substitutions" className="text-gray-600 hover:text-[#FF8C42]">Par quoi remplacer...</Link></li>
                 <li><Link to="/urgencies" className="text-gray-600 hover:text-[#FF8C42]">Urgences cuisine</Link></li>
                 <li><Link to="/anti-gaspillage" className="text-gray-600 hover:text-[#FF8C42]">Anti-gaspillage</Link></li>
+              </ul>
+            </div>
+            <div>
+              {/* Les trois pages produit sont les seules pages
+                  transactionnelles du site : elles méritent une place fixe,
+                  pas seulement un lien depuis leur index. */}
+              <h3 className="font-semibold text-gray-800 mb-3">L'application</h3>
+              <ul className="space-y-2">
+                <li><Link to="/fonctionnalites/scanner-frigo" className="text-gray-600 hover:text-[#FF8C42]">Scanner son frigo</Link></li>
+                <li><Link to="/fonctionnalites/import-recette-tiktok" className="text-gray-600 hover:text-[#FF8C42]">Importer une recette TikTok</Link></li>
+                <li><Link to="/fonctionnalites/photo-de-plat" className="text-gray-600 hover:text-[#FF8C42]">Estimer un plat en photo</Link></li>
+                <li><Link to="/fonctionnalites" className="text-gray-600 hover:text-[#FF8C42]">Toutes les fonctionnalités</Link></li>
               </ul>
             </div>
             <div>
@@ -577,6 +603,8 @@ function App() {
             <div>
               <h3 className="font-semibold text-gray-800 mb-3">Yummeal</h3>
               <ul className="space-y-2">
+                <li><Link to="/fonctionnalites" className="text-gray-600 hover:text-[#FF8C42]">Fonctionnalités</Link></li>
+                <li><Link to="/a-propos" className="text-gray-600 hover:text-[#FF8C42]">À propos</Link></li>
                 <li><Link to="/creators" className="text-gray-600 hover:text-[#FF8C42]">Creators</Link></li>
                 <li><Link to="/confidentialite" className="text-gray-600 hover:text-[#FF8C42]">Politique de confidentialité</Link></li>
                 <li><Link to="/cgu" className="text-gray-600 hover:text-[#FF8C42]">CGU</Link></li>
@@ -587,7 +615,10 @@ function App() {
             <div className="flex items-center gap-4">
               <img
                 src={Logo}
-                alt="Yummeal Logo"
+                alt="Yummeal"
+                width={32}
+                height={32}
+                loading="lazy"
                 className="h-8 w-auto"
               />
               <span className="text-gray-600"> 2026 Yummeal, tous droits réservés</span>

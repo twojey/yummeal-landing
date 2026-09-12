@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/budget';
+import { articles, getArticle } from '../data/budget';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function BudgetArticlePage() {
@@ -56,7 +57,20 @@ export default function BudgetArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="budget" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="budget"
+
+          heading="Les autres guides petit budget"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="budget" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

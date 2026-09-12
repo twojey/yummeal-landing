@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "./config";
 
 const SUPABASE_URL = "https://vqibuydjokujdqslczdu.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxaWJ1eWRqb2t1amRxc2xjemR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYzMTM5MzMsImV4cCI6MjA2MTg4OTkzM30.5H-XZbkodlKf2c5x1AuMRdExqQt-rW-zoxAj_5LTf3M";
-const API_BASE_URL = "https://yummeal-server.deno.dev";
+
 const CONFIRMATION_KEYWORD = "SUPPRIMER";
 
 type Step = "intro" | "auth" | "confirm" | "done";

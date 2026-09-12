@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/sante';
+import { articles, getArticle } from '../data/sante';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function SanteArticlePage() {
@@ -58,10 +59,23 @@ export default function SanteArticlePage() {
           <DownloadButtons />
         </div>
 
+        <SiloSiblings
+
+          segment="sante"
+
+          heading="Les autres guides santé et alimentation"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
         <RelatedArticles
           category="sante"
           slug={article.slug}
           tags={article.tags ?? []}
+        title={article.title}
         />
       </div>
     </div>

@@ -12,7 +12,7 @@ export interface Article {
 export const articles: Article[] = [
   {
     slug: 'organiser-frigo-etudiant',
-    title: 'Comment organiser son frigo en studio étudiant pour ne rien gaspiller',
+    title: 'Organiser son frigo en studio étudiant',
     metaDescription:
       "Un petit frigo mal rangé, c'est la garantie d'oublier un yaourt au fond ou de racheter ce qu'on a déjà. Voici comment l'organiser simplement en studio.",
     intro:
@@ -55,7 +55,7 @@ export const articles: Article[] = [
     slug: 'comprendre-dates-peremption',
     title: 'DLC ou DDM : comprendre les vraies dates de péremption',
     metaDescription:
-      "DLC, DDM : ces deux dates sur les emballages ne veulent pas dire la même chose. Voici la différence, expliquée simplement, pour éviter de jeter par excès de prudence.",
+      "DLC et DDM ne veulent pas dire la même chose. La différence, expliquée simplement, pour éviter de jeter par excès de prudence.",
     intro:
       "Beaucoup de nourriture est jetée non pas parce qu'elle est réellement impropre à la consommation, mais parce qu'on confond deux types de dates très différents imprimés sur les emballages : la DLC et la DDM.",
     sections: [
@@ -97,7 +97,7 @@ export const articles: Article[] = [
     slug: 'cuisiner-fanes-carottes',
     title: 'Cuisiner les fanes de légumes : la méthode générale',
     metaDescription:
-      "Fanes de carottes, de radis, de céleri ou de fenouil : plutôt que de les jeter systématiquement, voici une méthode générale pour savoir lesquelles cuisiner et comment.",
+      "Fanes de carottes, radis, céleri, fenouil : comment savoir lesquelles se cuisinent, et de quelle façon, au lieu de les jeter.",
     intro:
       "La plupart des fanes de légumes (carottes, radis, céleri, fenouil, betteraves...) sont jetées par réflexe alors qu'elles sont comestibles et pleines de goût. Plutôt qu'une recette précise, voici une méthode générale pour savoir quoi faire de n'importe quelle fane qui vous passe entre les mains.",
     sections: [
@@ -137,9 +137,9 @@ export const articles: Article[] = [
   },
   {
     slug: 'astuces-economies-courses-etudiant',
-    title: 'Astuces anti-gaspi pour économiser sur les courses en tant qu\'étudiant',
+    title: 'Économiser sur ses courses quand on est étudiant',
     metaDescription:
-      "Petit budget, petit frigo, emploi du temps irrégulier : voici des astuces concrètes pour réduire le gaspillage alimentaire et économiser sur les courses quand on est étudiant.",
+      "Petit budget, petit frigo, emploi du temps irrégulier : des astuces concrètes pour moins gaspiller et économiser sur les courses.",
     intro:
       "Avec un budget serré et un rythme de vie souvent irrégulier, le gaspillage alimentaire pèse plus lourd dans le budget étudiant qu'il n'y paraît : chaque produit jeté est de l'argent dépensé pour rien. Quelques habitudes simples permettent de limiter la casse.",
     sections: [

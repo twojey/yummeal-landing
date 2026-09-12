@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/scenarios';
+import { articles, getArticle } from '../data/scenarios';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function ScenariosArticlePage() {
@@ -54,7 +55,20 @@ export default function ScenariosArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="scenarios" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="scenarios"
+
+          heading="Les autres scénarios d'usage"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="scenarios" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

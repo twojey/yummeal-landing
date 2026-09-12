@@ -11,7 +11,7 @@ export interface Article {
 
 export const articles: Article[] = [
   {
-    slug: 'pasta-tuna-cream',
+    slug: 'pates-thon-creme',
     tags: ['pâtes', 'thon', 'crème fraîche', 'rapide'],
     title: 'Recette avec pâtes, thon et crème fraîche',
     metaDescription:
@@ -53,7 +53,7 @@ export const articles: Article[] = [
       "Yummeal scanne ce que vous avez au frigo et vous propose directement des recettes adaptées, sans avoir à chercher pendant 20 minutes.",
   },
   {
-    slug: 'chicken-broccoli-rice',
+    slug: 'poulet-brocoli-riz',
     tags: ['poulet', 'brocoli', 'riz', 'équilibré'],
     title: 'Recette avec poulet, brocoli et riz',
     metaDescription:
@@ -95,7 +95,7 @@ export const articles: Article[] = [
       "Yummeal identifie ce que vous avez déjà chez vous et vous propose des recettes adaptées, pour ne plus jamais tourner en rond devant le frigo.",
   },
   {
-    slug: 'egg-potato-onion',
+    slug: 'oeuf-pomme-de-terre-oignon',
     tags: ['œufs', 'pommes de terre', 'oignon', 'tortilla espagnole'],
     title: 'Recette avec œufs, pommes de terre et oignon',
     metaDescription:
@@ -136,7 +136,7 @@ export const articles: Article[] = [
       "Yummeal transforme ce que vous avez déjà au frigo en recettes prêtes à suivre, sans avoir à improviser à chaque fois.",
   },
   {
-    slug: 'bacon-cheese-pasta',
+    slug: 'bacon-fromage-pates',
     tags: ['pâtes', 'bacon', 'fromage', 'crémeux'],
     title: 'Recette avec bacon, fromage et pâtes',
     metaDescription:
@@ -178,7 +178,7 @@ export const articles: Article[] = [
       "Avec Yummeal, plus besoin de deviner quoi faire avec vos restes : l'app vous propose directement des recettes selon ce que vous avez.",
   },
   {
-    slug: 'ham-cheese-tomato',
+    slug: 'jambon-fromage-tomate',
     tags: ['jambon', 'fromage', 'tomate', 'gratin'],
     title: 'Recette avec jambon, fromage et tomate',
     metaDescription:
@@ -220,7 +220,7 @@ export const articles: Article[] = [
       "Yummeal repère ce que vous avez au frigo et vous suggère des recettes concrètes, prêtes à suivre, en quelques secondes.",
   },
   {
-    slug: 'rice-egg-soy-sauce',
+    slug: 'riz-oeuf-sauce-soja',
     tags: ['riz', 'œuf', 'sauce soja', 'riz sauté'],
     title: 'Recette avec riz, œuf et sauce soja',
     metaDescription:

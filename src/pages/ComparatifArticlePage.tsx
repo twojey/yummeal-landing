@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/comparatif';
+import { articles, getArticle } from '../data/comparatif';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function ComparatifArticlePage() {
@@ -52,7 +53,20 @@ export default function ComparatifArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="comparatif" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="comparatif"
+
+          heading="Les autres comparatifs"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="comparatif" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/recettesAvec';
+import { articles, getArticle } from '../data/recettesAvec';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildRecipeJsonLd } from '../lib/schema';
 
 export default function RecettesAvecArticlePage() {
@@ -59,10 +60,23 @@ export default function RecettesAvecArticlePage() {
           <DownloadButtons />
         </div>
 
+        <SiloSiblings
+
+          segment="recettes-avec"
+
+          heading="Les autres recettes par ingrédients"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
         <RelatedArticles
           category="recettes-avec"
           slug={article.slug}
           tags={article.tags ?? []}
+        title={article.title}
         />
       </div>
     </div>

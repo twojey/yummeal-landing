@@ -1,8 +1,9 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getArticle } from '../data/regimes';
+import { articles, getArticle } from '../data/regimes';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
 export default function RegimesArticlePage() {
@@ -57,7 +58,20 @@ export default function RegimesArticlePage() {
           <DownloadButtons />
         </div>
 
-        <RelatedArticles category="regimes" slug={article.slug} tags={article.tags ?? []} />
+        <SiloSiblings
+
+          segment="regimes"
+
+          heading="Les autres guides régimes et objectifs"
+
+          articles={articles}
+
+          currentSlug={article.slug}
+
+        />
+
+        <RelatedArticles category="regimes" slug={article.slug} tags={article.tags ?? []}
+        title={article.title} />
       </div>
     </div>
   );

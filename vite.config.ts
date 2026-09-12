@@ -3,14 +3,36 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+// `isSsrBuild` distingue les deux passes du script `build` : le bundle client
+// et le bundle SSR consommé par scripts/prerender.mjs. Le découpage en chunks
+// ne vaut que pour le client — en SSR, React est externe et rollup refuse de
+// le placer dans un chunk manuel.
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
   base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    sourcemap: true
+    // Pas de sourcemap en production : elle exposait tout le code source de
+    // l'app en clair (1,9 Mo servis publiquement sur /assets/*.js.map).
+    sourcemap: false,
+    // Un seul chunk de 644 Ko partait au navigateur pour chaque page. Le
+    // contenu étant prérendu, cela ne pesait pas sur le LCP mais sur
+    // l'hydratation (INP, TBT). Le socle React, framer-motion et les icônes
+    // sont isolés : identiques d'une page à l'autre, ils se mettent en cache
+    // une fois pour tout le site.
+    rollupOptions: isSsrBuild
+      ? {}
+      : {
+          output: {
+            manualChunks: {
+              react: ['react', 'react-dom', 'react-router-dom'],
+              motion: ['framer-motion'],
+              icons: ['lucide-react'],
+            },
+          },
+        }
   },
   resolve: {
     alias: {
@@ -21,4 +43,4 @@ export default defineConfig({
     include: ['lucide-react'],
     exclude: []
   }
-})
+}))

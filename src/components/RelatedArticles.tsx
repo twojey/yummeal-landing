@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getRelatedArticles } from '../data/contentIndex';
+import { getRelatedArticles, pathOf } from '../data/contentIndex';
 
 const CATEGORY_LABELS: Record<string, string> = {
   'recettes-avec': 'Recette',
@@ -16,16 +16,30 @@ const CATEGORY_LABELS: Record<string, string> = {
   concept: 'Concept',
   scenarios: 'Scénario',
   comparatif: 'Comparatif',
+  ingredients: 'Que faire avec',
 };
 
 interface RelatedArticlesProps {
   category: string;
   slug: string;
   tags: string[];
+  /**
+   * Titre de la page courante. Sert à calculer la parenté par entité
+   * alimentaire quand les tags ne suffisent pas (ou sont absents, comme sur
+   * les fiches ingrédient).
+   */
+  title?: string;
 }
 
-export default function RelatedArticles({ category, slug, tags }: RelatedArticlesProps) {
-  const related = getRelatedArticles(category, slug, tags);
+export default function RelatedArticles({
+  category,
+  slug,
+  tags,
+  title = '',
+}: RelatedArticlesProps) {
+  // 5 et non 4 : dans les silos de cinq ou six articles, quatre liens
+  // latéraux laissaient les pages juste sous le seuil de découverte.
+  const related = getRelatedArticles(category, slug, tags, 5, title);
   if (related.length === 0) return null;
 
   return (
@@ -35,7 +49,7 @@ export default function RelatedArticles({ category, slug, tags }: RelatedArticle
         {related.map((a) => (
           <li key={`${a.category}-${a.slug}`}>
             <Link
-              to={`/${a.category}/${a.slug}`}
+              to={pathOf(a)}
               className="block clay-card p-4 hover:shadow-md transition-shadow"
             >
               <span className="text-xs text-[#FF8C42] font-medium">

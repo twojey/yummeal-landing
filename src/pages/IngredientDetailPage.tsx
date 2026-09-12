@@ -1,7 +1,12 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { getCategory, getIngredient } from '../data/ingredients';
+import {
+  getCategory,
+  getIngredient,
+  getIngredientsByCategory,
+} from '../data/ingredients';
 import DownloadButtons from '../components/DownloadButtons';
+import RelatedArticles from '../components/RelatedArticles';
 
 export default function IngredientDetailPage() {
   const { category: categorySlug, slug } = useParams<{
@@ -21,6 +26,15 @@ export default function IngredientDetailPage() {
   if (!category || !ingredient) {
     return <Navigate to="/ingredients" replace />;
   }
+
+  // Navigation entre pages sœurs. Ce n'est pas un artifice de maillage : quand
+  // on cherche quoi faire d'un légume qui s'abîme, on en a souvent deux ou
+  // trois dans le même état. Accessoirement, c'est ce qui fait redescendre le
+  // PageRank interne vers ce silo — chaque fiche n'avait qu'un lien entrant,
+  // celui de sa page de catégorie.
+  const siblings = getIngredientsByCategory(category.slug).filter(
+    (i) => i.slug !== ingredient.slug
+  );
 
   return (
     <div className="min-h-screen bg-[#FFFAF0] px-4 md:px-8 pt-24 pb-16">
@@ -83,6 +97,33 @@ export default function IngredientDetailPage() {
           </p>
           <DownloadButtons />
         </div>
+
+        {siblings.length > 0 && (
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <h2 className="text-xl font-semibold mb-4">
+              Autres {category.label.toLowerCase()} à sauver
+            </h2>
+            <ul className="flex flex-wrap gap-2">
+              {siblings.map((i) => (
+                <li key={i.slug}>
+                  <Link
+                    to={`/ingredients/${i.categorySlug}/${i.slug}`}
+                    className="inline-block text-sm px-3 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 hover:border-[#FF8C42] hover:text-[#FF8C42] transition-colors"
+                  >
+                    {i.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <RelatedArticles
+          category="ingredients"
+          slug={ingredient.slug}
+          tags={[]}
+          title={`${ingredient.name} ${category.label}`}
+        />
       </div>
     </div>
   );
