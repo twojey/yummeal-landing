@@ -94,3 +94,29 @@ export const STORE_URLS: Record<'fr' | 'pl', LiensStores> = {
 
 /** Les URLs de la langue par défaut, pour le code qui n'a pas de locale. */
 export const STORE_URLS_DEFAUT = STORES_FR;
+
+/**
+ * Adresse de contact publique — SEULE déclaration du site.
+ *
+ * Elle était recopiée 11 fois dans quatre fichiers (CGU ×5, suppression de
+ * compte ×3, à propos ×2, confidentialité ×1), et c'était
+ * `contact@yummeal.com`. Or ce domaine **n'appartient pas à la société** :
+ *   - `dig NS yummeal.com` → `ns1/ns2.afternic.com`, une place de marché de
+ *     noms de domaine ; créé en 2006, chez un autre registrar ;
+ *   - `dig MX yummeal.com` → `0 .`, un null MX (RFC 7505) : le domaine déclare
+ *     n'accepter aucun courrier ;
+ *   - `dig TXT yummeal.com` → `v=spf1 -all` : et n'en émettre aucun.
+ *
+ * Cette adresse servait de contact RGPD, de contact légal des CGU et de recours
+ * en cas d'échec de la suppression de compte — une page exigée par Apple et par
+ * Google Play. Aucune de ces demandes n'arrivait, et un catch-all activé par le
+ * propriétaire du domaine parqué lui aurait livré des données personnelles.
+ *
+ * ⚠️ `yummeal.app` est bien le domaine de la société (il porte un `brevo-code:`
+ * et deux `google-site-verification`), mais il n'a **pas encore de MX** : le
+ * courrier envoyé ici rebondit jusqu'à ce qu'une boîte soit créée. C'est
+ * volontaire et c'est mieux que l'état précédent — un rebond est visible,
+ * une remise à un tiers ne l'est pas. `tests/api-urls.test.mjs` interdit tout
+ * retour en arrière.
+ */
+export const CONTACT_EMAIL = 'contact@yummeal.app';

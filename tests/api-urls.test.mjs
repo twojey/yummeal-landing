@@ -236,6 +236,78 @@ describe('URL des fiches stores', () => {
   });
 });
 
+describe('adresse de contact', () => {
+  /**
+   * `contact@yummeal.com` était publié 11 fois (CGU ×5, suppression de compte
+   * ×3, à propos ×2, confidentialité ×1) alors que **ce domaine appartient à
+   * un tiers** : NS sur `afternic.com` (place de marché de domaines, créé en
+   * 2006), `MX = 0 .` (null MX, RFC 7505 : n'accepte aucun courrier) et
+   * `TXT = v=spf1 -all` (n'en émet aucun).
+   *
+   * Ce n'était pas un détail : cette adresse servait de contact RGPD, de
+   * contact légal des CGU et de recours en cas d'échec de la suppression de
+   * compte — une page exigée par Apple et Google Play. Si le propriétaire du
+   * domaine parqué activait un catch-all, il recevrait des demandes de
+   * suppression de compte et des demandes RGPD, donc des données personnelles.
+   *
+   * Ces deux tests existent pour que la substitution ne soit pas défaite par
+   * un copier-coller depuis une vieille page.
+   */
+  const DOMAINE_TIERS = 'yummeal.com';
+
+  test('aucune adresse e-mail ne pointe vers le domaine d’un tiers', () => {
+    const fautifs = [];
+    for (const rel of [...sourceFiles(), ...publicFiles()]) {
+      const contenu = read(rel);
+      for (const ligne of contenu.split('\n')) {
+        const nue = ligne.trim();
+        // Les commentaires énoncent la règle : ils citent l'adresse exprès.
+        if (nue.startsWith('*') || nue.startsWith('//')) continue;
+        if (new RegExp(`[\\w.+-]+@${DOMAINE_TIERS.replace('.', '\\.')}`).test(ligne)) {
+          fautifs.push(`${rel} -> ${nue.slice(0, 80)}`);
+        }
+      }
+    }
+    assert.deepEqual(
+      fautifs,
+      [],
+      `adresse sur ${DOMAINE_TIERS}, qui n'est pas notre domaine — importer ` +
+        `CONTACT_EMAIL depuis src/config.ts :\n${fautifs.join('\n')}`
+    );
+  });
+
+  test('seul src/config.ts déclare l’adresse de contact', () => {
+    const fautifs = sourceFiles()
+      .filter((rel) => rel !== 'src/config.ts')
+      .filter((rel) =>
+        read(rel)
+          .split('\n')
+          .some((l) => {
+            const nue = l.trim();
+            if (nue.startsWith('*') || nue.startsWith('//')) return false;
+            return /contact@yummeal\.app/.test(l);
+          })
+      );
+    assert.deepEqual(
+      fautifs,
+      [],
+      `adresse recopiée en dur — importer CONTACT_EMAIL : ${fautifs.join(', ')}`
+    );
+  });
+
+  test('l’adresse déclarée est bien sur notre domaine', () => {
+    const m = read('src/config.ts').match(
+      /export const CONTACT_EMAIL = '([^']+)'/
+    );
+    assert.ok(m, 'CONTACT_EMAIL introuvable dans src/config.ts');
+    assert.match(
+      m[1],
+      /@yummeal\.app$/,
+      `CONTACT_EMAIL doit être sur yummeal.app (trouvé : ${m?.[1]})`
+    );
+  });
+});
+
 describe('hygiène de configuration', () => {
   test('la sourcemap est désactivée en production', () => {
     // `sourcemap: true` servait /assets/*.js.map, soit 1,9 Mo de code source

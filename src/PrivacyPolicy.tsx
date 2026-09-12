@@ -1,4 +1,5 @@
 import React from "react";
+import { CONTACT_EMAIL } from './config';
 
 const PrivacyPolicy: React.FC = () => (
   <div className="max-w-2xl mx-auto px-4 py-8">
@@ -32,7 +33,7 @@ const PrivacyPolicy: React.FC = () => (
     </ul>
     <h2 className="text-xl font-semibold mt-6 mb-2">Contact</h2>
     <p>
-      Pour toute question concernant la confidentialité, contactez-nous à contact@yummeal.com.
+      Pour toute question concernant la confidentialité, contactez-nous à {CONTACT_EMAIL}.
     </p>
   </div>
 );

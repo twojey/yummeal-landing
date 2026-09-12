@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import DownloadButtons from '../components/DownloadButtons';
-import { STORE_URLS } from '../config';
+import { CONTACT_EMAIL, STORE_URLS } from '../config';
 import { useLocale } from '../i18n/useLocale';
 import { cheminLocalise } from '../i18n/config';
 import {
@@ -57,8 +57,8 @@ export default function AProposPage() {
     {
       label: a.labels.contact,
       valeur: (
-        <a href="mailto:contact@yummeal.com" className="text-[#FF8C42] underline">
-          contact@yummeal.com
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#FF8C42] underline">
+          {CONTACT_EMAIL}
         </a>
       ),
     },

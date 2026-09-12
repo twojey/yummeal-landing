@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "./config";
+import { CONTACT_EMAIL } from './config';
 
 const SUPABASE_URL = "https://vqibuydjokujdqslczdu.supabase.co";
 const SUPABASE_ANON_KEY =
@@ -107,7 +108,7 @@ const DeleteAccount: React.FC = () => {
         }
         setError(
           serverMsg ||
-            `La suppression a échoué (code ${res.status}). Contactez contact@yummeal.com.`
+            `La suppression a échoué (code ${res.status}). Contactez ${CONTACT_EMAIL}.`
         );
         return;
       }
@@ -193,9 +194,9 @@ const DeleteAccount: React.FC = () => {
               Écrivez-nous à{" "}
               <a
                 className="text-blue-600 underline"
-                href="mailto:contact@yummeal.com?subject=Suppression%20de%20compte"
+                href={`mailto:${CONTACT_EMAIL}?subject=Suppression%20de%20compte`}
               >
-                contact@yummeal.com
+                {CONTACT_EMAIL}
               </a>{" "}
               — nous traiterons votre demande sous 30 jours maximum.
             </p>

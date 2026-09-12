@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CONTACT_EMAIL } from './config';
 
 const TermsAndConditions: React.FC = () => (
   <div className="max-w-2xl mx-auto px-4 py-8">
@@ -22,7 +23,7 @@ const TermsAndConditions: React.FC = () => (
       <li><strong>Numéro SIRET :</strong> 89827118400019</li>
       <li><strong>TVA intracommunautaire :</strong> FR13898271184</li>
       <li><strong>Greffe :</strong> RCS Versailles</li>
-      <li><strong>Contact :</strong> contact@yummeal.com</li>
+      <li><strong>Contact :</strong> {CONTACT_EMAIL}</li>
     </ul>
 
     <h2 className="text-xl font-semibold mt-6 mb-2">3. Création de compte</h2>
@@ -74,10 +75,10 @@ const TermsAndConditions: React.FC = () => (
         <strong>Par e-mail :</strong> si vous n'avez plus accès à
         l'Application, écrivez à{" "}
         <a
-          href="mailto:contact@yummeal.com?subject=Suppression%20de%20compte"
+          href={`mailto:${CONTACT_EMAIL}?subject=Suppression%20de%20compte`}
           className="text-blue-600 underline"
         >
-          contact@yummeal.com
+          {CONTACT_EMAIL}
         </a>{" "}
         depuis l'adresse de votre compte. La suppression est effectuée dans un
         délai maximum de 30 jours.
@@ -140,8 +141,8 @@ const TermsAndConditions: React.FC = () => (
     <h2 className="text-xl font-semibold mt-6 mb-2">12. Contact</h2>
     <p>
       Pour toute question, contactez-nous à{" "}
-      <a href="mailto:contact@yummeal.com" className="text-blue-600 underline">
-        contact@yummeal.com
+      <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 underline">
+        {CONTACT_EMAIL}
       </a>
       .
     </p>
