@@ -7,6 +7,7 @@ import {
 } from '../data/ingredients';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import RecettesRealisables from '../components/RecettesRealisables';
 
 export default function IngredientDetailPage() {
   const { category: categorySlug, slug } = useParams<{
@@ -75,8 +76,19 @@ export default function IngredientDetailPage() {
           </ul>
         </div>
 
+        {/* Le calcul de réalisabilité du catalogue, quand il existe pour cette
+            fiche. C'est le seul contenu qu'aucun concurrent ni aucun résumé
+            automatique ne peut reproduire. */}
+        <RecettesRealisables slug={ingredient.slug} nom={ingredient.name} />
+
+        {/* Repli : les idées rédigées à la main. Elles restent affichées quand
+            le calcul n'est pas disponible pour cette fiche (voir
+            scripts/build-recettes-realisables.mjs pour les 9 exclusions et
+            leurs raisons), et en complément sinon. */}
         <div className="clay-card p-6 mb-12">
-          <h2 className="text-xl font-semibold mb-3">Idées de recettes</h2>
+          <h2 className="text-xl font-semibold mb-3">
+            Autres pistes, sans recette précise
+          </h2>
           <ul className="space-y-2">
             {ingredient.recipeIdeas.map((idea, i) => (
               <li key={i} className="text-gray-600 flex gap-2">

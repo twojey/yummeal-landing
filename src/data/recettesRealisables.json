@@ -1,0 +1,203 @@
+{
+  "_meta": {
+    "genere_le": "2026-09-12",
+    "source": "RPC find_recipes_by_ingredients (Supabase, projet vqibuydjokujdqslczdu)",
+    "garde_manger": "les 65 ids de api-deno/src/constants/pantry_ingredients.ts (PANTRY_VERSION 2026-09-06), MOINS l'ingredient sujet",
+    "parametres": "p_max_missing=2, p_min_used=1, p_lang=fr, 5 recettes par fiche",
+    "filtres": "titre en alphabet latin, 6 a 70 caracteres, ET titre mentionnant l'ingredient (filtre de pertinence)",
+    "regenerer": "voir scripts/build-recettes-realisables.mjs"
+  },
+  "courgettes": [
+    {"id":"rec_44239","titre":"Beignets de Brocoli et Courgette","minutes":20,"manquants":1,"ingredients":2},
+    {"id":"rec_47997","titre":"Pain à la courgette et pépites de chocolat","minutes":null,"manquants":1,"ingredients":2},
+    {"id":"rec_40327","titre":"Wrap Courgette","minutes":10,"manquants":2,"ingredients":4},
+    {"id":"rec_42470","titre":"Gratin de Courgettes Vegan","minutes":25,"manquants":2,"ingredients":4},
+    {"id":"rec_42175","titre":"Beignets de Courgettes","minutes":30,"manquants":2,"ingredients":6}
+  ],
+  "poivrons-restes": [
+    {"id":"rec_48424","titre":"Poivrons Sautés à la Mayonnaise et au Ponzu","minutes":15,"manquants":2,"ingredients":6},
+    {"id":"rec_42122","titre":"Sauté de Tofu Croustillant aux Poivrons et Brocolis","minutes":25,"manquants":2,"ingredients":8},
+    {"id":"rec_42099","titre":"Soupe de Tomates et Poivrons Rouges Rôtis","minutes":60,"manquants":2,"ingredients":3},
+    {"id":"rec_55496","titre":"Poulet Rôti aux Saucisses et Poivrons","minutes":60,"manquants":2,"ingredients":3}
+  ],
+  "brocoli-anti-gaspi": [
+    {"id":"rec_44239","titre":"Beignets de Brocoli et Courgette","minutes":20,"manquants":1,"ingredients":2},
+    {"id":"rec_55511","titre":"Boules de Fromage et Brocoli","minutes":40,"manquants":1,"ingredients":2},
+    {"id":"rec_41511","titre":"Salade de Brocolis Rapide","minutes":10,"manquants":2,"ingredients":8},
+    {"id":"rec_47446","titre":"Brocoli Sauté à l'Ail","minutes":15,"manquants":2,"ingredients":6},
+    {"id":"rec_42091","titre":"Chips de Brocoli Croustillants Écrasés","minutes":20,"manquants":2,"ingredients":3}
+  ],
+  "carottes-anti-gaspi": [
+    {"id":"rec_36336","titre":"Purée de Carottes","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_42097","titre":"Salade Coréenne de Carottes (Morkovcha)","minutes":15,"manquants":1,"ingredients":4},
+    {"id":"rec_44628","titre":"Carottes à l'érable et aux canneberges","minutes":20,"manquants":1,"ingredients":3},
+    {"id":"rec_44080","titre":"Soupe de Carottes et Coriandre","minutes":30,"manquants":1,"ingredients":3},
+    {"id":"rec_42153","titre":"Soupe de Patates Douces et Carottes","minutes":45,"manquants":1,"ingredients":4}
+  ],
+  "carottes-fleuries": [
+    {"id":"rec_36336","titre":"Purée de Carottes","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_42097","titre":"Salade Coréenne de Carottes (Morkovcha)","minutes":15,"manquants":1,"ingredients":4},
+    {"id":"rec_44628","titre":"Carottes à l'érable et aux canneberges","minutes":20,"manquants":1,"ingredients":3},
+    {"id":"rec_44080","titre":"Soupe de Carottes et Coriandre","minutes":30,"manquants":1,"ingredients":3},
+    {"id":"rec_42153","titre":"Soupe de Patates Douces et Carottes","minutes":45,"manquants":1,"ingredients":4}
+  ],
+  "ail-conservation": [
+    {"id":"rec_39001","titre":"Pain à l'ail (sans huile)","minutes":15,"manquants":1,"ingredients":4},
+    {"id":"rec_42044","titre":"Spaghetti Aglio e Olio","minutes":15,"manquants":1,"ingredients":5},
+    {"id":"rec_56716","titre":"Pain à l'ail","minutes":15,"manquants":1,"ingredients":3},
+    {"id":"rec_46991","titre":"Paratha à l'ail et au beurre","minutes":20,"manquants":1,"ingredients":3},
+    {"id":"rec_55644","titre":"Poulet à l'Ail Glacé au Miel","minutes":30,"manquants":1,"ingredients":3}
+  ],
+  "pommes-terre-anti-gaspi": [
+    {"id":"rec_38175","titre":"Gnocchis à la Sauce Tomate","minutes":45,"manquants":0,"ingredients":2},
+    {"id":"rec_42155","titre":"Pomme de Terre au Four Double","minutes":60,"manquants":0,"ingredients":1},
+    {"id":"rec_51566","titre":"Chips de Pommes de Terre Instantanées","minutes":15,"manquants":1,"ingredients":3},
+    {"id":"rec_37612","titre":"Galettes Pomme de Terre et Farine","minutes":20,"manquants":1,"ingredients":4},
+    {"id":"rec_48263","titre":"Pommes de terre au beurre, dashi et sauce soja","minutes":20,"manquants":1,"ingredients":4}
+  ],
+  "tomates-anti-gaspi": [
+    {"id":"rec_42786","titre":"Carpaccio de Tomates Anciennes","minutes":15,"manquants":1,"ingredients":4},
+    {"id":"rec_47995","titre":"Salade de Haricots Verts et Tomates","minutes":15,"manquants":1,"ingredients":2},
+    {"id":"rec_42089","titre":"Beignets de Tomates Grecs","minutes":20,"manquants":1,"ingredients":3},
+    {"id":"rec_45140","titre":"Spaghetti aux Tomates Concassées","minutes":20,"manquants":1,"ingredients":4},
+    {"id":"rec_48094","titre":"Sauce Tomate","minutes":20,"manquants":1,"ingredients":2}
+  ],
+  "epinards-frais-qui-ramollissent": [
+    {"id":"rec_48057","titre":"Glaçons d'épinards pour Smoothies","minutes":5,"manquants":0,"ingredients":2},
+    {"id":"rec_42319","titre":"Petit-déjeuner aux Épinards et à l'Avoine","minutes":5,"manquants":1,"ingredients":7},
+    {"id":"rec_54290","titre":"Gomaae (Salade d'épinards à la sauce sésame)","minutes":10,"manquants":2,"ingredients":6},
+    {"id":"rec_44284","titre":"Cannellonis aux épinards","minutes":45,"manquants":2,"ingredients":4},
+    {"id":"rec_48067","titre":"Tarte aux Épinards, Feta et Riz Brun","minutes":60,"manquants":2,"ingredients":3}
+  ],
+  "bacon-anti-gaspi": [
+    {"id":"rec_57289","titre":"Lard Confite","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_26755","titre":"Momies de beignets au bacon","minutes":20,"manquants":1,"ingredients":4},
+    {"id":"rec_51494","titre":"Hot-dogs Enroulés de Bacon","minutes":20,"manquants":1,"ingredients":2},
+    {"id":"rec_57235","titre":"Bouchées de Lil' Smokies Enroulées de Bacon","minutes":50,"manquants":1,"ingredients":4},
+    {"id":"rec_55239","titre":"Rouleaux d'Enoki au Bacon","minutes":10,"manquants":2,"ingredients":4}
+  ],
+  "poulet-restes": [
+    {"id":"rec_51498","titre":"Salpicao de Poulet","minutes":25,"manquants":0,"ingredients":5},
+    {"id":"rec_55470","titre":"Poulet au Paprika et à la Tomate","minutes":30,"manquants":0,"ingredients":3},
+    {"id":"rec_55644","titre":"Poulet à l'Ail Glacé au Miel","minutes":30,"manquants":0,"ingredients":3},
+    {"id":"rec_55736","titre":"Poulet aigre-doux","minutes":30,"manquants":0,"ingredients":1},
+    {"id":"rec_56552","titre":"Pilons de Poulet Collants","minutes":40,"manquants":0,"ingredients":7}
+  ],
+  "jambon-restes": [
+    {"id":"rec_54724","titre":"Oeuf au Plat au Micro-Ondes avec Jambon","minutes":3,"manquants":1,"ingredients":3},
+    {"id":"rec_56709","titre":"Riz Frit au Jambon et aux Oeufs","minutes":20,"manquants":2,"ingredients":3},
+    {"id":"rec_57330","titre":"Jambon Glacé au Miel","minutes":20,"manquants":2,"ingredients":5},
+    {"id":"rec_55798","titre":"Jambon Glacé à l'Érable","minutes":75,"manquants":0,"ingredients":5}
+  ],
+  "thon-conserve": [
+    {"id":"rec_54159","titre":"Plat d'accompagnement au thon et aux poivrons verts","minutes":5,"manquants":1,"ingredients":4},
+    {"id":"rec_15435","titre":"Salade d'Avocat au Thon","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_15737","titre":"Avocat Thon","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_56355","titre":"Burgers au thon","minutes":null,"manquants":1,"ingredients":4},
+    {"id":"rec_56421","titre":"Pâtes crémeuses au thon","minutes":null,"manquants":2,"ingredients":3}
+  ],
+  "pates-restes": [
+    {"id":"rec_42044","titre":"Spaghetti Aglio e Olio","minutes":15,"manquants":0,"ingredients":5},
+    {"id":"rec_45264","titre":"Pâtes au Pesto de Persil","minutes":20,"manquants":0,"ingredients":3},
+    {"id":"rec_54146","titre":"Spaghetti façon Ramen","minutes":10,"manquants":1,"ingredients":4},
+    {"id":"rec_44664","titre":"Pâtes au Beurre et Citron","minutes":15,"manquants":1,"ingredients":3},
+    {"id":"rec_45092","titre":"Pâtes crémeuses au pesto","minutes":15,"manquants":1,"ingredients":2}
+  ],
+  "fond-de-pot-pesto": [
+    {"id":"rec_45033","titre":"Pizzas Pitas au Pesto","minutes":10,"manquants":1,"ingredients":2},
+    {"id":"rec_45092","titre":"Pâtes crémeuses au pesto","minutes":15,"manquants":1,"ingredients":2},
+    {"id":"rec_44314","titre":"Ciabattas Croustillantes aux Pleurotes et au Pesto","minutes":20,"manquants":2,"ingredients":3},
+    {"id":"rec_44363","titre":"Orzo au Pesto Vert","minutes":20,"manquants":2,"ingredients":3},
+    {"id":"rec_44219","titre":"Salade de Pommes de Terre Croustillantes au Pesto","minutes":30,"manquants":2,"ingredients":4}
+  ],
+  "pain-de-mie-sec": [
+    {"id":"rec_56716","titre":"Pain à l'ail","minutes":15,"manquants":0,"ingredients":3},
+    {"id":"rec_47048","titre":"Sandwich aux oeufs et mayonnaise","minutes":5,"manquants":1,"ingredients":3},
+    {"id":"rec_51557","titre":"Sandwich Grillé au Fromage","minutes":5,"manquants":1,"ingredients":3},
+    {"id":"rec_54339","titre":"Toast au Sésame","minutes":5,"manquants":1,"ingredients":4},
+    {"id":"rec_46690","titre":"Sandwich aux Oeufs et Mayonnaise","minutes":10,"manquants":1,"ingredients":3}
+  ],
+  "lentilles-corail-fond-de-sac": [
+    {"id":"rec_42572","titre":"Wrap de Lentilles Rouges","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_43273","titre":"Crêpes de Lentilles","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_41957","titre":"Galettes de Lentilles Corail","minutes":200,"manquants":0,"ingredients":2},
+    {"id":"rec_41243","titre":"Tofu de Lentilles","minutes":20,"manquants":1,"ingredients":3},
+    {"id":"rec_47977","titre":"Ragoût de lentilles corail aux légumes racines","minutes":null,"manquants":1,"ingredients":2}
+  ],
+  "fromage-restes": [
+    {"id":"rec_51557","titre":"Sandwich Grillé au Fromage","minutes":5,"manquants":1,"ingredients":3},
+    {"id":"rec_23525","titre":"Pakoda au Fromage","minutes":15,"manquants":1,"ingredients":6},
+    {"id":"rec_57408","titre":"Trempette au Fromage","minutes":15,"manquants":1,"ingredients":5},
+    {"id":"rec_46397","titre":"Pain à l'ail et au fromage","minutes":20,"manquants":1,"ingredients":4},
+    {"id":"rec_56492","titre":"Moules Gratinées au Fromage et à l'Ail","minutes":20,"manquants":1,"ingredients":3}
+  ],
+  "creme-fraiche": [
+    {"id":"rec_36395","titre":"Crème Fouettée en Bocal","minutes":5,"manquants":0,"ingredients":3},
+    {"id":"rec_53204","titre":"Ganache au chocolat","minutes":15,"manquants":0,"ingredients":1},
+    {"id":"rec_51685","titre":"Biscuits à la Crème","minutes":5,"manquants":1,"ingredients":6},
+    {"id":"rec_38914","titre":"Crème Fouettée Végétalienne","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_53573","titre":"Ganache au chocolat","minutes":15,"manquants":1,"ingredients":3}
+  ],
+  "oeufs-cuisine": [
+    {"id":"rec_55927","titre":"Oeufs Pochés Parfaits","minutes":5,"manquants":0,"ingredients":2},
+    {"id":"rec_48027","titre":"Oeufs Durs Parfaits","minutes":15,"manquants":0,"ingredients":2},
+    {"id":"rec_47048","titre":"Sandwich aux oeufs et mayonnaise","minutes":5,"manquants":1,"ingredients":3},
+    {"id":"rec_48071","titre":"Oeufs Brouillés","minutes":5,"manquants":1,"ingredients":3},
+    {"id":"rec_54788","titre":"Décoration d'Oeufs Durs","minutes":10,"manquants":0,"ingredients":1}
+  ],
+  "lait-anti-gaspi": [
+    {"id":"rec_42562","titre":"Aveioca Utilisant les Résidus de Lait d'Avoine","minutes":5,"manquants":0,"ingredients":2},
+    {"id":"rec_42554","titre":"Confiture de lait végane","minutes":20,"manquants":0,"ingredients":2},
+    {"id":"rec_52577","titre":"Dulce de Leche Maison","minutes":25,"manquants":0,"ingredients":3},
+    {"id":"rec_54874","titre":"Bonbons au Caramel au Lait Tendres et Moelleux","minutes":25,"manquants":0,"ingredients":4},
+    {"id":"rec_53578","titre":"Dulce de Leche Traditionnel","minutes":90,"manquants":0,"ingredients":4}
+  ],
+  "yaourt-perime": [
+    {"id":"rec_19553","titre":"Gâteau au Yaourt","minutes":50,"manquants":1,"ingredients":4},
+    {"id":"rec_19535","titre":"Mousse au chocolat et yaourt à deux ingrédients","minutes":270,"manquants":1,"ingredients":3},
+    {"id":"rec_38782","titre":"Lassi à la Mangue","minutes":5,"manquants":2,"ingredients":3},
+    {"id":"rec_38973","titre":"Lassi à la Mangue Vegan","minutes":5,"manquants":2,"ingredients":3},
+    {"id":"rec_22563","titre":"Smoothie Pastèque et Yaourt","minutes":10,"manquants":2,"ingredients":4}
+  ],
+  "blancs-d-oeufs-seuls": [
+    {"id":"rec_40851","titre":"Cloud Bread Sans Gluten","minutes":20,"manquants":0,"ingredients":3},
+    {"id":"rec_39549","titre":"Meringues","minutes":30,"manquants":0,"ingredients":4},
+    {"id":"rec_53585","titre":"Crème au beurre à la meringue suisse","minutes":30,"manquants":0,"ingredients":3},
+    {"id":"rec_54772","titre":"Meringues","minutes":90,"manquants":0,"ingredients":2},
+    {"id":"rec_56130","titre":"Biscuits Meringue 3 Ingrédients","minutes":null,"manquants":0,"ingredients":2}
+  ],
+  "jaunes-d-oeufs-seuls": [
+    {"id":"rec_52878","titre":"Crème Pâtissière","minutes":20,"manquants":1,"ingredients":5},
+    {"id":"rec_39513","titre":"Glace au Chocolat Parfaite","minutes":25,"manquants":1,"ingredients":4},
+    {"id":"rec_56720","titre":"Leche Flan","minutes":40,"manquants":1,"ingredients":3},
+    {"id":"rec_50067","titre":"Crème pâtissière facile au micro-ondes","minutes":null,"manquants":1,"ingredients":5}
+  ],
+  "avocat-trop-mur": [
+    {"id":"rec_15435","titre":"Salade d'Avocat au Thon","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_15737","titre":"Avocat Thon","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_42627","titre":"Mousse au Chocolat et à l'Avocat","minutes":10,"manquants":1,"ingredients":3},
+    {"id":"rec_45384","titre":"Salade de Pâtes à l'Avocat (Guacaroni)","minutes":20,"manquants":1,"ingredients":2},
+    {"id":"rec_42116","titre":"Salade de Chou Vert avec Vinaigrette Avocat Basilic","minutes":15,"manquants":2,"ingredients":4}
+  ],
+  "bananes-noires": [
+    {"id":"rec_48054","titre":"Comment Congeler des Bananes","minutes":10,"manquants":0,"ingredients":1},
+    {"id":"rec_54937","titre":"Bananes enrobées de chocolat","minutes":10,"manquants":0,"ingredients":1},
+    {"id":"rec_19601","titre":"Dessert Chocolat Banane","minutes":20,"manquants":0,"ingredients":1},
+    {"id":"rec_42622","titre":"Dessert de Banane à 2 Ingrédients","minutes":30,"manquants":0,"ingredients":2},
+    {"id":"rec_47308","titre":"Smoothie Banane et Avoine","minutes":5,"manquants":1,"ingredients":2}
+  ],
+  "pommes-fripees": [
+    {"id":"rec_42320","titre":"Dessert aux Pommes et Chocolat Noir","minutes":5,"manquants":0,"ingredients":1},
+    {"id":"rec_47226","titre":"Pommes Faciles à la Cannelle","minutes":15,"manquants":0,"ingredients":7},
+    {"id":"rec_42514","titre":"Purée de Pommes pour Gâteaux Végans","minutes":30,"manquants":0,"ingredients":2},
+    {"id":"rec_56366","titre":"Pâtisserie aux Pommes","minutes":40,"manquants":0,"ingredients":3},
+    {"id":"rec_42459","titre":"Jus Détox Ananas, Pomme et Gingembre","minutes":5,"manquants":1,"ingredients":4}
+  ],
+  "citron-entame": [
+    {"id":"rec_55066","titre":"Tranches de Citron au Miel","minutes":10,"manquants":0,"ingredients":2},
+    {"id":"rec_42922","titre":"Gâteau Tout Citron","minutes":60,"manquants":0,"ingredients":2},
+    {"id":"rec_40859","titre":"Boisson au Citron et à la Fleur d'Oranger","minutes":10,"manquants":1,"ingredients":4},
+    {"id":"rec_44664","titre":"Pâtes au Beurre et Citron","minutes":15,"manquants":1,"ingredients":3},
+    {"id":"rec_42063","titre":"Cubets Immunité Citron Gingembre Curcuma","minutes":20,"manquants":1,"ingredients":3}
+  ]
+}

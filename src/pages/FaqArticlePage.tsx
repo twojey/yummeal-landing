@@ -3,6 +3,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { articles, getArticle } from '../data/faq';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
+import MentionYmyl from '../components/MentionYmyl';
 import SiloSiblings from '../components/SiloSiblings';
 import { buildArticleJsonLd } from '../lib/schema';
 
@@ -34,6 +35,8 @@ export default function FaqArticlePage() {
           {article.title}
         </h1>
 
+
+        <MentionYmyl />
         <p className="text-lg text-gray-700 mb-6">{article.intro}</p>
 
         {article.sections.map((section, i) => (
