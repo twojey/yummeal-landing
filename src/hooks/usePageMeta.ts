@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { alternatives, BALISE_LANG, decoupeLocale } from '../i18n/config';
 
 interface PageMeta {
   title: string;
@@ -56,6 +57,23 @@ export function usePageMeta({ title, description, canonicalPath, jsonLd }: PageM
       document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', canonicalUrl);
+
+    // Langue et équivalences. La locale se lit dans le canonical lui-même :
+    // aucun appelant n'a à la passer, et elle ne peut donc pas diverger de
+    // l'URL réellement servie.
+    const { locale, chemin } = decoupeLocale(canonicalPath);
+    document.documentElement.setAttribute('lang', BALISE_LANG[locale]);
+
+    document
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((el) => el.remove());
+    alternatives(chemin, SITE_URL).forEach(({ hreflang, href }) => {
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'alternate');
+      link.setAttribute('hreflang', hreflang);
+      link.setAttribute('href', href);
+      document.head.appendChild(link);
+    });
 
     document
       .querySelectorAll('script[data-ldjson]')

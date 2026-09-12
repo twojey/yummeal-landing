@@ -3,6 +3,7 @@ Allow: /
 
 Sitemap: https://yummeal.app/sitemap-index.xml
 Sitemap: https://yummeal.app/sitemap-static.xml
+Sitemap: https://yummeal.app/sitemap-pl.xml
 Sitemap: https://yummeal.app/sitemap-fonctionnalites.xml
 Sitemap: https://yummeal.app/sitemap-ingredients.xml
 Sitemap: https://yummeal.app/sitemap-recettes-avec.xml

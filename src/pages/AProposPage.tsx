@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '../hooks/usePageMeta';
 import DownloadButtons from '../components/DownloadButtons';
+import { STORE_URLS_DEFAUT } from '../config';
 import {
   buildAboutPageJsonLd,
   buildBreadcrumbJsonLd,
@@ -82,7 +83,7 @@ const IDENTITE: Array<{ label: string; valeur: React.ReactNode }> = [
     label: 'Application iOS',
     valeur: (
       <a
-        href="https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441"
+        href={STORE_URLS_DEFAUT.apple}
         className="text-[#FF8C42] underline"
         rel="noopener"
       >
@@ -94,7 +95,7 @@ const IDENTITE: Array<{ label: string; valeur: React.ReactNode }> = [
     label: 'Application Android',
     valeur: (
       <a
-        href="https://play.google.com/store/apps/details?id=com.yummeal"
+        href={STORE_URLS_DEFAUT.google}
         className="text-[#FF8C42] underline"
         rel="noopener"
       >

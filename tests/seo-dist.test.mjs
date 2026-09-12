@@ -32,6 +32,16 @@ import {
 
 const SITE_URL = 'https://yummeal.app';
 
+/**
+ * Les accueils : un par langue. Un fil d'Ariane sur une page d'accueil ne
+ * décrit rien (« Accueil > Accueil »), donc ces routes sont exemptées — mais
+ * elles seules. Recopié ici volontairement plutôt qu'importé de
+ * src/i18n/config.ts : les tests sont en .mjs et ne compilent pas le
+ * TypeScript, et une divergence se voit tout de suite (une langue ajoutée
+ * sans sa racine ici fait échouer ce test, ce qui est le bon rappel).
+ */
+const RACINES_LOCALES = new Set(['/', '/pl/']);
+
 /** Au-delà, Google tronque le title dans les résultats. */
 const TITLE_MAX = 65;
 /** Au-delà, la description est coupée. */
@@ -219,7 +229,7 @@ describe('données structurées', { skip: SANS_BUILD }, () => {
 
   test('chaque page hors accueil a un fil d’Ariane', () => {
     const fautifs = pages
-      .filter((p) => p.route !== '/')
+      .filter((p) => !RACINES_LOCALES.has(p.route))
       .filter((p) => !jsonLdBlocks(p.html).some((b) => b['@type'] === 'BreadcrumbList'))
       .map((p) => p.route);
     assert.deepEqual(

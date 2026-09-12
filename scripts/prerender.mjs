@@ -20,6 +20,15 @@ const {
   pagesAlternatives,
 } = ssr;
 const {
+  locales,
+  baliseLang,
+  alternatives,
+  cheminLocalise,
+  cheminsDeLocale,
+  decoupeLocale,
+  dictionnaire,
+} = ssr;
+const {
   buildOrganizationJsonLd,
   buildAboutPageJsonLd,
   buildWebSiteJsonLd,
@@ -58,7 +67,9 @@ function crumbs(...steps) {
 }
 
 const staticRoutes = [
-  { path: '/', title: "Yummeal - Cuisiner sain avec ce qu'il y a dans votre frigo", description: "Yummeal transforme votre frigo en recettes réalisables : cuisinez sainement, sans gaspiller. Téléchargement gratuit sur iOS et Android.", jsonLd: [buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildMobileApplicationJsonLd()] },
+  // Title et description viennent du dictionnaire, comme le corps de la page :
+  // un title recopié ici divergerait du jour où la page est réécrite.
+  { path: '/', title: dictionnaire('fr').accueil.title, description: dictionnaire('fr').accueil.description, jsonLd: [buildOrganizationJsonLd(), buildWebSiteJsonLd('fr'), buildMobileApplicationJsonLd()] },
   // Page d'identité de la marque : celle qu'un moteur génératif cite pour
   // répondre « qu'est-ce que Yummeal ». Elle n'existait pas.
   { path: '/a-propos', title: 'À propos de Yummeal — qui édite l\u2019application et ce qu\u2019elle fait', description: "Application mobile éditée par YIDLA (France) : des recettes réalisables avec ce que vous avez déjà. Ce qu'elle fait, et ce qu'elle ne fait pas.", jsonLd: [buildAboutPageJsonLd(), buildOrganizationJsonLd(), buildMobileApplicationJsonLd(), crumbs({ name: 'À propos', path: '/a-propos' })] },
@@ -365,8 +376,47 @@ const alternativesRoutes = [
   })),
 ];
 
+/**
+ * Pages des langues autres que le français.
+ *
+ * Elles sont dérivées de `CHEMINS_TRADUITS` (src/i18n/config.ts), donc la
+ * liste des pages prérendues, celle des `hreflang` et celle du sélecteur de
+ * langue ne peuvent pas diverger : c'est la même source. Ajouter une page
+ * traduite = ajouter son chemin là-bas, et écrire sa traduction.
+ *
+ * Le title et la description viennent du dictionnaire de la langue. Une page
+ * polonaise avec un `<title>` français serait invisible sur les requêtes
+ * polonaises, quelle que soit la qualité du corps de page.
+ */
+const localeRoutes = locales.filter((l) => l !== 'fr').flatMap((locale) =>
+  cheminsDeLocale(locale).map((chemin) => {
+    const dico = dictionnaire(locale);
+    // Seul l'accueil est traduit pour l'instant ; le jour où d'autres pages
+    // s'ajoutent, il faudra une table chemin -> entrée du dictionnaire. On
+    // échoue bruyamment plutôt que de prérendre une page sans title.
+    if (chemin !== '') {
+      throw new Error(
+        `[prerender] chemin traduit « ${chemin} » (${locale}) déclaré dans ` +
+          `CHEMINS_TRADUITS sans title/description dans le dictionnaire. ` +
+          `Ajouter son entrée ici avant de le lister.`
+      );
+    }
+    return {
+      path: cheminLocalise(chemin, locale),
+      title: dico.accueil.title,
+      description: dico.accueil.description,
+      jsonLd: [
+        buildOrganizationJsonLd(),
+        buildWebSiteJsonLd(locale),
+        buildMobileApplicationJsonLd(),
+      ],
+    };
+  })
+);
+
 const routes = [
   ...staticRoutes,
+  ...localeRoutes,
   ...fonctionnaliteRoutes,
   ...alternativesRoutes,
   ...ingredientRoutes,
@@ -391,11 +441,25 @@ function injectMeta(
   // laisser og:type="website" partout faisait passer 163 pages pour la home
   // du site auprès de chaque partageur de lien.
   const ogType = routePath === '/' ? 'website' : 'article';
+
+  // Langue de la page et équivalences. `decoupeLocale` lit la locale dans le
+  // chemin : le prerender ne peut donc pas étiqueter une page autrement que
+  // ce que son URL annonce. Sans `lang` correct, un lecteur d'écran lit du
+  // polonais avec une prononciation française, et Google a un signal de
+  // langue qui contredit le texte.
+  const { locale, chemin } = decoupeLocale(routePath);
+  const hreflangBlock = alternatives(chemin, SITE_URL)
+    .map(
+      ({ hreflang, href }) =>
+        `<link rel="alternate" hreflang="${hreflang}" href="${href}" />`
+    )
+    .join('\n');
   const robotsTag = noindex
     ? '<meta name="robots" content="noindex,follow" />\n'
     : '';
   return html
-    .replace('</head>', `${robotsTag}${ldJsonBlock}\n</head>`)
+    .replace('</head>', `${robotsTag}${hreflangBlock}\n${ldJsonBlock}\n</head>`)
+    .replace(/<html lang="[^"]*"/, `<html lang="${baliseLang[locale]}"`)
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta\s+name="description"\s+content=".*?"\s*\/>/,

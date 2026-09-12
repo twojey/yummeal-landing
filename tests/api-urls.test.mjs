@@ -13,7 +13,9 @@
  */
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { read, sourceFiles, publicFiles, exists } from './lib/sources.mjs';
+import { read, sourceFiles, publicFiles, exists, distBuilt, distPages } from './lib/sources.mjs';
+
+const SANS_BUILD = distBuilt() ? false : 'dist/ absent — lancer `npm run build`';
 
 /** Hôte du backend en production. À changer ICI en cas de nouvelle migration. */
 const BACKEND_HOST = 'yummeal-server.yumhack.deno.net';
@@ -136,27 +138,100 @@ describe('URL des fiches stores', () => {
   const ID_IOS = '6744942441';
   const ID_ANDROID = 'com.yummeal';
 
-  test('les liens App Store utilisent le slug et l’id à jour', () => {
+  /**
+   * Les URL des stores étaient recopiées dans cinq fichiers, comme l'URL du
+   * backend avant elle. Elles sont désormais construites dans src/config.ts,
+   * donc un test qui cherche des URL littérales dans les sources ne peut plus
+   * les voir — il verrait `${APP_STORE_ID}`.
+   *
+   * Le garde-fou porte donc sur les deux choses qui comptent vraiment :
+   *  1. personne ne redéclare une URL de store ailleurs que dans config.ts ;
+   *  2. les URL qui sortent réellement dans le HTML prérendu sont correctes.
+   * Le second point est le seul qui teste ce que le visiteur reçoit.
+   */
+  const FICHIERS_AUTORISES = new Set([
+    'src/config.ts',
+    // llms.txt et les données éditoriales citent les fiches en texte : ce ne
+    // sont pas des boutons, mais elles doivent rester à jour elles aussi.
+    'public/llms.txt',
+  ]);
+
+  test('seul src/config.ts déclare les URL des stores', () => {
     const fautifs = [];
-    for (const rel of [...sourceFiles(), ...publicFiles()]) {
-      for (const m of read(rel).matchAll(/https:\/\/apps\.apple\.com\/[^\s'"`)]+/g)) {
-        const url = m[0];
-        if (!url.includes(ID_IOS)) fautifs.push(`${rel} -> id manquant : ${url}`);
-        else if (/\/app\/[^/]+\//.test(url) && !url.includes(SLUG_IOS))
-          fautifs.push(`${rel} -> slug périmé : ${url}`);
+    for (const rel of sourceFiles()) {
+      if (FICHIERS_AUTORISES.has(rel)) continue;
+      const contenu = read(rel);
+      for (const ligne of contenu.split('\n')) {
+        // Les commentaires citent les URL pour expliquer la règle.
+        const nue = ligne.trim();
+        if (nue.startsWith('*') || nue.startsWith('//')) continue;
+        if (/https:\/\/(?:apps\.apple\.com|play\.google\.com)/.test(ligne)) {
+          fautifs.push(`${rel} -> ${nue.slice(0, 90)}`);
+        }
       }
     }
+    assert.deepEqual(
+      fautifs,
+      [],
+      'URL de store déclarée hors de src/config.ts — importer STORE_URLS :\n' +
+        fautifs.join('\n')
+    );
+  });
+
+  test('les liens App Store et Play sont corrects dans le HTML servi', { skip: SANS_BUILD }, () => {
+    const fautifs = [];
+    let vus = 0;
+    for (const p of distPages()) {
+      for (const m of p.html.matchAll(/https:\/\/apps\.apple\.com\/[^\s'"`)<]+/g)) {
+        vus++;
+        const url = m[0];
+        if (!url.includes(ID_IOS)) fautifs.push(`${p.route} -> id manquant : ${url}`);
+        else if (/\/app\/[^/]+\//.test(url) && !url.includes(SLUG_IOS))
+          fautifs.push(`${p.route} -> slug périmé : ${url}`);
+      }
+      for (const m of p.html.matchAll(/https:\/\/play\.google\.com\/[^\s'"`)<]+/g)) {
+        vus++;
+        if (!m[0].includes(ID_ANDROID)) fautifs.push(`${p.route} -> ${m[0]}`);
+      }
+    }
+    assert.ok(vus > 100, `seulement ${vus} liens de store trouvés dans dist/ — le test ne teste rien`);
     assert.deepEqual(fautifs, [], fautifs.join('\n'));
   });
 
-  test('les liens Google Play utilisent le bon identifiant', () => {
-    const fautifs = [];
-    for (const rel of [...sourceFiles(), ...publicFiles()]) {
-      for (const m of read(rel).matchAll(/https:\/\/play\.google\.com\/[^\s'"`)]+/g)) {
-        if (!m[0].includes(ID_ANDROID)) fautifs.push(`${rel} -> ${m[0]}`);
+  /**
+   * L'application iOS n'est distribuée que dans la boutique française
+   * (vérifié le 12/09/2026 : `/pl/`, `/de/`, `/us/`… renvoient 404 et
+   * `itunes.apple.com/lookup?country=pl` renvoie 0 résultat). Tant que c'est
+   * le cas, aucune page polonaise ne doit proposer de bouton App Store, ni
+   * promettre iOS dans sa description : le lien mènerait à une 404.
+   *
+   * Le jour où la distribution est étendue, ce test échouera dès qu'on
+   * remplira `STORE_URLS.pl.apple` — c'est voulu : il faudra alors relire
+   * aussi la meta description polonaise, que ce test protège.
+   */
+  test('aucune page polonaise ne promet une boutique où l’app n’est pas distribuée', { skip: SANS_BUILD }, () => {
+    const pagesPl = distPages().filter((p) => p.route === '/pl' || p.route.startsWith('/pl/'));
+    assert.ok(pagesPl.length > 0, 'aucune page polonaise dans dist/ — le test ne teste rien');
+    for (const p of pagesPl) {
+      // On teste les liens CLIQUABLES (`href=`), pas toute occurrence de
+      // l'URL : le `sameAs` du JSON-LD cite la fiche App Store pour
+      // identifier l'entité « Yummeal », ce qui reste juste sur une page
+      // polonaise. Ce qui ne doit pas exister, c'est un bouton.
+      const liensApple = [...p.html.matchAll(/href="(https:\/\/apps\.apple\.com[^"]*)"/g)];
+      assert.deepEqual(
+        liensApple.map((m) => m[1]),
+        [],
+        `${p.route} affiche un lien App Store cliquable alors que l'app n'est pas distribuée en Pologne`
+      );
+      const desc = p.html.match(/<meta\s+name="description"\s+content="([^"]*)"/);
+      if (desc) {
+        assert.equal(
+          /\biOS\b/i.test(desc[1]),
+          false,
+          `${p.route} promet iOS dans sa meta description : « ${desc[1]} »`
+        );
       }
     }
-    assert.deepEqual(fautifs, [], fautifs.join('\n'));
   });
 });
 

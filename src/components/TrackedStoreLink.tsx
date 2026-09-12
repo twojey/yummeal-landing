@@ -7,6 +7,7 @@
 import { AnchorHTMLAttributes } from 'react';
 import { trackDownloadClick } from '../utils/tracking';
 import { withUtmParams } from '../utils/utmTracker';
+import { STORE_URLS_DEFAUT } from '../config';
 
 /**
  * Propriétés du composant
@@ -19,11 +20,15 @@ interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 /**
- * URLs des stores d'applications
+ * URLs des stores — reprises de src/config.ts, seule déclaration du site.
+ *
+ * Ce composant n'est pas un hook et sert aussi hors contexte de routeur : il
+ * prend donc les URL de la langue par défaut. Les boutons de téléchargement
+ * visibles passent par `DownloadButtons`, qui suit la langue de la page.
  */
 const STORE_URLS = {
-  apple: 'https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441',
-  google: 'https://play.google.com/store/apps/details?id=com.yummeal'
+  apple: STORE_URLS_DEFAUT.apple,
+  google: STORE_URLS_DEFAUT.google
 };
 
 /**

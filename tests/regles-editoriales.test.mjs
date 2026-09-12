@@ -22,6 +22,11 @@ const SANS_BUILD = distBuilt() ? false : 'dist/ absent — lancer `npm run build
  */
 const INTERDITS = [
   {
+    // Les règles sont nommées : les tests du garde-fou les désignaient par
+    // leur INDICE, si bien qu'insérer une règle en tête faisait pointer
+    // silencieusement les assertions sur une autre règle — elles échouaient
+    // en dénonçant la mauvaise chose.
+    cle: 'recettes-ia',
     motif: /recettes?\s+(?:g[éeè]n[ée]r[ée]e?s?|cr[ée][ée]e?s?)\s+par\s+(?:une?\s+)?(?:IA|intelligence artificielle)/gi,
     pourquoi:
       "les recettes ne sont PAS générées par IA — elles sont écrites par des humains " +
@@ -31,6 +36,33 @@ const INTERDITS = [
     exception: /ne sont pas g[ée]n[ée]r[ée]es par une? IA/i,
   },
   {
+    cle: 'app-auteur-des-recettes',
+    /**
+     * Le motif ci-dessus exigeait les mots « par IA », et c'était un trou :
+     * la page d'accueil affichait « Scannez votre frigo, Yummeal GÉNÈRE
+     * instantanément des recettes délicieuses » — la formulation exactement
+     * interdite, sans le mot IA, sur la page la plus vue du site. Elle a
+     * survécu à la création du garde-fou parce que le garde-fou cherchait le
+     * mot IA plutôt que l'affirmation.
+     *
+     * Ce qui compte n'est pas de savoir si l'IA est nommée, c'est qu'on ne
+     * présente pas l'application comme l'AUTEUR des recettes. On ancre donc
+     * sur le sujet (Yummeal / l'application) suivi d'un verbe de création,
+     * et sur la forme passive « recettes générées », quel qu'en soit l'agent.
+     *
+     * « recettes génériques » (src/data/concept.ts) ne matche pas : `[ée]`
+     * n'accepte pas le « i » de « génériques ». Vérifié.
+     */
+    motif:
+      /(?:Yummeal|l['\u2019]application|l['\u2019]appli)\s+(?:vous\s+)?(?:g[ée]n[èé]re|cr[ée]e|invente|[ée]labore)\b[^.!?]{0,60}\brecettes?\b|\brecettes?\s+(?:d[ée]j[àa]\s+)?g[ée]n[ée]r[ée]e?s?\b/gi,
+    pourquoi:
+      "l'application ne CRÉE pas les recettes : elles sont écrites par des humains, " +
+      "elle les trie et les filtre. La présenter comme leur auteur est faux, et c'est " +
+      "précisément ce que le public reproche aux applications de cuisine",
+    exception: /ne (?:sont|les) pas g[ée]n[ée]r[ée]|n['\u2019]en g[ée]n[ée]re aucune/i,
+  },
+  {
+    cle: 'gratuit-scope',
     // « gratuite » et « gratuits » échappaient au motif : deux formulations
     // trompeuses sur trois passaient donc le garde-fou sans être vues.
     motif: /\bgratuit(?:e|s|es)?\b/gi,
@@ -48,6 +80,13 @@ const INTERDITS = [
       /t[ée]l[ée]chargement (?:est )?gratuit|essai gratuit|offre gratuite|version gratuite d[eu]|audit (?:SEO )?gratuit|recette gratuite|[ée]chantillon-gratuit/i,
   },
 ];
+
+/** Retrouve une règle par son nom, pour que les tests ne dépendent pas de l'ordre. */
+const regleParCle = (cle) => {
+  const regle = INTERDITS.find((r) => r.cle === cle);
+  if (!regle) throw new Error(`règle « ${cle} » introuvable dans INTERDITS`);
+  return regle;
+};
 
 /** Les fichiers où la formulation compte : contenu et données, pas outillage. */
 const fichiersDeContenu = () => [
@@ -120,7 +159,7 @@ describe('formulations interdites dans les sources', () => {
   test('nulle part : « recettes générées par IA »', () => {
     // Règle appliquée partout : cette formulation est fausse quel que soit le
     // contexte, y compris à propos d'un concurrent qu'on décrirait mal.
-    const regle = INTERDITS[0];
+    const regle = regleParCle('recettes-ia');
     const fautifs = [];
     for (const rel of fichiersDeContenu()) {
       for (const ligne of infractions(read(rel), regle)) fautifs.push(`${rel} ${ligne}`);
@@ -129,7 +168,7 @@ describe('formulations interdites dans les sources', () => {
   });
 
   test('dans les métadonnées : « gratuit » toujours scopé', () => {
-    const regle = INTERDITS[1];
+    const regle = regleParCle('gratuit-scope');
     const fautifs = [];
     for (const rel of fichiersDeContenu()) {
       for (const valeur of valeursDeMetadonnees(read(rel))) {
@@ -150,7 +189,7 @@ describe('formulations interdites dans les sources', () => {
     // Restreint aux pages que NOUS décrivons (a-propos, fonctionnalités,
     // concept), là où « gratuit » porterait sur Yummeal. Les comparatifs sont
     // exclus : ils décrivent des offres tierces.
-    const regle = INTERDITS[1];
+    const regle = regleParCle('gratuit-scope');
     const nôtres = [
       'src/pages/AProposPage.tsx',
       'src/data/fonctionnalites.ts',
@@ -170,7 +209,8 @@ describe('formulations interdites dans le HTML généré', { skip: SANS_BUILD },
     const fautives = distPages()
       .filter((p) => {
         const texte = p.html.replace(/<[^>]+>/g, ' ');
-        return INTERDITS[0].motif.test(texte) && !INTERDITS[0].exception.test(texte);
+        const regle = regleParCle('recettes-ia');
+        return regle.motif.test(texte) && !regle.exception.test(texte);
       })
       .map((p) => p.route);
     assert.deepEqual(fautives, [], fautives.join('\n'));
@@ -185,7 +225,7 @@ describe('formulations interdites dans le HTML généré', { skip: SANS_BUILD },
       if (!m) continue;
       if (
         /\bgratuit\b/i.test(m[1]) &&
-        !INTERDITS[1].exception.test(m[1]) &&
+        !regleParCle('gratuit-scope').exception.test(m[1]) &&
         !parleDUnTiersPasDeNous(m[1])
       ) {
         fautives.push(`${p.route} : « ${m[1]} »`);
@@ -212,7 +252,7 @@ describe('le garde-fou lui-même', () => {
   ];
 
   const detecte = (valeur) => {
-    const regle = INTERDITS[1];
+    const regle = regleParCle('gratuit-scope');
     regle.motif.lastIndex = 0;
     return (
       regle.motif.test(valeur) &&

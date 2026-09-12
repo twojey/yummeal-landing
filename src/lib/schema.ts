@@ -3,6 +3,8 @@
 // module via le re-export dans src/entry-server.tsx). Aucune dépendance
 // React ici pour rester importable des deux côtés.
 
+import { STORE_URLS_DEFAUT } from '../config';
+
 export const SITE_URL = 'https://yummeal.app';
 
 // Date de dernière revue éditoriale du contenu généré cette session. Pas de
@@ -41,21 +43,27 @@ export function buildOrganizationJsonLd() {
     logo: `${SITE_URL}/images/yummeal_logo.png`,
     description:
       "Yummeal transforme le contenu de votre frigo en recettes personnalisées : cuisinez sainement, sans gaspiller et sans y penser.",
-    sameAs: [
-      'https://apps.apple.com/fr/app/recettes-du-frigo-yummeal/id6744942441',
-      'https://play.google.com/store/apps/details?id=com.yummeal',
-    ],
+    // `sameAs` identifie l'entité, ce n'est pas un bouton : on cite les fiches
+    // de la langue par défaut, y compris sur les pages d'une autre langue.
+    sameAs: [STORE_URLS_DEFAUT.apple, STORE_URLS_DEFAUT.google],
   };
 }
 
-export function buildWebSiteJsonLd() {
+/**
+ * `inLanguage` doit décrire la langue DE LA PAGE, pas celle du site : un
+ * `fr-FR` codé en dur sur une page polonaise dit à un moteur que le contenu
+ * qu'il vient de lire est en français. L'`@id` reste commun — c'est le même
+ * site web, servi en deux langues, et c'est exactement ce que les `hreflang`
+ * déclarent par ailleurs.
+ */
+export function buildWebSiteJsonLd(locale: 'fr' | 'pl' = 'fr') {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     name: 'Yummeal',
     url: SITE_URL,
-    inLanguage: 'fr-FR',
+    inLanguage: locale === 'pl' ? 'pl-PL' : 'fr-FR',
     publisher: { '@id': ORG_ID },
   };
 }

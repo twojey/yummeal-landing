@@ -36,6 +36,23 @@ export {
   REDIRECTIONS_VERS_INDEX,
 } from './data/alternatives';
 
+// Socle i18n : le prerender doit générer les pages localisées, leurs
+// `hreflang` et l'attribut `lang` depuis la MÊME source que le client,
+// sinon les deux divergent sans que rien n'échoue.
+// ⚠️ `LOCALES` et `BALISE_LANG` sont aliasés en minuscule : le plugin
+// react-refresh considère tout export dont le nom commence par une majuscule
+// comme un composant, et se met alors à signaler TOUS les réexports de ce
+// fichier (39 avertissements, et `lint` échoue sur --max-warnings 0).
+export {
+  LOCALES as locales,
+  BALISE_LANG as baliseLang,
+  alternatives,
+  cheminLocalise,
+  cheminsDeLocale,
+  decoupeLocale,
+} from './i18n/config';
+export { dictionnaire } from './i18n/useLocale';
+
 export {
   buildOrganizationJsonLd,
   buildAboutPageJsonLd,
