@@ -141,6 +141,23 @@ export const pl: Dictionnaire = {
     ],
   },
 
+  fonctionnalites: {
+    fil: 'Funkcje',
+    indexTitle: 'Funkcje Yummeal – trzy mechanizmy',
+    indexDescription:
+      'Trzy mechanizmy Yummeal i ich granice: skanowanie lodówki, import przepisu z TikToka, szacowanie dania ze zdjęcia.',
+    indexH1: 'Co robi Yummeal, mechanizm po mechanizmie',
+    indexIntro:
+      'Trzy funkcje, opisane razem z tym, czego NIE robią. Bez obietnic ponad to, co jest: łatwiej wtedy zdecydować, czy aplikacja jest dla Ciebie.',
+    indexCollection: 'Funkcje',
+    indexCta: 'Najprościej po prostu sprawdzić',
+    commentCaMarche: 'Jak to działa',
+    ceQueCaNeFaitPas: 'Czego to nie robi',
+    limitesIntro: 'Prawdziwe granice, żebyś wiedziała, czego się spodziewać.',
+    questions: 'Częste pytania',
+    autres: 'Pozostałe funkcje',
+  },
+
   pied: {
     guides: 'Jak nie marnować jedzenia',
     application: 'Aplikacja',

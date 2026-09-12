@@ -180,28 +180,32 @@ describe('couverture des traductions', { skip: SANS_BUILD }, () => {
     assert.match(read('public/robots.txt'), /sitemap-pl\.xml/);
   });
 
-  test('la page polonaise n’a pas de texte français résiduel', () => {
+  test('aucune page polonaise n’a de texte français résiduel', () => {
     // Un composant oublié ne casse rien : il rend juste du français au milieu
     // du polonais. Ces mots-outils sont fréquents en français et absents du
     // polonais, donc leur présence signale un bloc non traduit.
     //
     // « Français » est attendu : c'est le libellé du sélecteur de langue, et
     // le nom d'une langue s'écrit dans cette langue. On le retire avant.
-    const pl = distPages().find((p) => p.route === '/pl/');
-    assert.ok(pl, 'page /pl/ absente de dist/');
-    const corps = pl.html
-      .split('<div id="root">')[1]
-      .split('</body>')[0]
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/Fran[çc]ais/g, ' ');
+    const pagesPl = distPages().filter((p) => p.route.startsWith('/pl/'));
+    assert.ok(pagesPl.length > 0, 'aucune page polonaise dans dist/');
     const suspects = ['votre', 'vos', 'avec', 'pour', 'recettes', 'frigo', 'gratuit'];
-    const trouves = suspects.filter((mot) =>
-      new RegExp(`\\b${mot}\\b`, 'i').test(corps)
-    );
+    const fautives = [];
+    for (const p of pagesPl) {
+      const corps = p.html
+        .split('<div id="root">')[1]
+        .split('</body>')[0]
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/Fran[çc]ais/g, ' ');
+      const trouves = suspects.filter((mot) =>
+        new RegExp(`\\b${mot}\\b`, 'i').test(corps)
+      );
+      if (trouves.length) fautives.push(`${p.route} : ${trouves.join(', ')}`);
+    }
     assert.deepEqual(
-      trouves,
+      fautives,
       [],
-      `mots français dans la page polonaise (bloc non traduit ?) : ${trouves.join(', ')}`
+      `mots français dans une page polonaise (bloc non traduit ?) :\n${fautives.join('\n')}`
     );
   });
 });

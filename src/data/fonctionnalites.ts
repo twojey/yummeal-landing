@@ -199,6 +199,26 @@ export const fonctionnalites: Fonctionnalite[] = [
   },
 ];
 
-export function getFonctionnalite(slug: string): Fonctionnalite | undefined {
-  return fonctionnalites.find((f) => f.slug === slug);
+import { fonctionnalitesPl } from './fonctionnalites.pl';
+import type { Locale } from '../i18n/config';
+
+/**
+ * Les pages produit, dans une langue. Les slugs sont identiques d'une langue
+ * à l'autre : c'est ce qui rend l'appariement `hreflang` trivial et
+ * vérifiable (voir le commentaire de fonctionnalites.pl.ts).
+ */
+const PAR_LOCALE: Record<Locale, Fonctionnalite[]> = {
+  fr: fonctionnalites,
+  pl: fonctionnalitesPl,
+};
+
+export function fonctionnalitesDe(locale: Locale): Fonctionnalite[] {
+  return PAR_LOCALE[locale];
+}
+
+export function getFonctionnalite(
+  slug: string,
+  locale: Locale = 'fr'
+): Fonctionnalite | undefined {
+  return PAR_LOCALE[locale].find((f) => f.slug === slug);
 }

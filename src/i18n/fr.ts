@@ -122,6 +122,26 @@ export const fr = {
     ],
   },
 
+  fonctionnalites: {
+    // Libellés d'interface des pages produit. Le CONTENU de ces pages vit
+    // dans src/data/fonctionnalites{,.pl}.ts : seule l'ossature est ici.
+    fil: 'Fonctionnalités',
+    indexTitle: 'Fonctionnalités de Yummeal — les trois mécanismes',
+    indexDescription:
+      'Les trois mécanismes de Yummeal et leurs limites : scanner son frigo, importer une recette TikTok, estimer un plat en photo.',
+    indexH1: 'Ce que fait Yummeal, mécanisme par mécanisme',
+    indexIntro:
+      'Trois fonctions, expliquées avec ce qu’elles font et ce qu’elles ne font pas. Pas de promesse au-delà du réel : c’est plus utile pour décider si l’application vous convient.',
+    indexCollection: 'Fonctionnalités',
+    indexCta: 'Le plus simple reste de l’essayer',
+    commentCaMarche: 'Comment ça marche',
+    ceQueCaNeFaitPas: 'Ce que ça ne fait pas',
+    limitesIntro:
+      'Les limites réelles, pour que vous sachiez à quoi vous attendre.',
+    questions: 'Questions fréquentes',
+    autres: 'Les autres fonctionnalités',
+  },
+
   pied: {
     guides: 'Guides anti-gaspi',
     application: "L'application",

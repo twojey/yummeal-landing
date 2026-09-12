@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Sitemap de la version polonaise. Un sitemap par langue plutôt qu'un seul
-  fichier mélangé : quand une langue bouge (elle va beaucoup bouger au
-  lancement), c'est son seul `lastmod` qui change dans l'index, et Google ne
-  recrawle pas les 148 URL françaises pour rien.
+  fichier mélangé : au lancement le polonais va bouger souvent, et c'est alors
+  son seul `lastmod` qui change dans l'index — inutile de faire recrawler les
+  148 URL françaises à chaque retouche.
 
   Les équivalences entre langues sont déclarées dans le <head> de chaque page
   (balises hreflang réciproques, générées par scripts/prerender.mjs depuis
   src/i18n/config.ts). Elles ne sont donc PAS répétées ici : les dupliquer en
   annotations xhtml:link créerait une deuxième source de vérité, et la
   première contradiction entre les deux invaliderait les deux.
+
+  Les slugs restent ceux du français (voir src/data/fonctionnalites.pl.ts) :
+  le title, le H1 et le corps portent la charge sémantique, le slug est un
+  signal faible, et des slugs communs rendent l'appariement hreflang
+  vérifiable.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -17,5 +22,29 @@
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/pl/fonctionnalites/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/pl/fonctionnalites/scanner-frigo/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/pl/fonctionnalites/import-recette-tiktok/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yummeal.app/pl/fonctionnalites/photo-de-plat/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

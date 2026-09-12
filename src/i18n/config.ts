@@ -18,12 +18,11 @@
  * 40 000 mots de polonais non relu ferait plus de mal que de bien sur un
  * marché où la marque démarre.
  *
- * PROCHAINES PAGES À AJOUTER, dans cet ordre (ce sont les seules pages
- * transactionnelles du site, donc celles qui rapportent une traduction) :
- * `/a-propos`, `/fonctionnalites`, puis les trois fiches
- * `/fonctionnalites/{scanner-frigo,import-recette-tiktok,photo-de-plat}`.
- * Ajouter le chemin ici APRÈS avoir écrit la traduction dans `pl.ts` — les
- * tests vérifient que chaque chemin listé est bien prérendu.
+ * PROCHAINE PAGE À AJOUTER : `/a-propos` — c'est elle qu'un moteur génératif
+ * cite pour répondre « qu'est-ce que Yummeal », y compris en polonais.
+ * Ajouter le chemin ici APRÈS avoir écrit la traduction — les tests vérifient
+ * que chaque chemin listé est bien prérendu, et que chaque page traduite ne
+ * laisse pas fuiter de français.
  */
 
 export const LOCALE_DEFAUT = 'fr' as const;
@@ -55,6 +54,12 @@ export const NOM_LOCALE: Record<Locale, string> = {
 const CHEMINS_TRADUITS: Record<Exclude<Locale, 'fr'>, readonly string[]> = {
   pl: [
     '', // accueil — priorité du lancement polonais
+    // Les trois pages produit + leur index : les seules pages à intention
+    // transactionnelle du site, donc celles qu'une traduction rentabilise.
+    '/fonctionnalites',
+    '/fonctionnalites/scanner-frigo',
+    '/fonctionnalites/import-recette-tiktok',
+    '/fonctionnalites/photo-de-plat',
   ],
 };
 

@@ -122,7 +122,9 @@ function App() {
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center">
+              {/* Le logo ramène à l'accueil DE LA LANGUE courante : un `/` en
+                  dur renvoyait un visiteur polonais sur la page française. */}
+              <Link to={racine} className="flex items-center">
                 <img
                   src={Logo}
                   alt="Yummeal"
@@ -207,6 +209,11 @@ function App() {
             react-router traite `/pl` et `/pl/` comme la même route ; côté
             Netlify c'est `/pl/index.html` qui est servi. */}
         <Route path="/pl" element={<HomePage />} />
+        <Route path="/pl/fonctionnalites" element={<FonctionnalitesIndexPage />} />
+        <Route
+          path="/pl/fonctionnalites/:slug"
+          element={<FonctionnalitePage />}
+        />
         <Route path="/a-propos" element={<AProposPage />} />
         <Route path="/fonctionnalites" element={<FonctionnalitesIndexPage />} />
         <Route path="/fonctionnalites/:slug" element={<FonctionnalitePage />} />

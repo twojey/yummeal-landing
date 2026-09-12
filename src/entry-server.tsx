@@ -29,7 +29,7 @@ export { articles as regimesArticles } from './data/regimes';
 export { articles as guidesArticles } from './data/guides';
 export { articles as faqArticles } from './data/faq';
 export { articles as conceptArticles } from './data/concept';
-export { fonctionnalites } from './data/fonctionnalites';
+export { fonctionnalites, fonctionnalitesDe } from './data/fonctionnalites';
 export {
   pagesAlternatives,
   REDIRECTIONS_COMPARATIF,

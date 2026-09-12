@@ -17,6 +17,7 @@ const {
   ingredients,
   ingredientCategories,
   fonctionnalites,
+  fonctionnalitesDe,
   pagesAlternatives,
 } = ssr;
 const {
@@ -388,21 +389,23 @@ const alternativesRoutes = [
  * polonaise avec un `<title>` français serait invisible sur les requêtes
  * polonaises, quelle que soit la qualité du corps de page.
  */
-const localeRoutes = locales.filter((l) => l !== 'fr').flatMap((locale) =>
-  cheminsDeLocale(locale).map((chemin) => {
-    const dico = dictionnaire(locale);
-    // Seul l'accueil est traduit pour l'instant ; le jour où d'autres pages
-    // s'ajoutent, il faudra une table chemin -> entrée du dictionnaire. On
-    // échoue bruyamment plutôt que de prérendre une page sans title.
-    if (chemin !== '') {
-      throw new Error(
-        `[prerender] chemin traduit « ${chemin} » (${locale}) déclaré dans ` +
-          `CHEMINS_TRADUITS sans title/description dans le dictionnaire. ` +
-          `Ajouter son entrée ici avant de le lister.`
-      );
-    }
-    return {
-      path: cheminLocalise(chemin, locale),
+const localeRoutes = locales.filter((l) => l !== 'fr').flatMap((locale) => {
+  const dico = dictionnaire(locale);
+  const chemin = (c) => cheminLocalise(c, locale);
+  const filLocal = (...etapes) =>
+    buildBreadcrumbJsonLd([
+      { name: dico.nav.accueil, path: chemin('') },
+      ...etapes,
+    ]);
+
+  /**
+   * Title, description et JSON-LD de chaque chemin traduit. La clé est le
+   * chemin SANS préfixe de langue, exactement comme dans CHEMINS_TRADUITS :
+   * c'est ce qui permet de vérifier que les deux listes coïncident plutôt que
+   * de l'espérer.
+   */
+  const entrees = {
+    '': () => ({
       title: dico.accueil.title,
       description: dico.accueil.description,
       jsonLd: [
@@ -410,9 +413,64 @@ const localeRoutes = locales.filter((l) => l !== 'fr').flatMap((locale) =>
         buildWebSiteJsonLd(locale),
         buildMobileApplicationJsonLd(),
       ],
-    };
-  })
-);
+    }),
+    '/fonctionnalites': () => ({
+      title: dico.fonctionnalites.indexTitle,
+      description: dico.fonctionnalites.indexDescription,
+      jsonLd: [
+        buildCollectionPageJsonLd(
+          {
+            name: dico.fonctionnalites.indexCollection,
+            description: dico.fonctionnalites.indexDescription,
+            path: chemin('/fonctionnalites'),
+          },
+          fonctionnalitesDe(locale).map((f) => ({
+            name: f.h1,
+            path: chemin(`/fonctionnalites/${f.slug}`),
+          }))
+        ),
+        filLocal({
+          name: dico.fonctionnalites.fil,
+          path: chemin('/fonctionnalites'),
+        }),
+      ],
+    }),
+    ...Object.fromEntries(
+      fonctionnalitesDe(locale).map((f) => [
+        `/fonctionnalites/${f.slug}`,
+        () => ({
+          title: f.title,
+          description: f.metaDescription,
+          jsonLd: [
+            buildFonctionnaliteJsonLd(f, chemin(`/fonctionnalites/${f.slug}`)),
+            filLocal(
+              {
+                name: dico.fonctionnalites.fil,
+                path: chemin('/fonctionnalites'),
+              },
+              { name: f.h1, path: chemin(`/fonctionnalites/${f.slug}`) }
+            ),
+          ],
+        }),
+      ])
+    ),
+  };
+
+  return cheminsDeLocale(locale).map((c) => {
+    const entree = entrees[c];
+    // On échoue bruyamment : un chemin listé dans CHEMINS_TRADUITS sans
+    // métadonnées ici serait prérendu avec le title de l'accueil, et
+    // déclarerait un hreflang vers une page qui n'a pas le bon contenu.
+    if (!entree) {
+      throw new Error(
+        `[prerender] chemin traduit « ${c} » (${locale}) déclaré dans ` +
+          `CHEMINS_TRADUITS sans title/description. Ajouter son entrée dans ` +
+          `localeRoutes avant de le lister.`
+      );
+    }
+    return { path: cheminLocalise(c, locale), ...entree() };
+  });
+});
 
 const routes = [
   ...staticRoutes,
