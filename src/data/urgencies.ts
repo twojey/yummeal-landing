@@ -135,6 +135,16 @@ export const articles: Article[] = [
           "Versez le bouillon bouillant dessus, couvrez 3 minutes : le pain ramollit et absorbe le bouillon, exactement comme une panade traditionnelle. Ajoutez un œuf poché ou du fromage râpé si vous en avez.",
         ],
       },
+      {
+        // Repris de l'ancienne fiche ingrédient « pain rassis », fusionnée
+        // ici : ces deux usages n'étaient couverts nulle part ailleurs.
+        heading: 'Et si vous n’avez pas faim tout de suite : chapelure et croûtons',
+        body: [
+          "Mixé au robot ou écrasé au rouleau dans un torchon, le pain rassis devient une chapelure maison qui se congèle et se garde des mois. Elle vaut mieux que celle du commerce, et elle est gratuite.",
+          "Coupé en dés, arrosé d'un filet d'huile et grillé 5 minutes à la poêle ou au four, il donne des croûtons pour une salade ou une soupe. Salez, poivrez, ajoutez de l'ail en poudre si vous en avez.",
+          "Dernier réflexe, si le pain est encore juste un peu sec : quelques secondes sous l'eau puis 5 minutes au four à 180 °C suffisent souvent à lui rendre son moelleux.",
+        ],
+      },
     ],
     ctaTitle: "Un frigo pas très rempli n'est jamais un problème",
     ctaText:

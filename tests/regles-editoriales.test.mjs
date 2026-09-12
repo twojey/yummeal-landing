@@ -31,7 +31,9 @@ const INTERDITS = [
     exception: /ne sont pas g[ée]n[ée]r[ée]es par une? IA/i,
   },
   {
-    motif: /\bgratuit\b/gi,
+    // « gratuite » et « gratuits » échappaient au motif : deux formulations
+    // trompeuses sur trois passaient donc le garde-fou sans être vues.
+    motif: /\bgratuit(?:e|s|es)?\b/gi,
     pourquoi:
       "« gratuit » doit être scopé au téléchargement (« téléchargement gratuit »), " +
       "jamais employé pour l'application en général : l'usage complet est par abonnement",
@@ -40,7 +42,10 @@ const INTERDITS = [
      * d'un concurrent comme gratuite est un fait, pas une promesse.
      */
     exception:
-      /t[ée]l[ée]chargement (?:est )?gratuit|gratuit sur (?:iOS|les deux stores)|essai gratuit|offre gratuite|version gratuite d[eu]|audit (?:SEO )?gratuit|recette gratuite|[ée]chantillon-gratuit/i,
+      // ⚠️ Ces exceptions doivent rester ANCRÉES sur le mot qu'elles scopent.
+      // « gratuit sur iOS » était tolérée et blanchissait « Yummeal est
+      // gratuit sur iOS » — l'inverse exact de ce que la règle protège.
+      /t[ée]l[ée]chargement (?:est )?gratuit|essai gratuit|offre gratuite|version gratuite d[eu]|audit (?:SEO )?gratuit|recette gratuite|[ée]chantillon-gratuit/i,
   },
 ];
 
@@ -69,11 +74,41 @@ function infractions(contenu, { motif, exception }) {
 }
 
 /**
+ * Concurrents nommés dans les comparatifs. Sert à distinguer un FAIT sur un
+ * tiers d'une PROMESSE sur nous.
+ */
+const CONCURRENTS = [
+  'SuperCook', 'Frigo Magic', 'Mon Frigo', 'Crumb', 'Samsung Food', 'Jow',
+  'Marmiton', 'Yummly', 'Paprika', 'Recipe Keeper', 'BigOven', 'SideChef',
+  'Mealime', 'Eat This Much', 'KitchenPal', 'Cooklist', 'PlantJammer',
+  'MyFridgeFood', 'Yazio', 'Lifesum', 'Foodvisor', 'Too Good To Go', 'Olio',
+];
+
+/**
+ * La règle porte sur CE QUE NOUS PROMETTONS, pas sur le mot lui-même.
+ *
+ * « SuperCook est gratuit, financé par la publicité » est un fait vérifiable
+ * sur un tiers : l'interdire reviendrait à s'interdire de décrire le marché,
+ * et un comparatif qui masque le prix des concurrents n'est pas honnête.
+ * En revanche « Yummeal est gratuit » est faux, puisque l'usage complet est
+ * par abonnement.
+ *
+ * D'où le critère retenu : une valeur est tolérée si elle nomme un concurrent
+ * ET ne nous nomme pas. Dès que « Yummeal » apparaît dans la même valeur, la
+ * tolérance tombe — c'est ce que vérifie le test de non-régression plus bas,
+ * qui échouerait si cette porte s'ouvrait trop.
+ */
+function parleDUnTiersPasDeNous(valeur) {
+  const nousConcerne = /yummeal/i.test(valeur);
+  const nommeUnTiers = CONCURRENTS.some((c) =>
+    new RegExp(`\\b${c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(valeur)
+  );
+  return nommeUnTiers && !nousConcerne;
+}
+
+/**
  * Champs de métadonnées : c'est là que la formulation coûte le plus, parce que
- * c'est ce que Google affiche et ce qu'un moteur génératif reprend. Le corps
- * des articles, lui, décrit légitimement l'offre gratuite d'un concurrent —
- * « SuperCook est un agrégateur gratuit financé par la publicité » est un fait,
- * pas une promesse sur Yummeal. On ne mélange donc pas les deux surfaces.
+ * c'est ce que Google affiche et ce qu'un moteur génératif reprend.
  */
 function valeursDeMetadonnees(contenu) {
   return [
@@ -99,7 +134,11 @@ describe('formulations interdites dans les sources', () => {
     for (const rel of fichiersDeContenu()) {
       for (const valeur of valeursDeMetadonnees(read(rel))) {
         regle.motif.lastIndex = 0;
-        if (regle.motif.test(valeur) && !regle.exception.test(valeur)) {
+        if (
+          regle.motif.test(valeur) &&
+          !regle.exception.test(valeur) &&
+          !parleDUnTiersPasDeNous(valeur)
+        ) {
           fautifs.push(`${rel} : « ${valeur.slice(0, 130)} »`);
         }
       }
@@ -144,12 +183,57 @@ describe('formulations interdites dans le HTML généré', { skip: SANS_BUILD },
     for (const p of distPages()) {
       const m = p.html.match(/<meta\s+name="description"\s+content="([^"]*)"/);
       if (!m) continue;
-      if (/\bgratuit\b/i.test(m[1]) && !INTERDITS[1].exception.test(m[1])) {
+      if (
+        /\bgratuit\b/i.test(m[1]) &&
+        !INTERDITS[1].exception.test(m[1]) &&
+        !parleDUnTiersPasDeNous(m[1])
+      ) {
         fautives.push(`${p.route} : « ${m[1]} »`);
       }
     }
     assert.deepEqual(fautives, [], fautives.join('\n'));
   });
+});
+
+describe('le garde-fou lui-même', () => {
+  // La tolérance « fait sur un tiers » ne doit pas devenir une porte ouverte.
+  // Ces cas doivent rester DÉTECTÉS, sinon la règle ne protège plus rien.
+  const doitEchouer = [
+    'Yummeal est gratuit sur iOS et Android',
+    'Une application gratuite pour cuisiner avec son frigo',
+    'Yummeal, gratuit et sans abonnement, face à SuperCook',
+    'Comparatif gratuit des applications de recettes',
+  ];
+  const doitPasser = [
+    'SuperCook est gratuit, financé par la publicité',
+    'Frigo Magic propose une offre gratuite sans compte',
+    'Frigo Magic est gratuit et sans compte, mais tout se déclare à la main',
+    'Téléchargement gratuit sur iOS et Android',
+  ];
+
+  const detecte = (valeur) => {
+    const regle = INTERDITS[1];
+    regle.motif.lastIndex = 0;
+    return (
+      regle.motif.test(valeur) &&
+      !regle.exception.test(valeur) &&
+      !parleDUnTiersPasDeNous(valeur)
+    );
+  };
+
+  for (const valeur of doitEchouer) {
+    test(`détecte « ${valeur.slice(0, 46)}… »`, () => {
+      assert.ok(
+        detecte(valeur),
+        'la règle laisse passer une promesse « gratuit » qui porte sur nous'
+      );
+    });
+  }
+  for (const valeur of doitPasser) {
+    test(`tolère « ${valeur.slice(0, 46)}… »`, () => {
+      assert.equal(detecte(valeur), false, 'faux positif : ce libellé est légitime');
+    });
+  }
 });
 
 describe('honnêteté des données structurées et des chiffres', () => {

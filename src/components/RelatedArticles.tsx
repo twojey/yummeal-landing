@@ -14,8 +14,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   guides: 'Guide',
   faq: 'FAQ',
   concept: 'Concept',
-  scenarios: 'Scénario',
-  comparatif: 'Comparatif',
+  alternatives: 'Comparatif',
   ingredients: 'Que faire avec',
 };
 

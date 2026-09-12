@@ -171,26 +171,6 @@ export const ingredients: Ingredient[] = [
     ],
   },
   {
-    slug: 'oignons-conservation',
-    categorySlug: 'legumes',
-    name: 'Oignons entamés',
-    metaDescription:
-      "Un oignon coupé en deux, mais pas fini : comment le conserver et ne pas le gaspiller.",
-    intro:
-      "Un demi-oignon se conserve quelques jours au frigo, bien emballé, même s'il perd un peu de sa fermeté.",
-    why: "Une fois coupé, l'oignon perd sa pelure protectrice et s'oxyde à l'air, ce qui le fait légèrement noircir en surface sans le rendre impropre à la consommation.",
-    tips: [
-      'Enveloppez la face coupée avec du film alimentaire pour limiter le contact avec l\'air.',
-      'La partie oxydée en surface part avec les premières couches : le reste est intact.',
-      'Émincé et congelé, l\'oignon se garde plusieurs mois pour vos futures cuissons.',
-    ],
-    recipeIdeas: [
-      'Oignons caramélisés',
-      'Soupe à l\'oignon',
-      'Base pour sauce tomate ou bolognaise',
-    ],
-  },
-  {
     slug: 'pommes-terre-anti-gaspi',
     categorySlug: 'legumes',
     name: 'Pommes de terre qui germent',
@@ -293,26 +273,6 @@ export const ingredients: Ingredient[] = [
 
   // --- Viandes & poissons ---
   {
-    slug: 'restes-poulet-roti',
-    categorySlug: 'viandes-poissons',
-    name: 'Restes de poulet rôti',
-    metaDescription:
-      "Des restes de poulet rôti du dimanche ? Voici plusieurs façons de les transformer en un nouveau repas.",
-    intro:
-      "Le poulet rôti restant se réutilise facilement dans un plat différent, sans donner l'impression de remanger le même repas.",
-    why: 'Une fois cuit, le poulet se conserve 2 à 3 jours au frigo dans une boîte hermétique : largement de quoi préparer un second repas.',
-    tips: [
-      'Effilochez la viande à la main plutôt que de la recouper, c\'est plus rapide et ça se marie mieux à une sauce.',
-      "N'oubliez pas la carcasse : elle fait un excellent bouillon maison.",
-      'Le poulet effiloché se congèle très bien pour une utilisation ultérieure.',
-    ],
-    recipeIdeas: [
-      'Curry de poulet rapide',
-      'Wrap ou sandwich au poulet effiloché',
-      'Bouillon maison avec la carcasse',
-    ],
-  },
-  {
     slug: 'bacon-anti-gaspi',
     categorySlug: 'viandes-poissons',
     name: 'Fond de paquet de bacon',
@@ -345,6 +305,11 @@ export const ingredients: Ingredient[] = [
       'Coupez-le en dés et ajoutez-le en fin de cuisson d\'une sauce pour éviter qu\'il ne se dessèche davantage.',
       "En salade froide, il n'a pas besoin d'être réchauffé du tout.",
       'Il se congèle en dés, prêt à être ajouté directement dans un futur plat.',
+      'Effilochez la viande à la main plutôt que de la recouper, c\'est plus rapide et ça se marie mieux à une sauce.',
+      'Le poulet effiloché se congèle très bien pour une utilisation ultérieure.',
+      'Curry de poulet rapide',
+      'Wrap ou sandwich au poulet effiloché',
+      'Bouillon maison avec la carcasse',
     ],
     recipeIdeas: [
       'Salade César au poulet',
@@ -394,26 +359,6 @@ export const ingredients: Ingredient[] = [
   },
 
   // --- Épicerie & féculents ---
-  {
-    slug: 'pain-rassis',
-    categorySlug: 'epicerie-feculents',
-    name: 'Pain rassis',
-    metaDescription:
-      'Du pain rassis à ne pas jeter : les meilleures façons de lui donner une seconde vie.',
-    intro:
-      "Le pain rassis n'est pas du pain périmé : il a juste perdu son humidité, ce qui le rend même préférable pour certaines recettes.",
-    why: "Le rassissement est un phénomène naturel de l'amidon qui durcit en séchant, sans lien avec une dégradation ou une contamination du pain.",
-    tips: [
-      "Passez-le quelques secondes sous l'eau puis 5 minutes au four pour lui redonner du moelleux.",
-      "Mixé, il devient une chapelure maison à congeler.",
-      'Coupé en dés et grillé à la poêle, il devient des croûtons pour salade ou soupe.',
-    ],
-    recipeIdeas: [
-      'Pain perdu',
-      'Chapelure maison',
-      'Panzanella (salade de pain)',
-    ],
-  },
   {
     slug: 'farine-pain',
     categorySlug: 'epicerie-feculents',
@@ -507,31 +452,17 @@ export const ingredients: Ingredient[] = [
       'Étalez-le sur une assiette pour qu\'il refroidisse vite avant de le mettre au frigo.',
       'Un riz cuit puis refroidi est en réalité meilleur pour un riz sauté qu\'un riz tout juste cuit (moins collant).',
       'Réchauffez-le toujours bien chaud à cœur avant de le consommer.',
+      'Le riz de la veille, bien conservé, est un excellent point de départ pour un repas rapide le lendemain.',
+      'Le riz de la veille, correctement refroidi et stocké, est sans danger et même préférable pour certaines préparations.',
+      'Vérifiez qu\'il a bien été réfrigéré dans les 2 heures suivant la cuisson initiale.',
+      'Riz sauté façon cantine chinoise',
+      'Riz gratiné au four',
+      'Riz en soupe avec un bouillon',
     ],
     recipeIdeas: [
       'Riz sauté aux légumes et à l\'œuf',
       'Galettes de riz à la poêle',
       'Riz en salade froide',
-    ],
-  },
-  {
-    slug: 'restes-riz-veille',
-    categorySlug: 'epicerie-feculents',
-    name: 'Riz de la veille',
-    metaDescription:
-      'Le riz de la veille, bien conservé, est un excellent point de départ pour un repas rapide le lendemain.',
-    intro:
-      'Le riz de la veille, correctement refroidi et stocké, est sans danger et même préférable pour certaines préparations.',
-    why: 'Le froid fige légèrement l\'amidon du riz, ce qui l\'empêche de devenir pâteux à la recuisson — l\'effet recherché pour un riz sauté réussi.',
-    tips: [
-      'Vérifiez qu\'il a bien été réfrigéré dans les 2 heures suivant la cuisson initiale.',
-      "Réchauffez-le à la poêle avec un peu d'huile plutôt qu'à la vapeur, pour éviter qu'il ne redevienne collant.",
-      "S'il dégage une odeur inhabituelle, ne le consommez pas.",
-    ],
-    recipeIdeas: [
-      'Riz sauté façon cantine chinoise',
-      'Riz gratiné au four',
-      'Riz en soupe avec un bouillon',
     ],
   },
   {

@@ -12,7 +12,13 @@ const root = path.resolve(__dirname, '..');
 const distDir = path.join(root, 'dist');
 
 const ssr = await import(path.join(root, 'dist-ssr', 'entry-server.js'));
-const { render, ingredients, ingredientCategories, fonctionnalites } = ssr;
+const {
+  render,
+  ingredients,
+  ingredientCategories,
+  fonctionnalites,
+  pagesAlternatives,
+} = ssr;
 const {
   buildOrganizationJsonLd,
   buildAboutPageJsonLd,
@@ -25,6 +31,7 @@ const {
   buildCollectionPageJsonLd,
   buildIngredientJsonLd,
   buildFonctionnaliteJsonLd,
+  buildAlternativesJsonLd,
   jsonLdScriptTags,
 } = ssr;
 
@@ -212,18 +219,6 @@ const flatCategories = [
     indexTitle: 'Le concept Yummeal | Anti-gaspi & zéro déchet - Yummeal',
     indexDescription: "Comprendre le concept derrière Yummeal : comment fonctionne l'anti-gaspi de l'application et quelle vision de la cuisine zéro déchet elle défend.",
   },
-  {
-    segment: 'scenarios',
-    dataKey: 'scenariosArticles',
-    indexTitle: "Scénarios d'usage | Pour qui est fait Yummeal - Yummeal",
-    indexDescription: "Découvrez les situations concrètes du quotidien auxquelles Yummeal répond, selon votre profil et vos contraintes.",
-  },
-  {
-    segment: 'comparatif',
-    dataKey: 'comparatifArticles',
-    indexTitle: 'Comparatifs | Yummeal face aux autres applications de cuisine',
-    indexDescription: "Des comparaisons factuelles et sourcées entre Yummeal et les autres applications de cuisine, gestion de frigo et anti-gaspillage.",
-  },
 ];
 
 /** Nom court du silo, pour le fil d'Ariane (le indexTitle est trop long). */
@@ -240,8 +235,6 @@ const SILO_LABELS = {
   guides: 'Guides pratiques',
   faq: 'FAQ sécurité alimentaire',
   concept: 'Le concept Yummeal',
-  scenarios: "Scénarios d'usage",
-  comparatif: 'Comparatifs',
 };
 
 const flatCategoryRoutes = flatCategories.flatMap((cat) => {
@@ -279,10 +272,6 @@ const flatCategoryRoutes = flatCategories.flatMap((cat) => {
           ? buildRecipeJsonLd(a, path)
           : buildArticleJsonLd(a, path);
       const jsonLd = [core, crumbs(siloCrumb, { name: a.title, path })];
-      // Les pages de comparaison sont l'endroit où la décision se prend :
-      // l'application y était absente du balisage, elle n'existait que sur
-      // l'accueil.
-      if (cat.segment === 'comparatif') jsonLd.push(buildMobileApplicationJsonLd());
       return {
         path,
         title: boundedTitle(a.title),
@@ -335,9 +324,51 @@ const fonctionnaliteRoutes = [
   })),
 ];
 
+// Silo `/alternatives` — remplace `/comparatif`, dont 22 des 23 pages
+// visaient « Yummeal vs X », un mot-clé qui contient notre marque alors
+// qu'elle n'a pas de notoriété de recherche. Les 6 pages ci-dessous visent la
+// demande telle qu'elle se formule réellement : « alternative à Jow »,
+// « supercook alternative », « application qui scanne le frigo ».
+const ALTERNATIVES_CRUMB = { name: 'Alternatives', path: '/alternatives' };
+const alternativesIndexDescription =
+  "Quatre mécanismes différents se cachent derrière « application de recettes ». Savoir lequel vous convient vaut mieux que comparer des listes de fonctionnalités.";
+
+const alternativesRoutes = [
+  {
+    path: '/alternatives',
+    title: 'Meilleure application pour cuisiner avec son frigo',
+    description: alternativesIndexDescription,
+    jsonLd: [
+      buildCollectionPageJsonLd(
+        {
+          name: 'Alternatives et comparatifs',
+          description: alternativesIndexDescription,
+          path: '/alternatives',
+        },
+        pagesAlternatives.map((p) => ({
+          name: p.h1,
+          path: `/alternatives/${p.slug}`,
+        }))
+      ),
+      crumbs(ALTERNATIVES_CRUMB),
+    ],
+  },
+  ...pagesAlternatives.map((p) => ({
+    path: `/alternatives/${p.slug}`,
+    title: boundedTitle(p.title),
+    description: p.metaDescription,
+    jsonLd: [
+      buildAlternativesJsonLd(p, `/alternatives/${p.slug}`),
+      buildMobileApplicationJsonLd(),
+      crumbs(ALTERNATIVES_CRUMB, { name: p.h1, path: `/alternatives/${p.slug}` }),
+    ],
+  })),
+];
+
 const routes = [
   ...staticRoutes,
   ...fonctionnaliteRoutes,
+  ...alternativesRoutes,
   ...ingredientRoutes,
   ...flatCategoryRoutes,
 ];

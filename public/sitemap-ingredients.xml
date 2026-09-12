@@ -73,12 +73,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.app/ingredients/legumes/oignons-conservation/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://yummeal.app/ingredients/legumes/pommes-terre-anti-gaspi/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -109,12 +103,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://yummeal.app/ingredients/viandes-poissons/restes-poulet-roti/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://yummeal.app/ingredients/viandes-poissons/bacon-anti-gaspi/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -134,12 +122,6 @@
   </url>
   <url>
     <loc>https://yummeal.app/ingredients/viandes-poissons/thon-conserve/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yummeal.app/ingredients/epicerie-feculents/pain-rassis/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -170,12 +152,6 @@
   </url>
   <url>
     <loc>https://yummeal.app/ingredients/epicerie-feculents/riz-restes/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yummeal.app/ingredients/epicerie-feculents/restes-riz-veille/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

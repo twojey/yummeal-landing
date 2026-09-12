@@ -17,5 +17,4 @@ Sitemap: https://yummeal.app/sitemap-regimes.xml
 Sitemap: https://yummeal.app/sitemap-guides.xml
 Sitemap: https://yummeal.app/sitemap-faq.xml
 Sitemap: https://yummeal.app/sitemap-concept.xml
-Sitemap: https://yummeal.app/sitemap-scenarios.xml
-Sitemap: https://yummeal.app/sitemap-comparatif.xml
+Sitemap: https://yummeal.app/sitemap-alternatives.xml

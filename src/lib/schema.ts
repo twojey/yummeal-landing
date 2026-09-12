@@ -155,6 +155,52 @@ export function buildRecipeJsonLd(article: ArticleLike, path: string) {
   };
 }
 
+interface AlternativesLike {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  h1: string;
+  apps: { nom: string }[];
+}
+
+/**
+ * Page de comparaison d'un segment du marché.
+ *
+ * `Article` + `ItemList` des applications comparées, et non `Product` ni
+ * `Review` : nous ne notons pas des produits concurrents, nous décrivons leurs
+ * mécanismes. Déclarer une Review sans note vérifiable serait une fausse
+ * preuve, et lui donner une note serait une prétention que rien n'étaye.
+ *
+ * `dateModified` porte la date de vérification des faits : sur un comparatif,
+ * la fraîcheur EST une information, pas une métadonnée.
+ */
+export function buildAlternativesJsonLd(page: AlternativesLike, path: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: page.h1,
+    description: page.metaDescription,
+    url: canonicalFor(path),
+    mainEntityOfPage: canonicalFor(path),
+    dateModified: CONTENT_REVIEWED_DATE,
+    datePublished: CONTENT_REVIEWED_DATE,
+    inLanguage: 'fr-FR',
+    author: { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@id': WEBSITE_ID },
+    about: {
+      '@type': 'ItemList',
+      name: 'Applications comparées',
+      numberOfItems: page.apps.length,
+      itemListElement: page.apps.map((a, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: a.nom,
+      })),
+    },
+  };
+}
+
 interface FonctionnaliteLike {
   slug: string;
   title: string;

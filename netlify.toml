@@ -85,6 +85,169 @@
   to = "/recettes-avec/riz-oeuf-sauce-soja/"
   status = 301
 
+# Silo /comparatif retire au profit de /alternatives. Ses 23 pages profondes
+# ciblaient « Yummeal vs X », un mot-cle qui contient notre marque alors
+# qu'elle n'a pas de notoriete de recherche : personne ne le tape. Chaque
+# ancienne URL a une cible qui traite le meme sujet, donc rien n'est perdu.
+# yummeal-vs-olio et yummeal-vs-toogoodtogo renvoient vers l'index : ce ne sont
+# pas des concurrents fonctionnels, aucune page de comparaison ne leur
+# correspond.
+[[redirects]]
+  from = "/comparatif/yummeal-vs-jow/*"
+  to = "/alternatives/jow/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-jow-vs-marmiton/*"
+  to = "/alternatives/jow/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-mealime/*"
+  to = "/alternatives/jow/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-eat-this-much/*"
+  to = "/alternatives/jow/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-sidechef/*"
+  to = "/alternatives/jow/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-marmiton/*"
+  to = "/alternatives/marmiton/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-yummly/*"
+  to = "/alternatives/marmiton/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-paprika-3/*"
+  to = "/alternatives/marmiton/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-recipe-keeper/*"
+  to = "/alternatives/marmiton/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-bigoven/*"
+  to = "/alternatives/marmiton/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-supercook/*"
+  to = "/alternatives/supercook/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-myfridgefood/*"
+  to = "/alternatives/supercook/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-plantjammer/*"
+  to = "/alternatives/supercook/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-frigo-magic/*"
+  to = "/alternatives/frigo-magic/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-kitchenpal/*"
+  to = "/alternatives/frigo-magic/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-cooklist/*"
+  to = "/alternatives/frigo-magic/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-samsung-food/*"
+  to = "/alternatives/applications-scan-frigo/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-yazio/*"
+  to = "/alternatives/suivi-calories-photo/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-lifesum/*"
+  to = "/alternatives/suivi-calories-photo/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-foodvisor/*"
+  to = "/alternatives/suivi-calories-photo/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-olio/*"
+  to = "/alternatives/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/yummeal-vs-toogoodtogo/*"
+  to = "/alternatives/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/meilleure-app-cuisine-frigo/*"
+  to = "/alternatives/"
+  status = 301
+
+[[redirects]]
+  from = "/comparatif/*"
+  to = "/alternatives/"
+  status = 301
+
+# Consolidations du 12/09/2026 (lot D.3 du plan). Dans chaque paire, la page la
+# plus riche survit et a absorbe le contenu de l'autre — verifie mot par mot
+# avant suppression, et le contenu qui n'etait couvert nulle part ailleurs
+# (chapelure, croutons) a ete transfere. Rien n'est perdu.
+[[redirects]]
+  from = "/ingredients/epicerie-feculents/pain-rassis/*"
+  to = "/urgencies/que-faire-avec-pain-rassis/"
+  status = 301
+
+[[redirects]]
+  from = "/ingredients/epicerie-feculents/restes-riz-veille/*"
+  to = "/ingredients/epicerie-feculents/riz-restes/"
+  status = 301
+
+[[redirects]]
+  from = "/ingredients/viandes-poissons/restes-poulet-roti/*"
+  to = "/ingredients/viandes-poissons/poulet-restes/"
+  status = 301
+
+[[redirects]]
+  from = "/ingredients/legumes/oignons-conservation/*"
+  to = "/anti-gaspillage/comment-conserver-oignons-coupes/"
+  status = 301
+
+# Silo /scenarios dissous : son index faisait 85 mots pour un seul enfant, qui
+# a rejoint /solutions ou il a sa place.
+[[redirects]]
+  from = "/scenarios/mamans-actives/*"
+  to = "/solutions/mamans-actives-charge-mentale/"
+  status = 301
+
+[[redirects]]
+  from = "/scenarios/*"
+  to = "/solutions/"
+  status = 301
+
 # Catch-all : doit rester EN DERNIER.
 [[redirects]]
   from = "/*"

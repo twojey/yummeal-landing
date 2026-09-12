@@ -209,7 +209,7 @@ export default function AProposPage() {
             le concept derrière l'application
           </Link>
           ,{' '}
-          <Link to="/comparatif" className="text-[#FF8C42] underline">
+          <Link to="/alternatives" className="text-[#FF8C42] underline">
             les comparatifs avec d'autres applications
           </Link>
           , les{' '}

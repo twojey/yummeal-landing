@@ -29,9 +29,12 @@ export { articles as regimesArticles } from './data/regimes';
 export { articles as guidesArticles } from './data/guides';
 export { articles as faqArticles } from './data/faq';
 export { articles as conceptArticles } from './data/concept';
-export { articles as scenariosArticles } from './data/scenarios';
-export { articles as comparatifArticles } from './data/comparatif';
 export { fonctionnalites } from './data/fonctionnalites';
+export {
+  pagesAlternatives,
+  REDIRECTIONS_COMPARATIF,
+  REDIRECTIONS_VERS_INDEX,
+} from './data/alternatives';
 
 export {
   buildOrganizationJsonLd,
@@ -45,5 +48,6 @@ export {
   buildCollectionPageJsonLd,
   buildIngredientJsonLd,
   buildFonctionnaliteJsonLd,
+  buildAlternativesJsonLd,
   jsonLdScriptTags,
 } from './lib/schema';

@@ -41,13 +41,11 @@ import FaqIndexPage from './pages/FaqIndexPage';
 import FaqArticlePage from './pages/FaqArticlePage';
 import ConceptIndexPage from './pages/ConceptIndexPage';
 import ConceptArticlePage from './pages/ConceptArticlePage';
-import ScenariosIndexPage from './pages/ScenariosIndexPage';
-import ScenariosArticlePage from './pages/ScenariosArticlePage';
-import ComparatifIndexPage from './pages/ComparatifIndexPage';
-import ComparatifArticlePage from './pages/ComparatifArticlePage';
 import AProposPage from './pages/AProposPage';
 import FonctionnalitesIndexPage from './pages/FonctionnalitesIndexPage';
 import FonctionnalitePage from './pages/FonctionnalitePage';
+import AlternativesIndexPage from './pages/AlternativesIndexPage';
+import AlternativesArticlePage from './pages/AlternativesArticlePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -72,8 +70,9 @@ function App() {
       '/guides',
       '/faq',
       '/concept',
-      '/scenarios',
-      '/comparatif',
+      '/alternatives',
+      '/fonctionnalites',
+      '/a-propos',
     ];
     if (contentCategories.some((prefix) => location.pathname.startsWith(prefix))) {
       return;
@@ -545,10 +544,8 @@ function App() {
         <Route path="/faq/:slug" element={<FaqArticlePage />} />
         <Route path="/concept" element={<ConceptIndexPage />} />
         <Route path="/concept/:slug" element={<ConceptArticlePage />} />
-        <Route path="/scenarios" element={<ScenariosIndexPage />} />
-        <Route path="/scenarios/:slug" element={<ScenariosArticlePage />} />
-        <Route path="/comparatif" element={<ComparatifIndexPage />} />
-        <Route path="/comparatif/:slug" element={<ComparatifArticlePage />} />
+        <Route path="/alternatives" element={<AlternativesIndexPage />} />
+        <Route path="/alternatives/:slug" element={<AlternativesArticlePage />} />
         {/* Aucune route `*` n'existait : une URL inconnue rendait un écran
             blanc. Elle sert aussi de source à dist/404.html (prerender). */}
         <Route path="*" element={<NotFoundPage />} />
@@ -596,8 +593,7 @@ function App() {
                 <li><Link to="/guides" className="text-gray-600 hover:text-[#FF8C42]">Guides pratiques</Link></li>
                 <li><Link to="/faq" className="text-gray-600 hover:text-[#FF8C42]">FAQ sécurité alimentaire</Link></li>
                 <li><Link to="/concept" className="text-gray-600 hover:text-[#FF8C42]">Le concept Yummeal</Link></li>
-                <li><Link to="/scenarios" className="text-gray-600 hover:text-[#FF8C42]">Scénarios d'usage</Link></li>
-                <li><Link to="/comparatif" className="text-gray-600 hover:text-[#FF8C42]">Comparatifs</Link></li>
+                <li><Link to="/alternatives" className="text-gray-600 hover:text-[#FF8C42]">Alternatives &amp; comparatifs</Link></li>
               </ul>
             </div>
             <div>

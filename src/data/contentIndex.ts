@@ -14,8 +14,7 @@ import { articles as regimesArticles } from './regimes';
 import { articles as guidesArticles } from './guides';
 import { articles as faqArticles } from './faq';
 import { articles as conceptArticles } from './concept';
-import { articles as scenariosArticles } from './scenarios';
-import { articles as comparatifArticles } from './comparatif';
+import { pagesAlternatives } from './alternatives';
 import { ingredients } from './ingredients';
 
 export interface IndexedArticle {
@@ -70,8 +69,14 @@ const sources: { category: string; articles: { slug: string; title: string; tags
   { category: 'guides', articles: guidesArticles },
   { category: 'faq', articles: faqArticles },
   { category: 'concept', articles: conceptArticles },
-  { category: 'scenarios', articles: scenariosArticles },
-  { category: 'comparatif', articles: comparatifArticles },
+  {
+    category: 'alternatives',
+    articles: pagesAlternatives.map((p) => ({
+      slug: p.slug,
+      title: p.h1,
+      tags: p.tags,
+    })),
+  },
 ];
 
 /**
