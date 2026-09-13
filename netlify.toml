@@ -284,6 +284,38 @@
   to = "/oauth-consent.html"
   status = 200
 
+# Connecteur MCP (ChatGPT, Claude) servi sous yummeal.app : PROXY (réécriture
+# 200), jamais une 301/302. Un client MCP ne rejoue pas un POST redirigé, et
+# OAuth (RFC 9728) exige que la ressource annoncée soit l'URL à laquelle le
+# client s'est connecté : le backend doit donc tourner avec
+# MCP_PUBLIC_BASE_URL=https://yummeal.app. Méthode, corps et en-tête
+# Authorization sont relayés ; Netlify place l'IP réelle du client en tête de
+# X-Forwarded-For, que le backend lit pour ses quotas. Doit rester AVANT le
+# catch-all.
+[[redirects]]
+  from = "/mcp"
+  to = "https://yummeal-server.yumhack.deno.net/mcp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mcp/*"
+  to = "https://yummeal-server.yumhack.deno.net/mcp/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/.well-known/oauth-protected-resource"
+  to = "https://yummeal-server.yumhack.deno.net/.well-known/oauth-protected-resource"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/.well-known/oauth-protected-resource/*"
+  to = "https://yummeal-server.yumhack.deno.net/.well-known/oauth-protected-resource/:splat"
+  status = 200
+  force = true
+
 # Catch-all : doit rester EN DERNIER.
 [[redirects]]
   from = "/*"
