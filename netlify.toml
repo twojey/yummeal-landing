@@ -2,6 +2,28 @@
   publish = "dist"
   command = "npm run build"
 
+# Page de consentement OAuth du connecteur MCP (ChatGPT, Claude). Elle affiche
+# un bouton « Autoriser » sur une session de compte : jamais indexée, jamais
+# dans une iframe (détournement de clic), jamais en cache. Les deux chemins
+# sont couverts : l'URL publique et le fichier vers lequel elle est réécrite.
+[[headers]]
+  for = "/oauth/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Referrer-Policy = "no-referrer"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/oauth-consent.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Referrer-Policy = "no-referrer"
+    Cache-Control = "no-store"
+
 # Toute route réelle est prérendue en dist/<route>/index.html par
 # scripts/prerender.mjs, y compris la page d'erreur (dist/404.html). Netlify
 # sert un fichier statique existant AVANT d'appliquer une règle de redirection
@@ -247,6 +269,20 @@
   from = "/scenarios/*"
   to = "/solutions/"
   status = 301
+
+# Page de consentement OAuth (connecteur MCP) : `authorization_url_path` du
+# serveur OAuth Supabase. Réécriture 200 (pas une 301) vers un point d'entrée
+# Vite séparé ; la query `authorization_id` est transmise telle quelle.
+# Doit rester AVANT le catch-all.
+[[redirects]]
+  from = "/oauth/consent"
+  to = "/oauth-consent.html"
+  status = 200
+
+[[redirects]]
+  from = "/oauth/consent/"
+  to = "/oauth-consent.html"
+  status = 200
 
 # Catch-all : doit rester EN DERNIER.
 [[redirects]]

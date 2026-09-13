@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Page de consentement OAuth du connecteur MCP (ChatGPT, Claude…).
+         Point d'entrée Vite SÉPARÉ du site : ni prérendu SEO, ni sitemap, ni
+         pixel publicitaire, ni SDK d'attribution sur une page qui manipule une
+         session de compte. Servie sur /oauth/consent par une réécriture 200
+         (netlify.toml), qui pose aussi X-Robots-Tag et l'interdiction d'iframe. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <title>Yummeal — autorisation</title>
+  </head>
+  <body>
+    <div id="root">
+      <noscript>
+        JavaScript est nécessaire pour autoriser l'accès à votre compte Yummeal.
+        JavaScript is required to authorize access to your Yummeal account.
+      </noscript>
+    </div>
+    <script type="module" src="./src/oauth/main.tsx"></script>
+  </body>
+</html>

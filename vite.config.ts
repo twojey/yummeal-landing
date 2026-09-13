@@ -25,6 +25,14 @@ export default defineConfig(({ isSsrBuild }) => ({
     rollupOptions: isSsrBuild
       ? {}
       : {
+          // Deux pages HTML : le site, et la page de consentement OAuth du
+          // connecteur MCP (servie sur /oauth/consent, cf. netlify.toml). Elle
+          // a son propre point d'entrée pour ne charger ni les pixels ni le
+          // SDK d'attribution du site, et pour rester hors du prérendu SEO.
+          input: {
+            main: resolve(__dirname, 'index.html'),
+            oauthConsent: resolve(__dirname, 'oauth-consent.html'),
+          },
           output: {
             manualChunks: {
               react: ['react', 'react-dom', 'react-router-dom'],
