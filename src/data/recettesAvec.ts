@@ -7,12 +7,27 @@ export interface Article {
   ctaTitle: string;
   ctaText: string;
   tags?: string[];
+  // Vidéo YouTube source dont s'inspire la recette, quand une correspondance
+  // fiable existe dans le catalogue Supabase (table `recipe`, colonne
+  // `video_url`) — voir le matching documenté dans src/lib/schema.ts
+  // (buildRecipeJsonLd). Absent = pas de correspondance assez sûre : la page
+  // reste en JSON-LD `Article` plutôt que d'afficher un lien approximatif.
+  sourceVideo?: {
+    youtubeId: string;
+    title: string;
+    channel: string;
+  };
 }
 
 export const articles: Article[] = [
   {
     slug: 'pates-thon-creme',
     tags: ['pâtes', 'thon', 'crème fraîche', 'rapide'],
+    sourceVideo: {
+      youtubeId: 'k4bF7lAGf8k',
+      title: 'Creamy Tuna Pasta',
+      channel: 'TheCooknShare',
+    },
     title: 'Recette avec pâtes, thon et crème fraîche',
     metaDescription:
       "Une boîte de thon et un fond de crème fraîche dans le frigo ? Voici une recette de pâtes au thon et à la crème, prête en 15 minutes, pour 2 personnes.",
@@ -55,6 +70,11 @@ export const articles: Article[] = [
   {
     slug: 'poulet-brocoli-riz',
     tags: ['poulet', 'brocoli', 'riz', 'équilibré'],
+    sourceVideo: {
+      youtubeId: '6ncQPbmVy2Q',
+      title: 'Chicken and Broccoli Rice',
+      channel: 'TheCooknShare',
+    },
     title: 'Recette avec poulet, brocoli et riz',
     metaDescription:
       "Du poulet, du brocoli et du riz au frigo : voici une recette complète et équilibrée, prête en 25 minutes pour 2 personnes.",
@@ -97,6 +117,11 @@ export const articles: Article[] = [
   {
     slug: 'oeuf-pomme-de-terre-oignon',
     tags: ['œufs', 'pommes de terre', 'oignon', 'tortilla espagnole'],
+    sourceVideo: {
+      youtubeId: 'JTiBrCQMRLI',
+      title: 'Fried Potatoes with Onion and Fried Eggs',
+      channel: 'Essen Recipes',
+    },
     title: 'Recette avec œufs, pommes de terre et oignon',
     metaDescription:
       "Œufs, pommes de terre et oignon au frigo : la base d'une tortilla espagnole maison, simple et généreuse, pour 2 personnes.",
@@ -306,6 +331,11 @@ export const articles: Article[] = [
   {
     slug: 'poulet-creme-champignons',
     tags: ['poulet', 'crème fraîche', 'champignons', 'sauce'],
+    sourceVideo: {
+      youtubeId: 'mpo0gX1fqaY',
+      title: 'One Pan Creamy Mushroom Chicken',
+      channel: 'TheCooknShare',
+    },
     title: 'Recette avec poulet, crème et champignons',
     metaDescription:
       "Poulet, crème fraîche et champignons au frigo : une recette de poulet en sauce crémeuse, prête en 25 minutes pour 2 personnes.",
@@ -390,6 +420,11 @@ export const articles: Article[] = [
   {
     slug: 'pomme-de-terre-bacon-fromage',
     tags: ['pomme de terre', 'bacon', 'fromage', 'gratin', 'tartiflette'],
+    sourceVideo: {
+      youtubeId: 'dqyknrRjegw',
+      title: 'Baked Potato with Egg, Bacon and Cheese',
+      channel: 'Essen Recipes',
+    },
     title: 'Recette avec pomme de terre, bacon et fromage',
     metaDescription:
       "Pommes de terre, bacon et fromage au frigo : une recette de gratin façon tartiflette express, prête en 40 minutes pour 2 personnes.",
@@ -431,6 +466,11 @@ export const articles: Article[] = [
   {
     slug: 'riz-lentilles-oignon',
     tags: ['riz', 'lentilles', 'oignon', 'mujadara', 'économique'],
+    sourceVideo: {
+      youtubeId: 'OoXfaDvOba8',
+      title: 'Lentils and Rice with Caramelized Onions',
+      channel: 'Tasty',
+    },
     title: 'Recette avec riz, lentilles et oignon',
     metaDescription:
       "Riz, lentilles et oignon au placard : une recette de riz aux lentilles façon mujadara, économique et complète, pour 2 personnes.",
@@ -472,6 +512,11 @@ export const articles: Article[] = [
   {
     slug: 'pain-jambon-fromage-chaud',
     tags: ['pain', 'jambon', 'fromage', 'croque-monsieur'],
+    sourceVideo: {
+      youtubeId: 'Pgm03qs7FHE',
+      title: 'Hot Ham and Cheese Sandwich',
+      channel: "Michael's Home Cooking",
+    },
     title: 'Recette avec pain, jambon et fromage (croque-monsieur)',
     metaDescription:
       "Du pain, du jambon et du fromage qui traînent : voici la vraie recette du croque-monsieur maison, avec sa béchamel, pour 2 personnes.",

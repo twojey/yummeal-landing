@@ -128,10 +128,33 @@ export function buildFaqJsonLd(articles: ArticleLike[]) {
   };
 }
 
+export interface SourceVideo {
+  youtubeId: string;
+  title: string;
+  channel: string;
+}
+
+interface RecipeArticleLike extends ArticleLike {
+  sourceVideo?: SourceVideo;
+}
+
 // Les recettes de la catégorie "recettes-avec" suivent un patron fixe :
 // une section "Ingrédients (...)" (une ligne par ingrédient) et une section
 // "Préparation" (une ligne par étape) — voir src/data/recettesAvec.ts.
-export function buildRecipeJsonLd(article: ArticleLike, path: string) {
+//
+// ⚠️ Le type `Recipe` exige un champ `image` pour être valide (Google Search
+// Console, 23/09/2026), et ces pages n'ont pas de vraie photo du plat prise
+// par Yummeal. Une image générique aurait été une fausse preuve (cf.
+// CLAUDE.md, pas de recette présentée comme réelle sans l'être). La solution
+// retenue le 23/09/2026 : quand la combinaison d'ingrédients correspond
+// vraiment à une recette du catalogue Supabase qui a une vidéo YouTube
+// source (`recipe.video_url`), on utilise la MINIATURE OFFICIELLE de cette
+// vidéo (hotlinkée sur `i.ytimg.com`, jamais téléchargée ni réhébergée) et on
+// déclare la vidéo elle-même en `video` — c'est un usage que YouTube autorise
+// explicitement (embed), avec attribution visible sur la page. Sans
+// correspondance fiable (voir le script de matching, tools/seo/match-recette-video.sql),
+// on retombe sur `Article` plutôt que d'inventer un lien approximatif.
+export function buildRecipeJsonLd(article: RecipeArticleLike, path: string) {
   const ingredientsSection = article.sections.find((s) =>
     /ingr[ée]dients/i.test(s.heading)
   );
@@ -139,9 +162,13 @@ export function buildRecipeJsonLd(article: ArticleLike, path: string) {
     /pr[ée]paration/i.test(s.heading)
   );
 
-  if (!ingredientsSection || !stepsSection) {
+  if (!article.sourceVideo || !ingredientsSection || !stepsSection) {
     return buildArticleJsonLd(article, path);
   }
+
+  const { youtubeId, title: videoTitle, channel } = article.sourceVideo;
+  // Miniature servie par YouTube lui-même : un lien, pas une copie.
+  const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
 
   return {
     '@context': 'https://schema.org',
@@ -149,15 +176,24 @@ export function buildRecipeJsonLd(article: ArticleLike, path: string) {
     name: article.title,
     description: article.metaDescription,
     url: canonicalFor(path),
-    author: {
-      '@type': 'Organization',
-      name: 'Yummeal',
-    },
+    image: thumbnailUrl,
+    author: { '@id': ORG_ID },
     recipeIngredient: ingredientsSection.body,
     recipeInstructions: stepsSection.body.map((step) => ({
       '@type': 'HowToStep',
       text: step,
     })),
+    video: {
+      '@type': 'VideoObject',
+      name: videoTitle,
+      description: `Vidéo originale de la chaîne ${channel}, dont s'inspire cette recette.`,
+      thumbnailUrl,
+      contentUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+      embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
+      // Pas d'`uploadDate` : nous ne connaissons pas la date réelle de mise
+      // en ligne de la vidéo source, et en fabriquer une serait la même
+      // fausse précision que celle refusée pour CONTENT_REVIEWED_DATE.
+    },
     dateModified: CONTENT_REVIEWED_DATE,
     datePublished: CONTENT_REVIEWED_DATE,
   };

@@ -38,6 +38,26 @@ export default function RecettesAvecArticlePage() {
 
         <p className="text-lg text-gray-700 mb-6">{article.intro}</p>
 
+        {article.sourceVideo && (
+          <div className="clay-card p-4 mb-6">
+            <div className="aspect-video w-full mb-2">
+              <iframe
+                className="w-full h-full rounded-xl"
+                src={`https://www.youtube.com/embed/${article.sourceVideo.youtubeId}`}
+                title={article.sourceVideo.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <p className="text-sm text-gray-500">
+              Vidéo originale «&nbsp;{article.sourceVideo.title}&nbsp;» par{' '}
+              <span className="font-medium">{article.sourceVideo.channel}</span>,
+              dont s'inspire cette recette.
+            </p>
+          </div>
+        )}
+
         {article.sections.map((section, i) => (
           <div key={i} className="clay-card p-6 mb-6">
             <h2 className="text-xl font-semibold mb-3">{section.heading}</h2>
