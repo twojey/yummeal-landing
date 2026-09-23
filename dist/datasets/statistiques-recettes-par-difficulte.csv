@@ -1,0 +1,11 @@
+difficulte,label,nombre_recettes,temps_preparation_median_minutes,calories_medianes_par_portion,nombre_recettes_avec_calories
+easy,Facile,11735,30,354,11078
+medium,Moyen,3860,60,494,3716
+intermediate,Intermédiaire,79,150,654,79
+hard,Difficile,122,120,680,115
+
+# Source : table recipe (Supabase, projet vqibuydjokujdqslczdu), généré le 2026-09-23
+# Filtres : moderation_status IS DISTINCT FROM 'rejected'
+# Calories : total recette / servings, exclu hors [30, 3000] par portion
+# Total recettes analysées (incluant difficulte non renseignee) : 17881
+# Méthodologie complète : https://yummeal.app/statistiques-recettes/

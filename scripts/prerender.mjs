@@ -42,8 +42,16 @@ const {
   buildIngredientJsonLd,
   buildFonctionnaliteJsonLd,
   buildAlternativesJsonLd,
+  buildDatasetJsonLd,
   jsonLdScriptTags,
 } = ssr;
+
+const statistiquesRecettes = JSON.parse(
+  fs.readFileSync(
+    path.join(root, 'src', 'data', 'statistiquesRecettes.json'),
+    'utf-8'
+  )
+);
 
 const SITE_URL = 'https://yummeal.app';
 
@@ -74,6 +82,10 @@ const staticRoutes = [
   // Page d'identité de la marque : celle qu'un moteur génératif cite pour
   // répondre « qu'est-ce que Yummeal ». Elle n'existait pas.
   { path: '/a-propos', title: 'À propos de Yummeal — qui édite l\u2019application et ce qu\u2019elle fait', description: "Application mobile éditée par YIDLA (France) : des recettes réalisables avec ce que vous avez déjà. Ce qu'elle fait, et ce qu'elle ne fait pas.", jsonLd: [buildAboutPageJsonLd(), buildOrganizationJsonLd(), buildMobileApplicationJsonLd(), crumbs({ name: 'À propos', path: '/a-propos' })] },
+  // Asset « linkable » (cf. discussion GEO/SEO du 23/09) : une page de
+  // statistiques agregees sur le catalogue reel, dataset CSV telechargeable,
+  // pensee pour etre citee par d'autres sites plutot que pour le trafic direct.
+  { path: '/statistiques-recettes', title: 'Statistiques du catalogue de recettes par difficulte - Yummeal', description: `Temps de preparation et calories medians par niveau de difficulte, calcules sur ${statistiquesRecettes._meta.total_recettes_analysees} recettes. Dataset telechargeable en CSV.`, jsonLd: [buildDatasetJsonLd({ path: '/statistiques-recettes', dateGeneration: statistiquesRecettes._meta.genere_le, nombreRecettes: statistiquesRecettes._meta.total_recettes_analysees, csvPath: '/datasets/statistiques-recettes-par-difficulte.csv' }), buildOrganizationJsonLd(), crumbs({ name: 'Statistiques du catalogue de recettes', path: '/statistiques-recettes' })] },
   { path: '/creators', title: 'Yummeal Creators - Programme affiliés & UGC', description: 'Rejoignez le programme Creators Yummeal : contenu UGC rémunéré à la performance.', jsonLd: crumbs({ name: 'Creators', path: '/creators' }) },
   { path: '/confidentialite', title: 'Politique de confidentialité - Yummeal', description: 'Politique de confidentialité de l\'application Yummeal.', jsonLd: crumbs({ name: 'Confidentialité', path: '/confidentialite' }) },
   { path: '/cgu', title: 'Conditions générales d\'utilisation - Yummeal', description: 'Conditions générales d\'utilisation de l\'application Yummeal.', jsonLd: crumbs({ name: 'CGU', path: '/cgu' }) },

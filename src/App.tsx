@@ -41,6 +41,7 @@ import FonctionnalitesIndexPage from './pages/FonctionnalitesIndexPage';
 import FonctionnalitePage from './pages/FonctionnalitePage';
 import AlternativesIndexPage from './pages/AlternativesIndexPage';
 import AlternativesArticlePage from './pages/AlternativesArticlePage';
+import StatistiquesRecettesPage from './pages/StatistiquesRecettesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import HomePage from './pages/HomePage';
 import SelecteurLangue from './components/SelecteurLangue';
@@ -72,6 +73,7 @@ function App() {
       '/alternatives',
       '/fonctionnalites',
       '/a-propos',
+      '/statistiques-recettes',
     ];
     if (contentCategories.some((prefix) => location.pathname.startsWith(prefix))) {
       return;
@@ -258,6 +260,7 @@ function App() {
         <Route path="/concept/:slug" element={<ConceptArticlePage />} />
         <Route path="/alternatives" element={<AlternativesIndexPage />} />
         <Route path="/alternatives/:slug" element={<AlternativesArticlePage />} />
+        <Route path="/statistiques-recettes" element={<StatistiquesRecettesPage />} />
         {/* Aucune route `*` n'existait : une URL inconnue rendait un écran
             blanc. Elle sert aussi de source à dist/404.html (prerender). */}
         <Route path="*" element={<NotFoundPage />} />
@@ -307,6 +310,7 @@ function App() {
                   <li><Link to="/faq" className="text-gray-600 hover:text-[#FF8C42]">FAQ sécurité alimentaire</Link></li>
                   <li><Link to="/concept" className="text-gray-600 hover:text-[#FF8C42]">Le concept Yummeal</Link></li>
                   <li><Link to="/alternatives" className="text-gray-600 hover:text-[#FF8C42]">Alternatives &amp; comparatifs</Link></li>
+                  <li><Link to="/statistiques-recettes" className="text-gray-600 hover:text-[#FF8C42]">Statistiques du catalogue</Link></li>
                 </ul>
               </div>
               <div>

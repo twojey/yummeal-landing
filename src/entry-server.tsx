@@ -66,5 +66,6 @@ export {
   buildIngredientJsonLd,
   buildFonctionnaliteJsonLd,
   buildAlternativesJsonLd,
+  buildDatasetJsonLd,
   jsonLdScriptTags,
 } from './lib/schema';

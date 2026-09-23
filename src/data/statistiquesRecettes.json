@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "genere_le": "2026-09-23",
+    "source": "table recipe (Supabase, projet vqibuydjokujdqslczdu)",
+    "filtres": "moderation_status IS DISTINCT FROM 'rejected' ; pour les calories/portion, calories/servings exclu hors [30, 3000] (valeurs aberrantes : condiments à une bouchée ou plats agrégés sur une seule portion)",
+    "regenerer": "voir scripts/build-statistiques-recettes.mjs",
+    "total_recettes_analysees": 17881
+  },
+  "parDifficulte": [
+    { "difficulte": "easy", "label": "Facile", "n": 11735, "nPrep": 11735, "medianePrepMinutes": 30, "nCalories": 11078, "medianeCaloriesParPortion": 354 },
+    { "difficulte": "medium", "label": "Moyen", "n": 3860, "nPrep": 3860, "medianePrepMinutes": 60, "nCalories": 3716, "medianeCaloriesParPortion": 494 },
+    { "difficulte": "intermediate", "label": "Intermédiaire", "n": 79, "nPrep": 79, "medianePrepMinutes": 150, "nCalories": 79, "medianeCaloriesParPortion": 654 },
+    { "difficulte": "hard", "label": "Difficile", "n": 122, "nPrep": 122, "medianePrepMinutes": 120, "nCalories": 115, "medianeCaloriesParPortion": 680 }
+  ],
+  "nonClasse": { "n": 2085, "nPrep": 1951, "medianePrepMinutes": 35, "nCalories": 11 }
+}

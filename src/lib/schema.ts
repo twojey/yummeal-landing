@@ -306,6 +306,42 @@ export function buildAboutPageJsonLd() {
 }
 
 /**
+ * Page de statistiques agrégées sur le catalogue de recettes (asset
+ * « linkable » : l'objectif n'est pas le trafic direct mais d'être citée par
+ * d'autres sites, cf. Dataset = le type schema.org que Google associe à ses
+ * propres résultats de recherche de jeux de données).
+ *
+ * `dateGeneration` est la date RÉELLE de calcul des chiffres (celle du script
+ * qui a produit le JSON), volontairement distincte de CONTENT_REVIEWED_DATE
+ * qui ne concerne que le texte éditorial : un jeu de données a sa propre
+ * fraîcheur, la confondre avec une date de relecture de prose serait
+ * trompeur.
+ */
+export function buildDatasetJsonLd(params: {
+  path: string;
+  dateGeneration: string;
+  nombreRecettes: number;
+  csvPath: string;
+}) {
+  const { path, dateGeneration, nombreRecettes, csvPath } = params;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'Statistiques du catalogue de recettes Yummeal par niveau de difficulté',
+    description: `Temps de préparation et calories médians par niveau de difficulté, calculés sur ${nombreRecettes} recettes du catalogue Yummeal.`,
+    url: canonicalFor(path),
+    creator: { '@id': ORG_ID },
+    dateModified: dateGeneration,
+    datePublished: dateGeneration,
+    distribution: {
+      '@type': 'DataDownload',
+      encodingFormat: 'text/csv',
+      contentUrl: `${SITE_URL}${csvPath}`,
+    },
+  };
+}
+
+/**
  * Fil d'Ariane. L'arborescence va jusqu'à trois niveaux
  * (/ingredients/<categorie>/<slug>) et aucune page n'exposait de
  * BreadcrumbList : c'est le seul rich result encore servi par Google que ce
