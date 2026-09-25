@@ -32,6 +32,12 @@ export const ORG_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const APP_ID = `${SITE_URL}/#app`;
 
+// Référence à l'Organization pour `author`/`publisher`. Un `{ '@id' }` nu est
+// valide en JSON-LD, mais Google ne résout pas l'@id : Search Console signalait
+// « Type d'objet non valide pour le champ author » (25/09/2026). Le type et le
+// nom explicites lèvent l'avertissement, l'@id garde la réconciliation.
+const ORG_REF = { '@type': 'Organization', '@id': ORG_ID, name: 'Yummeal' };
+
 export function buildOrganizationJsonLd() {
   return {
     '@context': 'https://schema.org',
@@ -108,7 +114,7 @@ export function buildArticleJsonLd(article: ArticleLike, path: string) {
     dateModified: CONTENT_REVIEWED_DATE,
     datePublished: CONTENT_REVIEWED_DATE,
     inLanguage: 'fr-FR',
-    author: { '@id': ORG_ID },
+    author: ORG_REF,
     publisher: { '@id': ORG_ID },
   };
 }
@@ -132,6 +138,9 @@ export interface SourceVideo {
   youtubeId: string;
   title: string;
   channel: string;
+  // Date de mise en ligne réelle, lue sur la page YouTube de la vidéo
+  // (`itemprop="uploadDate"`). Obligatoire pour le rich result Vidéo.
+  uploadDate: string;
 }
 
 interface RecipeArticleLike extends ArticleLike {
@@ -166,7 +175,7 @@ export function buildRecipeJsonLd(article: RecipeArticleLike, path: string) {
     return buildArticleJsonLd(article, path);
   }
 
-  const { youtubeId, title: videoTitle, channel } = article.sourceVideo;
+  const { youtubeId, title: videoTitle, channel, uploadDate } = article.sourceVideo;
   // Miniature servie par YouTube lui-même : un lien, pas une copie.
   const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
 
@@ -177,7 +186,7 @@ export function buildRecipeJsonLd(article: RecipeArticleLike, path: string) {
     description: article.metaDescription,
     url: canonicalFor(path),
     image: thumbnailUrl,
-    author: { '@id': ORG_ID },
+    author: ORG_REF,
     recipeIngredient: ingredientsSection.body,
     recipeInstructions: stepsSection.body.map((step) => ({
       '@type': 'HowToStep',
@@ -190,9 +199,9 @@ export function buildRecipeJsonLd(article: RecipeArticleLike, path: string) {
       thumbnailUrl,
       contentUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
       embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
-      // Pas d'`uploadDate` : nous ne connaissons pas la date réelle de mise
-      // en ligne de la vidéo source, et en fabriquer une serait la même
-      // fausse précision que celle refusée pour CONTENT_REVIEWED_DATE.
+      // Date réelle publiée par YouTube, jamais estimée : Search Console
+      // bloque le rich result Vidéo sans elle (25/09/2026).
+      uploadDate,
     },
     dateModified: CONTENT_REVIEWED_DATE,
     datePublished: CONTENT_REVIEWED_DATE,
@@ -229,7 +238,7 @@ export function buildAlternativesJsonLd(page: AlternativesLike, path: string) {
     dateModified: CONTENT_REVIEWED_DATE,
     datePublished: CONTENT_REVIEWED_DATE,
     inLanguage: 'fr-FR',
-    author: { '@id': ORG_ID },
+    author: ORG_REF,
     publisher: { '@id': ORG_ID },
     isPartOf: { '@id': WEBSITE_ID },
     about: {
@@ -428,7 +437,7 @@ export function buildIngredientJsonLd(ingredient: IngredientLike, path: string) 
     dateModified: CONTENT_REVIEWED_DATE,
     datePublished: CONTENT_REVIEWED_DATE,
     inLanguage: 'fr-FR',
-    author: { '@id': ORG_ID },
+    author: ORG_REF,
     publisher: { '@id': ORG_ID },
     isPartOf: { '@id': WEBSITE_ID },
   };

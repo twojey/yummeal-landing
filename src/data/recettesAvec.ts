@@ -16,6 +16,7 @@ export interface Article {
     youtubeId: string;
     title: string;
     channel: string;
+    uploadDate: string;
   };
 }
 
@@ -27,6 +28,7 @@ export const articles: Article[] = [
       youtubeId: 'k4bF7lAGf8k',
       title: 'Creamy Tuna Pasta',
       channel: 'TheCooknShare',
+      uploadDate: '2015-05-27T03:34:18-07:00',
     },
     title: 'Recette avec pâtes, thon et crème fraîche',
     metaDescription:
@@ -74,6 +76,7 @@ export const articles: Article[] = [
       youtubeId: '6ncQPbmVy2Q',
       title: 'Chicken and Broccoli Rice',
       channel: 'TheCooknShare',
+      uploadDate: '2024-07-03T07:15:00-07:00',
     },
     title: 'Recette avec poulet, brocoli et riz',
     metaDescription:
@@ -121,6 +124,7 @@ export const articles: Article[] = [
       youtubeId: 'JTiBrCQMRLI',
       title: 'Fried Potatoes with Onion and Fried Eggs',
       channel: 'Essen Recipes',
+      uploadDate: '2021-08-14T11:23:30-07:00',
     },
     title: 'Recette avec œufs, pommes de terre et oignon',
     metaDescription:
@@ -335,6 +339,7 @@ export const articles: Article[] = [
       youtubeId: 'mpo0gX1fqaY',
       title: 'One Pan Creamy Mushroom Chicken',
       channel: 'TheCooknShare',
+      uploadDate: '2016-03-31T19:22:38-07:00',
     },
     title: 'Recette avec poulet, crème et champignons',
     metaDescription:
@@ -424,6 +429,7 @@ export const articles: Article[] = [
       youtubeId: 'dqyknrRjegw',
       title: 'Baked Potato with Egg, Bacon and Cheese',
       channel: 'Essen Recipes',
+      uploadDate: '2021-03-22T13:38:13-07:00',
     },
     title: 'Recette avec pomme de terre, bacon et fromage',
     metaDescription:
@@ -470,6 +476,7 @@ export const articles: Article[] = [
       youtubeId: 'OoXfaDvOba8',
       title: 'Lentils and Rice with Caramelized Onions',
       channel: 'Tasty',
+      uploadDate: '2017-04-10T18:00:55-07:00',
     },
     title: 'Recette avec riz, lentilles et oignon',
     metaDescription:
@@ -516,6 +523,7 @@ export const articles: Article[] = [
       youtubeId: 'Pgm03qs7FHE',
       title: 'Hot Ham and Cheese Sandwich',
       channel: "Michael's Home Cooking",
+      uploadDate: '2009-01-01T10:07:09-08:00',
     },
     title: 'Recette avec pain, jambon et fromage (croque-monsieur)',
     metaDescription:
