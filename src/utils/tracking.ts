@@ -62,6 +62,8 @@ const sendToDeno = async (eventName: string, data: Record<string, unknown>): Pro
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
+      // Survit à la navigation déclenchée par le clic (boutons de téléchargement).
+      keepalive: true,
       headers: {
         'Content-Type': 'application/json',
         'X-Anonymous-ID': anonId

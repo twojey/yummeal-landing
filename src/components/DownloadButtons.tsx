@@ -23,7 +23,7 @@ import { generateOneLinkUrl } from '../utils/appsflyerIntegration';
  * rattachée à une page du site (confirmé : le composant utilisé partout sur
  * le site n'envoyait ni clic ni attribution). Pas de cookie ni de bannière :
  * `href` garde le lien store direct comme repli (clic droit, JS désactivé,
- * crawler), `onClick` fait la vraie navigation attribuée. `trackDownloadClick`
+ * crawler), `onClick` remplace le href par le OneLink attribué juste avant la navigation. `trackDownloadClick`
  * envoie l'événement à `/tracking`, relayé côté serveur vers PostHog (déjà
  * reçu pour les `page_view` du site, cf. `posthog_relay_policy.ts` côté API).
  */
@@ -39,19 +39,18 @@ export default function DownloadButtons() {
 
   const handleClick = (platform: 'apple' | 'google') =>
     (event: React.MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault();
       trackDownloadClick(platform, `${pageCampaign()}_download_buttons`);
 
-      const oneLinkUrl = generateOneLinkUrl({
+      // Pas de preventDefault ni de window.open différé : Safari iOS bloque un
+      // window.open lancé hors du geste utilisateur (setTimeout), et le clic ne
+      // ferait plus rien. On réécrit le href avant l'action par défaut : le
+      // navigateur suit alors le OneLink dans le même geste. L'envoi du
+      // tracking survit à la navigation grâce à `keepalive` (utils/tracking.ts).
+      event.currentTarget.href = generateOneLinkUrl({
         pid: 'website',
         c: pageCampaign(),
         af_sub1: platform
       });
-
-      // Laisser partir l'événement de tracking avant la navigation.
-      window.setTimeout(() => {
-        window.open(oneLinkUrl, '_blank', 'noopener,noreferrer');
-      }, 100);
     };
 
   return (
