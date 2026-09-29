@@ -1,3 +1,4 @@
+import { ACQUISITION_ONELINK, captureAcquisition } from './acquisitionLink';
 /**
  * Intégration AppsFlyer pour le tracking des utilisateurs
  * Capture la source de trafic et envoie les événements à AppsFlyer
@@ -12,7 +13,7 @@ const APPSFLYER_SCRIPT_SOURCES = [
   'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
   'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
 ];
-const ONELINK_URL = 'https://yummeal.onelink.me/iDjc/web';
+const ONELINK_URL = ACQUISITION_ONELINK;
 const SDK_READY_EVENT = 'appsflyer:sdk-ready';
 
 let isConfigured = false;
@@ -435,15 +436,10 @@ export function generateOneLinkUrl(additionalParams?: Record<string, string>): s
 
   // Ajouter les paramètres UTM actuels
   if (typeof window !== 'undefined') {
-    const currentParams = new URLSearchParams(window.location.search);
-    const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-
-    utmParams.forEach(param => {
-      const value = currentParams.get(param);
-      if (value) {
-        params.append(param, value);
-      }
-    });
+    let currentParams: URLSearchParams;
+    try { currentParams = captureAcquisition(window.location.search, window.sessionStorage); }
+    catch { currentParams = new URLSearchParams(window.location.search); }
+    for (const [key, value] of currentParams) params.set(key, value);
   }
 
   // Ajouter les paramètres supplémentaires

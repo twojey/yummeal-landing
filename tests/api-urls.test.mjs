@@ -41,7 +41,7 @@ const DOMAINE_WEB_ATTENDU = 'yummeal.app';
  * court et commenté : chaque entrée est une exception au domaine canonique.
  */
 const HOTES_TIERS_LEGITIMES = new Set([
-  'yummeal.onelink.me', // OneLink AppsFlyer (attribution des installs)
+  'yummealapp.onelink.me', // OneLink AppsFlyer (attribution des installs)
 ]);
 
 /** Le fichier autorisé à déclarer une URL de backend. */

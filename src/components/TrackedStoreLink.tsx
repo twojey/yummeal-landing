@@ -6,7 +6,7 @@
 
 import { AnchorHTMLAttributes } from 'react';
 import { trackDownloadClick } from '../utils/tracking';
-import { withUtmParams } from '../utils/utmTracker';
+import { captureAcquisition, buildAcquisitionLink } from '../utils/acquisitionLink';
 import { STORE_URLS_DEFAUT } from '../config';
 
 /**
@@ -53,7 +53,7 @@ export default function TrackedStoreLink({ store, trackingId, ...props }: Props)
       trackDownloadClick(store, buttonLocation);
       
       // Construire l'URL avec les paramètres UTM
-      const targetUrl = withUtmParams(STORE_URLS[store]);
+      const targetUrl = buildAcquisitionLink(STORE_URLS[store], store, captureAcquisition(window.location.search, window.sessionStorage));
       console.log('%cURL avec paramètres UTM:', 'font-weight: bold', targetUrl);
       
       // Ajouter un délai pour laisser le temps au tracking de s'exécuter

@@ -9,6 +9,10 @@ import { setupAutoTracking, addTrackingToSpecificButtons } from './utils/autoTra
 import { getAnonymousId } from './utils/anonymousId';
 import { initAppsFlyer } from './utils/appsflyerIntegration';
 
+import { captureAcquisition } from './utils/acquisitionLink';
+
+try { captureAcquisition(window.location.search, window.sessionStorage); } catch { /* Storage may be blocked. */ }
+
 // Initialiser l'identifiant anonyme persistant
 const anonId = getAnonymousId();
 console.log('[INIT] Identifiant anonyme initialisé:', anonId);

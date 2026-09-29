@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
+import { captureAcquisition, buildAcquisitionLink } from '../utils/acquisitionLink';
 import AppleLogo from '../Apple_logo_black.svg';
 import PlayStoreLogo from '../playstore.svg';
 import { STORE_URLS } from '../config';
 import { useLocale } from '../i18n/useLocale';
 import { trackDownloadClick } from '../utils/tracking';
-import { generateOneLinkUrl } from '../utils/appsflyerIntegration';
 
 /**
  * Boutons de téléchargement.
@@ -18,7 +19,7 @@ import { generateOneLinkUrl } from '../utils/appsflyerIntegration';
  * pire que n'en afficher qu'un.
  *
  * ⚠️ Suivi web (27/09/2026) : le clic ouvre le lien OneLink AppsFlyer déjà
- * configuré pour le site (`generateOneLinkUrl`, `pid=website&c=<page>`) au
+ * configuré pour le site (`buildAcquisitionLink`, `pid=website&c=<page>`) au
  * lieu du lien store brut — sans ce paramètre, aucune install ne peut être
  * rattachée à une page du site (confirmé : le composant utilisé partout sur
  * le site n'envoyait ni clic ni attribution). Pas de cookie ni de bannière :
@@ -36,6 +37,11 @@ function pageCampaign(): string {
 export default function DownloadButtons() {
   const { locale, t } = useLocale();
   const urls = STORE_URLS[locale];
+  const [evidence,setEvidence]=useState(new URLSearchParams());
+  useEffect(()=>{
+    try { setEvidence(captureAcquisition(window.location.search,window.sessionStorage)); }
+    catch { setEvidence(new URLSearchParams(window.location.search)); }
+  },[]);
 
   const handleClick = (platform: 'apple' | 'google') =>
     (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -46,18 +52,18 @@ export default function DownloadButtons() {
       // ferait plus rien. On réécrit le href avant l'action par défaut : le
       // navigateur suit alors le OneLink dans le même geste. L'envoi du
       // tracking survit à la navigation grâce à `keepalive` (utils/tracking.ts).
-      event.currentTarget.href = generateOneLinkUrl({
-        pid: 'website',
-        c: pageCampaign(),
-        af_sub1: platform
-      });
+      const captured = new URLSearchParams(evidence);
+      if (!captured.has('pid')) captured.set('pid', 'website');
+      if (!captured.has('c')) captured.set('c', pageCampaign());
+      const storeUrl = urls[platform];
+      if (storeUrl) event.currentTarget.href = buildAcquisitionLink(storeUrl, platform, captured);
     };
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
       {urls.apple && (
         <a
-          href={urls.apple}
+          href={buildAcquisitionLink(urls.apple, 'apple', evidence)}
           onClick={handleClick('apple')}
           className="clay-btn clay-btn--primary"
           target="_blank"
@@ -74,7 +80,7 @@ export default function DownloadButtons() {
         </a>
       )}
       <a
-        href={urls.google}
+        href={buildAcquisitionLink(urls.google, 'google', evidence)}
         onClick={handleClick('google')}
         className="clay-btn clay-btn--secondary"
         target="_blank"
