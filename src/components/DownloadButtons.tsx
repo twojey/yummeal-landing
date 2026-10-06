@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { captureAcquisition, buildAcquisitionLink } from '../utils/acquisitionLink';
+import { captureAcquisition, buildAcquisitionLink, withWebsiteAttribution } from '../utils/acquisitionLink';
 import AppleLogo from '../Apple_logo_black.svg';
 import PlayStoreLogo from '../playstore.svg';
 import { STORE_URLS } from '../config';
@@ -52,9 +52,7 @@ export default function DownloadButtons() {
       // ferait plus rien. On réécrit le href avant l'action par défaut : le
       // navigateur suit alors le OneLink dans le même geste. L'envoi du
       // tracking survit à la navigation grâce à `keepalive` (utils/tracking.ts).
-      const captured = new URLSearchParams(evidence);
-      if (!captured.has('pid')) captured.set('pid', 'website');
-      if (!captured.has('c')) captured.set('c', pageCampaign());
+      const captured = withWebsiteAttribution(evidence, pageCampaign());
       const storeUrl = urls[platform];
       if (storeUrl) event.currentTarget.href = buildAcquisitionLink(storeUrl, platform, captured);
     };

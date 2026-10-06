@@ -5,18 +5,24 @@ import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
 import MentionYmyl from '../components/MentionYmyl';
 import SiloSiblings from '../components/SiloSiblings';
-import { buildArticleJsonLd } from '../lib/schema';
+import SeoRefreshBlock from '../components/SeoRefreshBlock';
+import { getSeoRefresh } from '../data/seoRefresh';
+import { buildArticleJsonLd, buildSeoRefreshFaqJsonLd } from '../lib/schema';
 
 export default function SanteArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticle(slug) : undefined;
+  const refresh = slug ? getSeoRefresh(`/sante/${slug}`) : undefined;
 
   usePageMeta({
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/sante/${slug ?? ''}`,
     jsonLd: article
-      ? buildArticleJsonLd(article, `/sante/${slug ?? ''}`)
+      ? [
+          buildArticleJsonLd(article, `/sante/${slug ?? ''}`),
+          ...(refresh ? [buildSeoRefreshFaqJsonLd(refresh.faq)] : []),
+        ]
       : undefined,
   });
 
@@ -40,6 +46,7 @@ export default function SanteArticlePage() {
 
         <MentionYmyl />
         <p className="text-lg text-gray-700 mb-6">{article.intro}</p>
+        <SeoRefreshBlock entry={refresh} />
 
         {article.sections.map((section, i) => (
           <div key={i} className="clay-card p-6 mb-6">

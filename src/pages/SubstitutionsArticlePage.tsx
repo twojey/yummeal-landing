@@ -4,18 +4,24 @@ import { articles, getArticle } from '../data/substitutions';
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
 import SiloSiblings from '../components/SiloSiblings';
-import { buildArticleJsonLd } from '../lib/schema';
+import SeoRefreshBlock from '../components/SeoRefreshBlock';
+import { getSeoRefresh } from '../data/seoRefresh';
+import { buildArticleJsonLd, buildSeoRefreshFaqJsonLd } from '../lib/schema';
 
 export default function SubstitutionsArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticle(slug) : undefined;
+  const refresh = slug ? getSeoRefresh(`/substitutions/${slug}`) : undefined;
 
   usePageMeta({
     title: article ? `${article.title} - Yummeal` : 'Yummeal',
     description: article?.metaDescription ?? '',
     canonicalPath: `/substitutions/${slug ?? ''}`,
     jsonLd: article
-      ? buildArticleJsonLd(article, `/substitutions/${slug ?? ''}`)
+      ? [
+          buildArticleJsonLd(article, `/substitutions/${slug ?? ''}`),
+          ...(refresh ? [buildSeoRefreshFaqJsonLd(refresh.faq)] : []),
+        ]
       : undefined,
   });
 
@@ -37,6 +43,7 @@ export default function SubstitutionsArticlePage() {
         </h1>
 
         <p className="text-lg text-gray-700 mb-6">{article.intro}</p>
+        <SeoRefreshBlock entry={refresh} />
 
         {article.sections.map((section, i) => (
           <div key={i} className="clay-card p-6 mb-6">

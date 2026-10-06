@@ -29,3 +29,21 @@ export function buildAcquisitionLink(storeUrl: string, platform:'apple'|'google'
   url.searchParams.set('af_dp',deepLink.toString());
   return url.toString();
 }
+
+/**
+ * Ajoute le contexte propre au site avant de construire un lien OneLink.
+ *
+ * Les visiteurs qui arrivent directement sur le site n'ont pas d'UTM, mais
+ * ils doivent tout de même être distingués des installations qui arrivent
+ * depuis une autre surface. Cette fonction est volontairement pure afin que
+ * tous les composants de CTA appliquent exactement la même règle.
+ */
+export function withWebsiteAttribution(
+  evidence: URLSearchParams,
+  campaign: string,
+): URLSearchParams {
+  const enriched = new URLSearchParams(evidence);
+  if (!enriched.has('pid')) enriched.set('pid', 'website');
+  if (!enriched.has('c')) enriched.set('c', campaign || 'website');
+  return enriched;
+}

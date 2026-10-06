@@ -6,7 +6,7 @@
 
 import { AnchorHTMLAttributes } from 'react';
 import { trackDownloadClick } from '../utils/tracking';
-import { captureAcquisition, buildAcquisitionLink } from '../utils/acquisitionLink';
+import { captureAcquisition, buildAcquisitionLink, withWebsiteAttribution } from '../utils/acquisitionLink';
 import { STORE_URLS_DEFAUT } from '../config';
 
 /**
@@ -38,7 +38,7 @@ export default function TrackedStoreLink({ store, trackingId, ...props }: Props)
   /**
    * Gère le clic sur le lien et envoie les événements de tracking
    */
-  const handleClick = (): void => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     console.group('%c[TrackedStoreLink] Clic sur bouton de téléchargement', 'color: #2196F3; font-weight: bold');
     
     // Déterminer l'emplacement du bouton pour le tracking
@@ -53,21 +53,22 @@ export default function TrackedStoreLink({ store, trackingId, ...props }: Props)
       trackDownloadClick(store, buttonLocation);
       
       // Construire l'URL avec les paramètres UTM
-      const targetUrl = buildAcquisitionLink(STORE_URLS[store], store, captureAcquisition(window.location.search, window.sessionStorage));
+      const evidence = captureAcquisition(window.location.search, window.sessionStorage);
+      const targetUrl = buildAcquisitionLink(
+        STORE_URLS[store],
+        store,
+        withWebsiteAttribution(evidence, buttonLocation),
+      );
       console.log('%cURL avec paramètres UTM:', 'font-weight: bold', targetUrl);
-      
-      // Ajouter un délai pour laisser le temps au tracking de s'exécuter
-      console.log('%cOuverture de l\'URL dans 100ms...', 'font-weight: bold');
-      setTimeout(() => {
-        // Ouvrir l'URL dans un nouvel onglet
-        const newWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
-        console.log('%cNouvelle fenêtre ouverte:', 'font-weight: bold', !!newWindow);
-        console.groupEnd();
-      }, 100);
+
+      // Le navigateur suit le lien dans le geste utilisateur : Safari ne
+      // bloque pas la navigation et keepalive conserve l'événement tracking.
+      event.currentTarget.href = targetUrl;
+      console.groupEnd();
     } catch (error) {
       console.error('%c[TrackedStoreLink] Erreur:', 'color: #F44336; font-weight: bold', error);
       // Fallback en cas d'erreur - ouvrir quand même l'URL
-      window.open(STORE_URLS[store], '_blank', 'noopener,noreferrer');
+      event.currentTarget.href = STORE_URLS[store];
       console.groupEnd();
     }
   };

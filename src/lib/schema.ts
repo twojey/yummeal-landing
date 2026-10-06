@@ -119,6 +119,23 @@ export function buildArticleJsonLd(article: ArticleLike, path: string) {
   };
 }
 
+export function buildSeoRefreshFaqJsonLd(
+  faqs: Array<{ question: string; answer: string }>,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 export function buildFaqJsonLd(articles: ArticleLike[]) {
   return {
     '@context': 'https://schema.org',

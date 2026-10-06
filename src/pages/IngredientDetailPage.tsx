@@ -8,6 +8,9 @@ import {
 import DownloadButtons from '../components/DownloadButtons';
 import RelatedArticles from '../components/RelatedArticles';
 import RecettesRealisables from '../components/RecettesRealisables';
+import SeoRefreshBlock from '../components/SeoRefreshBlock';
+import { getSeoRefresh } from '../data/seoRefresh';
+import { buildIngredientJsonLd, buildSeoRefreshFaqJsonLd } from '../lib/schema';
 
 export default function IngredientDetailPage() {
   const { category: categorySlug, slug } = useParams<{
@@ -17,11 +20,20 @@ export default function IngredientDetailPage() {
   const category = categorySlug ? getCategory(categorySlug) : undefined;
   const ingredient =
     categorySlug && slug ? getIngredient(categorySlug, slug) : undefined;
+  const refresh = categorySlug && slug
+    ? getSeoRefresh(`/ingredients/${categorySlug}/${slug}`)
+    : undefined;
 
   usePageMeta({
     title: ingredient ? `Que faire avec : ${ingredient.name} ? - Yummeal` : 'Yummeal',
     description: ingredient?.metaDescription ?? '',
     canonicalPath: `/ingredients/${categorySlug ?? ''}/${slug ?? ''}`,
+    jsonLd: ingredient
+      ? [
+          buildIngredientJsonLd(ingredient, `/ingredients/${categorySlug ?? ''}/${slug ?? ''}`),
+          ...(refresh ? [buildSeoRefreshFaqJsonLd(refresh.faq)] : []),
+        ]
+      : undefined,
   });
 
   if (!category || !ingredient) {
@@ -58,6 +70,7 @@ export default function IngredientDetailPage() {
         </h1>
 
         <p className="text-lg text-gray-700 mb-6">{ingredient.intro}</p>
+        <SeoRefreshBlock entry={refresh} />
 
         <div className="clay-card p-6 mb-6">
           <h2 className="text-xl font-semibold mb-2">Pourquoi ça arrive</h2>

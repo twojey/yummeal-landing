@@ -8,10 +8,13 @@ import {
 import TableauComparatif from '../components/TableauComparatif';
 import DownloadButtons from '../components/DownloadButtons';
 import SiloSiblings from '../components/SiloSiblings';
+import SeoRefreshBlock from '../components/SeoRefreshBlock';
+import { getSeoRefresh } from '../data/seoRefresh';
 import {
   buildAlternativesJsonLd,
   buildBreadcrumbJsonLd,
   buildMobileApplicationJsonLd,
+  buildSeoRefreshFaqJsonLd,
 } from '../lib/schema';
 
 /**
@@ -25,6 +28,7 @@ import {
 export default function AlternativesArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const page = slug ? getPageAlternatives(slug) : undefined;
+  const refresh = slug ? getSeoRefresh(`/alternatives/${slug}`) : undefined;
 
   usePageMeta({
     title: page ? page.title : 'Yummeal',
@@ -34,6 +38,7 @@ export default function AlternativesArticlePage() {
       ? [
           buildAlternativesJsonLd(page, `/alternatives/${page.slug}`),
           buildMobileApplicationJsonLd(),
+          ...(refresh ? [buildSeoRefreshFaqJsonLd(refresh.faq)] : []),
           buildBreadcrumbJsonLd([
             { name: 'Accueil', path: '/' },
             { name: 'Alternatives', path: '/alternatives' },
@@ -61,6 +66,7 @@ export default function AlternativesArticlePage() {
           Vérifié le {DATE_VERIFICATION}
         </p>
         <p className="text-lg text-gray-700 mb-2">{page.intro}</p>
+        <SeoRefreshBlock entry={refresh} />
 
         <TableauComparatif apps={page.apps} />
 

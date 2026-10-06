@@ -11,6 +11,7 @@ import { getAnonymousId } from './anonymousId';
 import { enrichEvent, normalizeEventData, isEventValid } from './eventEnricher';
 import { trackAppsFlyerEvent, getDetectedTrafficSource } from './appsflyerIntegration';
 import { API_BASE_URL } from '../config';
+import { captureAcquisition } from './acquisitionLink';
 
 // Configuration
 const API_URL = `${API_BASE_URL}/tracking`;
@@ -26,6 +27,35 @@ const generateEventId = (): string => {
   }
   return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
 };
+
+/** Contexte éditorial stable utilisé par les rapports d'acquisition. */
+function getPageContext(pathname: string): Record<string, string> {
+  const normalized = pathname.replace(/^\/+|\/+$/g, '');
+  const segments = normalized.split('/').filter(Boolean);
+  const localized = segments[0] === 'pl' ? segments.slice(1) : segments;
+  const category = localized[0] || 'home';
+  const slug = localized.slice(1).join('/') || 'home';
+  return {
+    content_id: normalized || 'home',
+    content_category: category,
+    content_slug: slug,
+  };
+}
+
+/**
+ * Récupère la première attribution capturée, y compris après une navigation
+ * interne. Sans cela, un visiteur issu d'une recherche ou d'une campagne
+ * devenait « direct » au moment du clic sur le CTA.
+ */
+function getAcquisitionContext(): Record<string, string> {
+  if (typeof window === 'undefined') return {};
+  try {
+    const evidence = captureAcquisition(window.location.search, window.sessionStorage);
+    return Object.fromEntries(evidence.entries());
+  } catch {
+    return {};
+  }
+}
 
 // Types
 type Platform = 'apple' | 'google';
@@ -129,6 +159,8 @@ export const trackPageView = (): void => {
     screen_height: window.innerHeight,
     user_agent: navigator.userAgent,
     language: navigator.language,
+    ...getPageContext(window.location.pathname),
+    ...getAcquisitionContext(),
     timestamp: new Date().toISOString()
   };
 
@@ -277,13 +309,17 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
     
     // Métadonnées
     timestamp: new Date().toISOString(),
-    device_type: getDeviceType()
+    device_type: getDeviceType(),
+    ...getPageContext(typeof window !== 'undefined' ? window.location.pathname : '/'),
   };
   
   try {
     // Enrichir avec les paramètres UTM
     const utmParams = getUtmParameters();
     Object.assign(data, utmParams);
+    // Le contexte capturé sur la landing page prime sur les seuls paramètres
+    // présents sur l'URL courante après navigation interne.
+    Object.assign(data, getAcquisitionContext());
     console.log('%cParamètres UTM:', 'font-weight: bold', utmParams);
     
     // Enrichir avec les identifiants Facebook
