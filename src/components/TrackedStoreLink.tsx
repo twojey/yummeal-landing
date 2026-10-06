@@ -8,6 +8,8 @@ import { AnchorHTMLAttributes } from 'react';
 import { trackDownloadClick } from '../utils/tracking';
 import { captureAcquisition, buildAcquisitionLink, withWebsiteAttribution } from '../utils/acquisitionLink';
 import { STORE_URLS_DEFAUT } from '../config';
+import { getAnonymousId } from '../utils/anonymousId';
+import { selectConversionVariant } from '../data/conversionOptimization';
 
 /**
  * Propriétés du composant
@@ -50,7 +52,8 @@ export default function TrackedStoreLink({ store, trackingId, ...props }: Props)
     try {
       // Enregistrer l'événement de téléchargement
       console.log('%cDéclenchement du tracking...', 'font-weight: bold');
-      trackDownloadClick(store, buttonLocation);
+      const conversionVariant = selectConversionVariant(window.location.pathname, getAnonymousId());
+      trackDownloadClick(store, buttonLocation, conversionVariant.id);
       
       // Construire l'URL avec les paramètres UTM
       const evidence = captureAcquisition(window.location.search, window.sessionStorage);

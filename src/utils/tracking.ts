@@ -287,7 +287,7 @@ export const trackDownloadStart = (platform: string, buttonLocation?: string): v
  * @param platform Plateforme ciblée (ios/android)
  * @param buttonLocation Emplacement du bouton sur la page
  */
-export const trackDownloadClick = (platform: Platform | string, buttonLocation?: string): void => {
+export const trackDownloadClick = (platform: Platform | string, buttonLocation?: string, conversionVariant?: string): void => {
   console.group('%c[TRACKING] Événement download_click', 'color: #4CAF50; font-weight: bold; font-size: 12px');
   console.log('%cPlateforme:', 'font-weight: bold', platform);
   console.log('%cEmplacement:', 'font-weight: bold', buttonLocation || window.location.pathname);
@@ -311,6 +311,7 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
     timestamp: new Date().toISOString(),
     device_type: getDeviceType(),
     ...getPageContext(typeof window !== 'undefined' ? window.location.pathname : '/'),
+    ...(conversionVariant ? { conversion_variant: conversionVariant } : {}),
   };
   
   try {
@@ -363,6 +364,15 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
   } finally {
     console.groupEnd();
   }
+};
+
+/** Mesure l’exposition à une variante de conversion avant le clic CTA. */
+export const trackConversionVariantExposed = (variantId: string, location?: string): void => {
+  sendEvent('conversion_variant_exposed', {
+    variant_id: variantId,
+    button_location: location || (typeof window !== 'undefined' ? window.location.pathname : '/'),
+    ...getPageContext(typeof window !== 'undefined' ? window.location.pathname : '/'),
+  });
 };
 
 /**

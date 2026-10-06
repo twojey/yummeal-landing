@@ -37,7 +37,7 @@ const FRUITS_LEGUMES = {
  * Cette source unique alimente le bloc visible, les FAQ et les liens de preuve
  * des pages déjà indexées.
  */
-export const SEO_REFRESH: Record<string, SeoRefreshEntry> = {
+const SEO_REFRESH_BASE: Record<string, SeoRefreshEntry> = {
   '/anti-gaspillage/comment-conserver-oignons-coupes': {
     queries: [
       'conservation oignon coupé', 'temps de conservation oignon coupé',
@@ -206,6 +206,15 @@ export const SEO_REFRESH: Record<string, SeoRefreshEntry> = {
     actions: ['Distinguez l’usage : cuisson, assaisonnement ou pâtisserie.', 'Remplacez généralement volume pour volume.', 'Évitez les huiles très parfumées si vous voulez préserver le goût de la recette.'],
     faq: [{ question: 'Quelle huile remplace l’huile d’olive pour cuire ?', answer: 'L’huile de tournesol ou de colza convient généralement pour une cuisson au goût neutre. Le choix dépend aussi de la température et du goût recherché.' }],
   },
+};
+
+// Le contenu généré et fact-checké peut surcharger une page existante après
+// validation du build. Le corpus manuel reste le filet de sécurité.
+import { SEO_REFRESH_GENERATED } from './seoRefresh.generated';
+
+export const SEO_REFRESH: Record<string, SeoRefreshEntry> = {
+  ...SEO_REFRESH_BASE,
+  ...(SEO_REFRESH_GENERATED as Record<string, SeoRefreshEntry>),
 };
 
 export function getSeoRefresh(path: string): SeoRefreshEntry | undefined {

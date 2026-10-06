@@ -4,7 +4,9 @@ import AppleLogo from '../Apple_logo_black.svg';
 import PlayStoreLogo from '../playstore.svg';
 import { STORE_URLS } from '../config';
 import { useLocale } from '../i18n/useLocale';
-import { trackDownloadClick } from '../utils/tracking';
+import { trackConversionVariantExposed, trackDownloadClick } from '../utils/tracking';
+import { getAnonymousId } from '../utils/anonymousId';
+import { selectConversionVariant } from '../data/conversionOptimization';
 
 /**
  * Boutons de téléchargement.
@@ -38,14 +40,26 @@ export default function DownloadButtons() {
   const { locale, t } = useLocale();
   const urls = STORE_URLS[locale];
   const [evidence,setEvidence]=useState(new URLSearchParams());
+  const [visitorId] = useState(() => typeof window === 'undefined' ? 'ssr' : getAnonymousId());
+  const [conversionVariant] = useState(() => selectConversionVariant(
+    typeof window === 'undefined' ? '/' : window.location.pathname,
+    visitorId,
+  ));
   useEffect(()=>{
     try { setEvidence(captureAcquisition(window.location.search,window.sessionStorage)); }
     catch { setEvidence(new URLSearchParams(window.location.search)); }
   },[]);
+  useEffect(() => {
+    if (locale === 'fr') trackConversionVariantExposed(conversionVariant.id, pageCampaign());
+  }, [conversionVariant.id, locale]);
 
   const handleClick = (platform: 'apple' | 'google') =>
     (event: React.MouseEvent<HTMLAnchorElement>) => {
-      trackDownloadClick(platform, `${pageCampaign()}_download_buttons`);
+      trackDownloadClick(
+        platform,
+        `${pageCampaign()}_download_buttons`,
+        locale === 'fr' ? conversionVariant.id : undefined,
+      );
 
       // Pas de preventDefault ni de window.open différé : Safari iOS bloque un
       // window.open lancé hors du geste utilisateur (setTimeout), et le clic ne
@@ -58,7 +72,13 @@ export default function DownloadButtons() {
     };
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-xs md:max-w-md mx-auto">
+    <div className="flex flex-col gap-3 w-full max-w-xs md:max-w-md mx-auto">
+      {locale === 'fr' && (
+        <>
+          <p className="font-semibold text-gray-900">{conversionVariant.headline}</p>
+          <p className="text-sm text-gray-600">{conversionVariant.body}</p>
+        </>
+      )}
       {urls.apple && (
         <a
           href={buildAcquisitionLink(urls.apple, 'apple', evidence)}
@@ -74,7 +94,7 @@ export default function DownloadButtons() {
             height={24}
             className="h-6 w-auto filter invert"
           />
-          {t.cta.appStore}
+          {locale === 'fr' ? (conversionVariant.ctaLabel ?? t.cta.appStore) : t.cta.appStore}
         </a>
       )}
       <a
@@ -91,7 +111,7 @@ export default function DownloadButtons() {
           height={24}
           className="h-6 w-6"
         />
-        {t.cta.googlePlay}
+        {locale === 'fr' ? (conversionVariant.ctaLabel ?? t.cta.googlePlay) : t.cta.googlePlay}
       </a>
     </div>
   );
