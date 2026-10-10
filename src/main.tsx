@@ -5,9 +5,7 @@ import App from './App.tsx';
 import './index.css';
 import { initFacebookPixel } from './utils/facebookPixel';
 import { initTikTokPixel } from './utils/tiktokPixel';
-import { setupAutoTracking, addTrackingToSpecificButtons } from './utils/autoTrackDownloads';
 import { getAnonymousId } from './utils/anonymousId';
-import { initAppsFlyer } from './utils/appsflyerIntegration';
 
 import { captureAcquisition } from './utils/acquisitionLink';
 
@@ -20,18 +18,6 @@ console.log('[INIT] Identifiant anonyme initialisé:', anonId);
 // Initialiser les pixels avant le rendu de l'application
 initFacebookPixel();
 initTikTokPixel();
-initAppsFlyer();
-
-// Configurer le tracking automatique des liens de téléchargement
-setupAutoTracking();
-
-// Ajouter manuellement le tracking aux boutons spécifiques
-// Attendre que le DOM soit complètement chargé
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', addTrackingToSpecificButtons);
-} else {
-  setTimeout(addTrackingToSpecificButtons, 500); // Attendre un peu pour s'assurer que tout est chargé
-}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

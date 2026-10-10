@@ -78,9 +78,6 @@ export const initFacebookPixel = (): void => {
   // Initialisation avec l'ID de pixel
   fbq('init', FB_PIXEL_ID);
   
-  // Premier PageView automatique
-  fbq('track', 'PageView');
-  
   console.log('[Facebook Pixel] Initialisé avec succès');
 };
 

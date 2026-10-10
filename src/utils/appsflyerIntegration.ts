@@ -1,26 +1,16 @@
-import { ACQUISITION_ONELINK, captureAcquisition } from './acquisitionLink';
 /**
- * Intégration AppsFlyer pour le tracking des utilisateurs
- * Capture la source de trafic et envoie les événements à AppsFlyer
+ * Attribution AppsFlyer côté site.
+ *
+ * Le site utilise OneLink pour les clics web -> app. L’ancien module chargé ici
+ * était le SDK mobile (devKey/appId, initSdk/start), qui n’est pas le Web SDK
+ * AppsFlyer et ne doit pas être exécuté dans un navigateur. Les événements web
+ * restent envoyés à l’API Yummeal et au Pixel Meta ; OneLink porte
+ * l’attribution de l’installation lors du clic vers le store.
  */
 
-import { getAnonymousId } from './anonymousId';
+import { ACQUISITION_ONELINK, captureAcquisition } from './acquisitionLink';
 
-// Configuration AppsFlyer
-const APPSFLYER_DEV_KEY = 'KqkTfhXvWx5Lm9nPqRsT';
-const APPSFLYER_APP_ID = 'id6744942441';
-const APPSFLYER_SCRIPT_SOURCES = [
-  'https://cdn-go.appsflyer.com/js/v6.14.3/web_sdk.min.js',
-  'https://cdn.appsflyer.com/web-sdk/latest/web_sdk.min.js'
-];
-const ONELINK_URL = ACQUISITION_ONELINK;
-const SDK_READY_EVENT = 'appsflyer:sdk-ready';
-
-let isConfigured = false;
-let sdkReadyListenerAttached = false;
-let sdkFallbackTimeout: number | null = null;
-
-interface TrafficSource {
+export interface TrafficSource {
   source: string;
   medium?: string;
   campaign?: string;
@@ -28,70 +18,39 @@ interface TrafficSource {
   term?: string;
   referrer?: string;
   fbclid?: string;
+  fbc?: string;
   gclid?: string;
+  ttclid?: string;
   msclkid?: string;
 }
 
-interface AppsFlyerSDK {
-  initSdk: (config: AppsFlyerConfig) => void;
-  setCustomerUserId: (userId: string) => void;
-  setAdditionalData: (data: Record<string, string>) => void;
-  start: () => void;
-  logEvent: (eventName: string, eventValue?: Record<string, unknown>) => void;
+function getIncomingParameters(): URLSearchParams {
+  if (typeof window === 'undefined') return new URLSearchParams();
+
+  try {
+    const captured = captureAcquisition(window.location.search, window.sessionStorage);
+    return captured.size ? captured : new URLSearchParams(window.location.search);
+  } catch {
+    return new URLSearchParams(window.location.search);
+  }
 }
 
-interface AppsFlyerConfig {
-  devKey: string;
-  appId: string;
-  isDebug: boolean;
-  onConversionDataSuccess: (data: ConversionData) => void;
-  onConversionDataFailure: (error: AppsFlyerError) => void;
-  onAppOpenAttribution: (data: AttributionData) => void;
-  onAttributionFailure: (error: AppsFlyerError) => void;
-  timeToWaitForATTUserAuthorization: number;
-  manualStart: boolean;
-}
-
-interface ConversionData {
-  status: string;
-  media_source?: string;
-  campaign?: string;
-  adset?: string;
-  ad?: string;
-  [key: string]: unknown;
-}
-
-interface AttributionData {
-  [key: string]: unknown;
-}
-
-interface AppsFlyerError {
-  message?: string;
-  [key: string]: unknown;
-}
-
-/**
- * Récupère la source de trafic depuis l'URL et les cookies
- */
+/** Détecte l’origine initiale, y compris après une navigation interne. */
 function getTrafficSource(): TrafficSource {
   const source: TrafficSource = {
     source: 'direct',
-    referrer: typeof document !== 'undefined' ? (document.referrer || 'direct') : 'direct'
+    referrer: typeof document !== 'undefined' ? (document.referrer || 'direct') : 'direct',
   };
 
-  if (typeof window === 'undefined') {
-    return source;
-  }
+  if (typeof window === 'undefined') return source;
 
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // Paramètres UTM
-    const utmSource = urlParams.get('utm_source');
-    const utmMedium = urlParams.get('utm_medium');
-    const utmCampaign = urlParams.get('utm_campaign');
-    const utmContent = urlParams.get('utm_content');
-    const utmTerm = urlParams.get('utm_term');
+    const params = getIncomingParameters();
+    const utmSource = params.get('utm_source');
+    const utmMedium = params.get('utm_medium');
+    const utmCampaign = params.get('utm_campaign');
+    const utmContent = params.get('utm_content');
+    const utmTerm = params.get('utm_term');
 
     if (utmSource) {
       source.source = utmSource;
@@ -101,44 +60,41 @@ function getTrafficSource(): TrafficSource {
       source.term = utmTerm || undefined;
     }
 
-    // Identifiants de clics (Facebook, Google, Microsoft)
-    const fbclid = urlParams.get('fbclid');
-    const gclid = urlParams.get('gclid');
-    const msclkid = urlParams.get('msclkid');
+    const fbclid = params.get('fbclid');
+    const fbc = params.get('fbc');
+    const gclid = params.get('gclid');
+    const ttclid = params.get('ttclid');
+    const msclkid = params.get('msclkid');
 
-    if (fbclid) {
+    if (fbclid || fbc) {
       source.source = 'facebook';
-      source.fbclid = fbclid;
+      source.fbclid = fbclid || undefined;
+      source.fbc = fbc || undefined;
     }
     if (gclid) {
       source.source = 'google';
       source.gclid = gclid;
+    }
+    if (ttclid) {
+      source.source = 'tiktok';
+      source.ttclid = ttclid;
     }
     if (msclkid) {
       source.source = 'microsoft';
       source.msclkid = msclkid;
     }
 
-    // Déterminer la source depuis le referrer si pas d'UTM
-    if (!utmSource && source.referrer && source.referrer !== 'direct') {
-      const referrerUrl = new URL(source.referrer);
+    if (!utmSource && !fbclid && !fbc && !gclid && !ttclid && !msclkid && source.referrer !== 'direct') {
+      const referrerUrl = new URL(source.referrer!);
       const referrerDomain = referrerUrl.hostname.toLowerCase();
 
-      if (referrerDomain.includes('google')) {
-        source.source = 'google';
-      } else if (referrerDomain.includes('facebook')) {
-        source.source = 'facebook';
-      } else if (referrerDomain.includes('instagram')) {
-        source.source = 'instagram';
-      } else if (referrerDomain.includes('tiktok')) {
-        source.source = 'tiktok';
-      } else if (referrerDomain.includes('linkedin')) {
-        source.source = 'linkedin';
-      } else if (referrerDomain.includes('twitter') || referrerDomain.includes('x.com')) {
-        source.source = 'twitter';
-      } else {
-        source.source = referrerDomain;
-      }
+      if (referrerDomain.includes('google')) source.source = 'google';
+      else if (referrerDomain.includes('facebook')) source.source = 'facebook';
+      else if (referrerDomain.includes('instagram')) source.source = 'instagram';
+      else if (referrerDomain.includes('tiktok')) source.source = 'tiktok';
+      else if (referrerDomain.includes('linkedin')) source.source = 'linkedin';
+      else if (referrerDomain.includes('twitter') || referrerDomain.includes('x.com')) source.source = 'twitter';
+      else source.source = referrerDomain;
     }
   } catch (error) {
     console.error('[AppsFlyer] Erreur lors de la détection de la source de trafic:', error);
@@ -147,308 +103,26 @@ function getTrafficSource(): TrafficSource {
   return source;
 }
 
-/**
- * Initialise le SDK AppsFlyer
- */
-export function initAppsFlyer(): void {
-  if (typeof window === 'undefined') {
-    console.warn('[AppsFlyer] Environnement non-navigateur, initialisation ignorée');
-    return;
-  }
-
-  if (isConfigured) {
-    return;
-  }
-
-  try {
-    const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
-
-    if (windowWithAppsFlyer.appsFlyer) {
-      configureAppsFlyer();
-      return;
-    }
-
-    if (document.getElementById('appsflyer-web-sdk')) {
-      waitForHeadInjectedSdk();
-      return;
-    }
-
-    loadAppsFlyerSdk(0);
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors de l\'initialisation:', error);
-  }
-}
-
-function waitForHeadInjectedSdk(): void {
-  if (sdkReadyListenerAttached) {
-    return;
-  }
-
-  sdkReadyListenerAttached = true;
-
-  const onSdkReady = (): void => {
-    window.removeEventListener(SDK_READY_EVENT, onSdkReady);
-
-    if (typeof (window as unknown as { appsFlyer?: AppsFlyerSDK }).appsFlyer !== 'undefined') {
-      configureAppsFlyer();
-    } else {
-      // SDK tag chargé mais objet indisponible, tenter fallback
-      loadAppsFlyerSdk(1);
-    }
-  };
-
-  window.addEventListener(SDK_READY_EVENT, onSdkReady);
-
-  if (sdkFallbackTimeout === null) {
-    sdkFallbackTimeout = window.setTimeout(() => {
-      if (!isConfigured && typeof (window as unknown as { appsFlyer?: AppsFlyerSDK }).appsFlyer === 'undefined') {
-        console.warn('[AppsFlyer] SDK non initialisé après chargement initial, tentative de fallback');
-        loadAppsFlyerSdk(1);
-      }
-    }, 4000);
-  }
-}
-
-function loadAppsFlyerSdk(sourceIndex: number): void {
-  if (sourceIndex >= APPSFLYER_SCRIPT_SOURCES.length) {
-    console.error('[AppsFlyer] Impossible de charger le SDK depuis toutes les sources configurées');
-    return;
-  }
-
-  const scriptUrl = APPSFLYER_SCRIPT_SOURCES[sourceIndex];
-  console.log(`[AppsFlyer] Chargement du SDK (source ${sourceIndex + 1}/${APPSFLYER_SCRIPT_SOURCES.length}): ${scriptUrl}`);
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = scriptUrl;
-
-  script.onload = () => {
-    console.log('[AppsFlyer] SDK chargé avec succès');
-    configureAppsFlyer();
-  };
-
-  script.onerror = () => {
-    console.error('[AppsFlyer] Erreur lors du chargement du SDK', { scriptUrl });
-    script.remove();
-    loadAppsFlyerSdk(sourceIndex + 1);
-  };
-
-  document.head.appendChild(script);
-}
-
-/**
- * Configure AppsFlyer après le chargement du SDK
- */
-function configureAppsFlyer(): void {
-  if (isConfigured) {
-    return;
-  }
-
-  // Vérifier que le SDK est chargé
-  const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
-  if (typeof windowWithAppsFlyer.appsFlyer === 'undefined') {
-    console.warn('[AppsFlyer] SDK non disponible après chargement');
-    return;
-  }
-
-  try {
-    const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
-    const appsFlyer = windowWithAppsFlyer.appsFlyer;
-    if (!appsFlyer) {
-      console.warn('[AppsFlyer] SDK non disponible');
-      return;
-    }
-
-    isConfigured = true;
-
-    const anonId = getAnonymousId();
-    const trafficSource = getTrafficSource();
-
-    // Configuration initiale
-    appsFlyer.initSdk({
-      devKey: APPSFLYER_DEV_KEY,
-      appId: APPSFLYER_APP_ID,
-      isDebug: false,
-      onConversionDataSuccess: handleConversionData,
-      onConversionDataFailure: handleConversionDataFailure,
-      onAppOpenAttribution: handleAppOpenAttribution,
-      onAttributionFailure: handleAttributionFailure,
-      timeToWaitForATTUserAuthorization: 10,
-      manualStart: true
-    });
-
-    // Définir les identifiants utilisateur
-    appsFlyer.setCustomerUserId(anonId);
-    appsFlyer.setAdditionalData({
-      af_channel: trafficSource.source,
-      af_campaign: trafficSource.campaign || 'organic',
-      af_content: trafficSource.content || '',
-      af_term: trafficSource.term || '',
-      af_referrer: trafficSource.referrer || 'direct'
-    });
-
-    // Démarrer le tracking
-    appsFlyer.start();
-
-    console.log('[AppsFlyer] Configuration complétée', {
-      userId: anonId,
-      source: trafficSource.source,
-      campaign: trafficSource.campaign
-    });
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors de la configuration:', error);
-  }
-}
-
-/**
- * Gère les données de conversion AppsFlyer
- */
-function handleConversionData(conversionData: ConversionData): void {
-  try {
-    console.log('[AppsFlyer] Données de conversion reçues:', conversionData);
-
-    if (conversionData.status === 'success') {
-      const mediaSource = conversionData.media_source;
-      const campaign = conversionData.campaign;
-      const adset = conversionData.adset;
-      const ad = conversionData.ad;
-
-      console.log('[AppsFlyer] Attribution détectée:', {
-        mediaSource,
-        campaign,
-        adset,
-        ad
-      });
-
-      // Stocker les données d'attribution en localStorage
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('appsflyer_attribution', JSON.stringify({
-          mediaSource,
-          campaign,
-          adset,
-          ad,
-          timestamp: new Date().toISOString()
-        }));
-      }
-    }
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors du traitement des données de conversion:', error);
-  }
-}
-
-/**
- * Gère les erreurs de données de conversion
- */
-function handleConversionDataFailure(error: AppsFlyerError): void {
-  console.warn('[AppsFlyer] Erreur lors de la récupération des données de conversion:', error);
-}
-
-/**
- * Gère l'attribution à l'ouverture de l'app
- */
-function handleAppOpenAttribution(attributionData: AttributionData): void {
-  try {
-    console.log('[AppsFlyer] Attribution à l\'ouverture de l\'app:', attributionData);
-
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('appsflyer_app_open_attribution', JSON.stringify({
-        ...attributionData,
-        timestamp: new Date().toISOString()
-      }));
-    }
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors du traitement de l\'attribution:', error);
-  }
-}
-
-/**
- * Gère les erreurs d'attribution
- */
-function handleAttributionFailure(error: AppsFlyerError): void {
-  console.warn('[AppsFlyer] Erreur lors de l\'attribution:', error);
-}
-
-/**
- * Envoie un événement à AppsFlyer
- */
-export function trackAppsFlyerEvent(eventName: string, eventValue?: Record<string, unknown>): void {
-  const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
-  if (typeof windowWithAppsFlyer.appsFlyer === 'undefined') {
-    console.warn('[AppsFlyer] SDK non disponible, événement non envoyé');
-    return;
-  }
-
-  try {
-    const windowWithAppsFlyer = window as unknown as { appsFlyer?: AppsFlyerSDK };
-    const appsFlyer = windowWithAppsFlyer.appsFlyer;
-    if (!appsFlyer) {
-      console.warn('[AppsFlyer] SDK non disponible');
-      return;
-    }
-
-    const anonId = getAnonymousId();
-
-    const eventData = {
-      af_user_id: anonId,
-      ...eventValue
-    };
-
-    appsFlyer.logEvent(eventName, eventData);
-
-    console.log('[AppsFlyer] Événement envoyé:', {
-      eventName,
-      eventData
-    });
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors de l\'envoi de l\'événement:', error);
-  }
-}
-
-/**
- * Récupère les données d'attribution stockées
- */
-export function getAttributionData(): ConversionData | null {
-  if (typeof localStorage === 'undefined') {
-    return null;
-  }
-
-  try {
-    const attributionStr = localStorage.getItem('appsflyer_attribution');
-    return attributionStr ? (JSON.parse(attributionStr) as ConversionData) : null;
-  } catch (error) {
-    console.error('[AppsFlyer] Erreur lors de la récupération des données d\'attribution:', error);
-    return null;
-  }
-}
-
-/**
- * Récupère la source de trafic détectée
- */
 export function getDetectedTrafficSource(): TrafficSource {
   return getTrafficSource();
 }
 
 /**
- * Génère l'URL OneLink avec les paramètres de tracking
+ * Construit un lien OneLink en conservant les signaux de la première visite.
+ * OneLink est l’unique chemin AppsFlyer actif côté web tant qu’un Web SDK ID
+ * dédié n’est pas fourni par AppsFlyer et configuré séparément.
  */
 export function generateOneLinkUrl(additionalParams?: Record<string, string>): string {
   const params = new URLSearchParams();
 
-  // Ajouter les paramètres UTM actuels
   if (typeof window !== 'undefined') {
-    let currentParams: URLSearchParams;
-    try { currentParams = captureAcquisition(window.location.search, window.sessionStorage); }
-    catch { currentParams = new URLSearchParams(window.location.search); }
-    for (const [key, value] of currentParams) params.set(key, value);
+    for (const [key, value] of getIncomingParameters()) params.set(key, value);
   }
 
-  // Ajouter les paramètres supplémentaires
   if (additionalParams) {
-    Object.entries(additionalParams).forEach(([key, value]) => {
-      params.append(key, value);
-    });
+    for (const [key, value] of Object.entries(additionalParams)) params.set(key, value);
   }
 
   const queryString = params.toString();
-  return queryString ? `${ONELINK_URL}?${queryString}` : ONELINK_URL;
+  return queryString ? `${ACQUISITION_ONELINK}?${queryString}` : ACQUISITION_ONELINK;
 }

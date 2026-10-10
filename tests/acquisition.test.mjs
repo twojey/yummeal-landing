@@ -27,6 +27,11 @@ test('paid, organic and affiliate signals survive both store destinations',()=>{
     assert.equal(link.searchParams.get(platform==='apple'?'af_ios_url':'af_android_url'),'https://store.example/app');
   }
 });
+test('Facebook fbc/fbclid and TikTok ttclid survive the OneLink handoff',()=>{
+  const evidence=new URLSearchParams('utm_source=paid_social&fbclid=fb-click&fbc=fb.1.123.fb-click&ttclid=tt-click');
+  const link=new URL(buildAcquisitionLink('https://store.example/app','google',evidence));
+  for(const key of ['fbclid','fbc','ttclid']) assert.equal(link.searchParams.get(key),evidence.get(key));
+});
 test('untagged localized store URLs remain intact',()=>{
   assert.equal(buildAcquisitionLink('https://apps.apple.com/fr/app/x','apple',new URLSearchParams()),'https://apps.apple.com/fr/app/x');
 });

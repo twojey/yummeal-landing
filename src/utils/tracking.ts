@@ -9,7 +9,7 @@
 import { trackFacebookEvent } from './facebookPixel';
 import { getAnonymousId } from './anonymousId';
 import { enrichEvent, normalizeEventData, isEventValid } from './eventEnricher';
-import { trackAppsFlyerEvent, getDetectedTrafficSource } from './appsflyerIntegration';
+import { getDetectedTrafficSource } from './appsflyerIntegration';
 import { API_BASE_URL } from '../config';
 import { captureAcquisition } from './acquisitionLink';
 
@@ -136,8 +136,7 @@ export const sendEvent = async (eventName: string, data: Record<string, unknown>
   // Envoi parallèle aux différentes destinations
   await Promise.all([
     sendToDeno(eventName, enrichedData),
-    Promise.resolve(trackFacebookEvent(eventName, enrichedData, eventId)),
-    Promise.resolve(trackAppsFlyerEvent(eventName, enrichedData))
+    Promise.resolve(trackFacebookEvent(eventName, enrichedData, eventId))
   ]);
 };
 
@@ -161,6 +160,7 @@ export const trackPageView = (): void => {
     language: navigator.language,
     ...getPageContext(window.location.pathname),
     ...getAcquisitionContext(),
+    ...getFacebookIds(),
     timestamp: new Date().toISOString()
   };
 
@@ -211,12 +211,26 @@ const getFacebookIds = (): { fbp?: string; fbc?: string } => {
     if (fbcCookie) {
       result.fbc = fbcCookie.split('=')[1];
     } else if (typeof window !== 'undefined') {
-      // Chercher fbclid dans l'URL
+      // Les signaux de la première visite survivent à la navigation interne.
       const urlParams = new URLSearchParams(window.location.search);
-      const fbclid = urlParams.get('fbclid');
-      if (fbclid) {
-        // Format standard pour fbc
-        result.fbc = `fb.1.${Date.now()}.${fbclid}`;
+      const captured = getAcquisitionContext();
+      const fbc = urlParams.get('fbc') || captured.fbc;
+      const fbclid = urlParams.get('fbclid') || captured.fbclid;
+      if (fbc) {
+        result.fbc = fbc;
+      } else if (fbclid) {
+        try {
+          const storedFbc = window.sessionStorage.getItem('yummeal_fbc_v1');
+          if (storedFbc) {
+            result.fbc = storedFbc;
+          } else {
+            // Format standard pour fbc lorsque seul fbclid est disponible.
+            result.fbc = `fb.1.${Date.now()}.${fbclid}`;
+            window.sessionStorage.setItem('yummeal_fbc_v1', result.fbc);
+          }
+        } catch {
+          result.fbc = `fb.1.${Date.now()}.${fbclid}`;
+        }
       }
     }
   } catch (error) {
@@ -350,10 +364,6 @@ export const trackDownloadClick = (platform: Platform | string, buttonLocation?:
     console.log('%cEnvoi à Facebook Pixel (Lead):', 'font-weight: bold', fbData);
     trackFacebookEvent('Lead', fbData, eventId);
 
-    // Envoi également comme événement personnalisé pour plus de visibilité
-    console.log('%cEnvoi à Facebook Pixel (download_click):', 'font-weight: bold', fbData);
-    trackFacebookEvent('download_click', fbData, eventId);
-    
     // Afficher les données complètes
     console.log('%cDonnées complètes de l\'event:', 'font-weight: bold');
     console.table(data);

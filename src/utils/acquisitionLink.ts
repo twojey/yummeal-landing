@@ -1,5 +1,5 @@
 export const ACQUISITION_ONELINK = 'https://yummealapp.onelink.me/XKCH/wqtzoj1h';
-const TRACKING_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','ttclid','pid','c','af_adset','af_sub1','deep_link_sub1','deep_link_value','referral_code','code'];
+const TRACKING_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','fbc','gclid','ttclid','pid','c','af_adset','af_sub1','deep_link_sub1','deep_link_value','referral_code','code'];
 const STORAGE_KEY = 'yummeal_acquisition_v1';
 /** First visit evidence survives internal page navigation; expires after seven days. */
 export function captureAcquisition(search: string, storage: Storage, now = Date.now()): URLSearchParams {
