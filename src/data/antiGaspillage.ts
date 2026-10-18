@@ -183,9 +183,9 @@ export const articles: Article[] = [
   },
   {
     slug: 'comment-conserver-oignons-coupes',
-    title: 'Comment bien conserver un oignon coupé',
+    title: 'Combien de temps garder un oignon coupé au frigo ?',
     metaDescription:
-      "Un oignon entamé qui traîne au frigo : comment le conserver correctement pour qu'il tienne plusieurs jours sans se gâter.",
+      "Combien de temps se garde un oignon coupé au frigo, comment le conserver (boîte hermétique, face coupée) et les signes qui disent qu'il faut le jeter.",
     intro:
       "Un oignon coupé se conserve moins longtemps qu'un oignon entier, mais largement assez pour ne pas avoir à le jeter après une seule utilisation, à condition de bien le stocker.",
     sections: [
