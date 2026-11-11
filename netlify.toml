@@ -316,13 +316,14 @@
   status = 200
   force = true
 
-# Lien court de parrainage Julia : redirection temporaire vers son OneLink pour
-# conserver les paramètres d'attribution et pouvoir changer la destination.
+# Liens courts des créateurs : chaque code actif est résolu par le backend en
+# son OneLink AppsFlyer (avec ses paramètres d'attribution). Sans `force`, les
+# pages prérendues existantes gardent la priorité ; seules les URL racine
+# inconnues, comme /julya66, sont envoyées au résolveur.
 [[redirects]]
-  from = "/julya66"
-  to = "https://yummealapp.onelink.me/XKCH/wqtzoj1h?pid=creator_partners&c=influence&af_adset=julya66&af_sub1=JULYA66&deep_link_value=invite&deep_link_sub1=JULYA66"
-  status = 302
-  force = true
+  from = "/:code"
+  to = "https://yummeal-server.yumhack.deno.net/referral/short/:code"
+  status = 200
 
 # Catch-all : doit rester EN DERNIER.
 [[redirects]]
