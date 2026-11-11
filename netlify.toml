@@ -316,6 +316,14 @@
   status = 200
   force = true
 
+# Lien court de parrainage Julia : redirection temporaire vers son OneLink pour
+# conserver les paramètres d'attribution et pouvoir changer la destination.
+[[redirects]]
+  from = "/julya66"
+  to = "https://yummealapp.onelink.me/XKCH/wqtzoj1h?pid=creator_partners&c=influence&af_adset=julya66&af_sub1=JULYA66&deep_link_value=invite&deep_link_sub1=JULYA66"
+  status = 302
+  force = true
+
 # Catch-all : doit rester EN DERNIER.
 [[redirects]]
   from = "/*"
