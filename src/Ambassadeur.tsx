@@ -18,6 +18,9 @@ import CoursesImage from './hero.webp';
 import FeatFrigo from './assets-amb/feat-frigo.png';
 import FeatJournal from './assets-amb/feat-journal.png';
 import FeatEnvie from './assets-amb/feat-envie.png';
+import DishFoutou from './assets-amb/dish-foutou.webp';
+import DishBurger from './assets-amb/dish-burger.webp';
+import DishFrigo from './assets-amb/dish-frigo.webp';
 import { trackFacebookEvent } from './utils/facebookPixel';
 import { trackTikTokEvent } from './utils/tiktokPixel';
 import { STORE_URLS_DEFAUT } from './config';
@@ -108,8 +111,7 @@ const STEPS = [
 
 const TIKTOK_POSTS = [
   {
-    emoji: '🍲',
-    gradient: 'radial-gradient(120% 80% at 70% 15%, #ffe3c2 0%, #ffb877 45%, #e88434 100%)',
+    image: DishFoutou,
     handle: '@cuisine.de.toii',
     caption: 'Comment mon foutou banane m\u2019a payé mes vacances 🤯',
     song: 'son original - cuisine.de.toii',
@@ -119,8 +121,7 @@ const TIKTOK_POSTS = [
     views: '47K vues',
   },
   {
-    emoji: '🍔',
-    gradient: 'radial-gradient(120% 80% at 30% 20%, #ffd9c7 0%, #ff9d7a 50%, #e86a3d 100%)',
+    image: DishBurger,
     handle: '@les.recettes.de.lea',
     caption: 'Ce burger maison m\u2019a rapporté 100€ (recette en commentaire)',
     song: 'Cooking Vibes - Kitchen Beats',
@@ -130,8 +131,7 @@ const TIKTOK_POSTS = [
     views: '33K vues',
   },
   {
-    emoji: '🥗',
-    gradient: 'radial-gradient(120% 80% at 60% 20%, #e3f5d8 0%, #a8d98a 50%, #5d9c4a 100%)',
+    image: DishFrigo,
     handle: '@frigo.malin',
     caption: 'Ne paye plus tes courses : mon frigo me fait les menus 🥑',
     song: 'son original - frigo.malin',
@@ -234,16 +234,19 @@ function TikTokPost({ post }: { post: (typeof TIKTOK_POSTS)[number] }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-xl"
-      style={{ background: post.gradient }}
+      className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-xl bg-black"
     >
+      {/* la vidéo du plat */}
+      <img
+        src={post.image}
+        alt={post.caption}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/25" />
       {/* onglet Pour toi */}
       <div className="absolute top-3 left-0 right-0 text-center text-white/90 text-xs font-semibold z-10">
         Suivis&nbsp;&nbsp;<span className="border-b-2 border-white pb-0.5">Pour toi</span>
-      </div>
-      {/* le plat filmé */}
-      <div className="absolute inset-0 flex items-center justify-center text-[72px]">
-        {post.emoji}
       </div>
       {/* rail droit façon TikTok */}
       <div className="absolute right-2 bottom-20 z-10 flex flex-col items-center gap-4 text-white">
