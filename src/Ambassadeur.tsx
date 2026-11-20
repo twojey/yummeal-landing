@@ -483,7 +483,7 @@ function TikTokPost({ post }: { post: (typeof TIKTOK_POSTS)[number] }) {
 const Ambassadeur: React.FC = () => {
   const title = heroTitle();
   return (
-    <div className="pb-16 md:pb-0">
+    <div>
       {/* Hero — accroche en rupture + mockup vidéo façon TikTok */}
       <section className="pt-28 pb-16 md:pt-36 md:pb-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -506,12 +506,9 @@ const Ambassadeur: React.FC = () => {
                   100€ dès 30 000 vues + 20% récurrent sur tes parrainages.
                 </b>
               </p>
-              <div className="flex flex-col items-start gap-3">
-                <ApplyButton className="!mx-0" />
-                <p className="text-sm text-gray-500">
-                  Candidature gratuite · réponse de l'équipe sous 72h
-                </p>
-              </div>
+              <p className="text-sm text-gray-500">
+                Candidature gratuite · réponse de l'équipe sous 72h
+              </p>
             </motion.div>
 
             {/* Mockup téléphone façon TikTok — vraie image + overlay CSS */}
@@ -892,16 +889,6 @@ const Ambassadeur: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Sticky CTA mobile — le pouce reste sur l'action principale */}
-      <div className="fixed bottom-3 inset-x-3 z-40 md:hidden">
-        <a
-          href="#inscription"
-          className="clay-btn clay-btn--primary w-full flex items-center justify-center text-base shadow-2xl"
-        >
-          Je candidate →
-        </a>
-      </div>
     </div>
   );
 };
