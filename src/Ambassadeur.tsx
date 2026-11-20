@@ -753,6 +753,26 @@ const Ambassadeur: React.FC = () => {
         </div>
       </section>
 
+      {/* Premier formulaire — juste après "Comment ça marche" */}
+      <section className="py-10 md:py-16">
+        <div className="max-w-2xl mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="clay-card text-center"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-2">
+              Candidate maintenant
+            </h2>
+            <p className="text-gray-600 text-sm mb-6">
+              Prénom + email, c'est tout — réponse sous 72h.
+            </p>
+            <LeadForm />
+          </motion.div>
+        </div>
+      </section>
+
       {/* Publications payées — mockups TikTok */}
       <section className="py-10 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
