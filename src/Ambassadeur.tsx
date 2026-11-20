@@ -75,18 +75,21 @@ function buildApplyUrl(): string {
 const PILLARS = [
   {
     icon: Smartphone,
+    image: FeatJournal,
     title: 'Un smartphone suffit',
     description:
       "Tu cuisines déjà tous les jours. Filme ce que tu fais — ton frigo, ta recette, le plat final — c'est exactement ce qui marche.",
   },
   {
     icon: Clapperboard,
+    image: FeatFrigo,
     title: 'Brief clair + app offerte',
     description:
       "Tu reçois l'app gratuitement et un brief précis : angles, exemples, ce qu'on attend. Tu n'as plus qu'à cuisiner en filmant.",
   },
   {
     icon: Wallet,
+    image: FeatEnvie,
     title: '100€ dès 30 000 vues',
     description:
       'Ta vidéo atteint 30 000 vues → tu touches 100€. + 20% récurrent sur chaque abonné qui rejoint Yummeal grâce à toi.',
@@ -603,44 +606,6 @@ const Ambassadeur: React.FC = () => {
               </p>
             </motion.div>
           </div>
-
-          {/* Visuels produit — les arguments que tes vidéos mettent en scène */}
-          <div className="grid sm:grid-cols-3 gap-6 mt-14 max-w-4xl mx-auto">
-            {[
-              {
-                src: FeatFrigo,
-                alt: "Trouve les recettes qui matchent ton frigo — vidéos de recettes avec tes ingrédients",
-                rotate: 'sm:-rotate-3',
-              },
-              {
-                src: FeatJournal,
-                alt: "Organise tes repas facilement — planning de la semaine et suivi des calories",
-                rotate: 'sm:translate-y-4',
-              },
-              {
-                src: FeatEnvie,
-                alt: "Trouve des recettes qui te font envie — les meilleures recettes du net",
-                rotate: 'sm:rotate-3',
-              },
-            ].map(({ src, alt, rotate }) => (
-              <motion.img
-                key={alt}
-                src={src}
-                alt={alt}
-                loading="lazy"
-                width={576}
-                height={1024}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className={`w-full rounded-2xl shadow-xl ${rotate} transition-transform hover:scale-[1.03]`}
-              />
-            ))}
-          </div>
-          <p className="text-center text-sm text-gray-500 mt-10">
-            👆 Ce que tu montres dans tes vidéos : le scan du frigo, le planning
-            de la semaine, les recettes qui donnent envie.
-          </p>
         </div>
       </section>
 
@@ -683,22 +648,32 @@ const Ambassadeur: React.FC = () => {
       <section className="py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid sm:grid-cols-3 gap-6">
-            {PILLARS.map(({ icon: Icon, title: t, description }) => (
+            {PILLARS.map(({ icon: Icon, image, title: t, description }) => (
               <motion.div
                 key={t}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="clay-card text-center flex flex-col items-center"
+                className="clay-card !p-0 overflow-hidden text-center flex flex-col items-center"
               >
-                <div
-                  className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-2 rounded-full shadow-lg mb-4"
-                  style={{ width: '48px', height: '48px' }}
-                >
-                  <Icon className="w-6 h-6 text-white" />
+                <div className="p-6 pb-0 flex flex-col items-center">
+                  <div
+                    className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-2 rounded-full shadow-lg mb-4"
+                    style={{ width: '48px', height: '48px' }}
+                  >
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{t}</h3>
+                  <p className="text-gray-600 text-sm">{description}</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{t}</h3>
-                <p className="text-gray-600 text-sm">{description}</p>
+                <img
+                  src={image}
+                  alt={t}
+                  loading="lazy"
+                  width={576}
+                  height={1024}
+                  className="w-full mt-6"
+                />
               </motion.div>
             ))}
           </div>
