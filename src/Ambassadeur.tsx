@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Smartphone,
@@ -31,6 +31,8 @@ import { trackTikTokEvent } from './utils/tiktokPixel';
 import { STORE_URLS_DEFAUT } from './config';
 
 const APPLY_URL = 'https://kroaze-business.vercel.app/candidater/yummeal';
+const LEAD_API =
+  'https://vqibuydjokujdqslczdu.supabase.co/functions/v1/capture-lead';
 
 /**
  * Accroches hero en rupture, choisies par `?v=` (message-match avec la pub).
@@ -260,14 +262,159 @@ function ApplyButton({ className = '' }: { className?: string }) {
   };
   return (
     <a
-      href={buildApplyUrl()}
-      target="_blank"
-      rel="noopener noreferrer"
+      href="#inscription"
       className={`clay-btn clay-btn--primary ${className}`}
       onClick={handleClick}
     >
       Je candidate →
     </a>
+  );
+}
+
+/** Formulaire de candidature intégré — même mécanique que la page Skare :
+ * prénom + email → capture-lead → lead en base + notif admin + mail de
+ * réception (actif dès que le domaine Resend est vérifié). */
+function LeadForm() {
+  const [fname, setFname] = useState('');
+  const [email, setEmail] = useState('');
+  const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>(
+    'idle',
+  );
+
+  if (state === 'done') {
+    return (
+      <div className="text-center">
+        <div className="text-4xl mb-3">🎉</div>
+        <h3 className="font-extrabold text-xl mb-2">Candidature reçue !</h3>
+        <p className="text-gray-600 text-sm max-w-md mx-auto">
+          Vérifie ta boîte mail (et les spams) — ton brief arrive sous 72h. En
+          attendant, télécharge l'app : c'est le produit que tu vas présenter.
+        </p>
+        <StoreButtons />
+      </div>
+    );
+  }
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setState('sending');
+    try {
+      const qs = new URLSearchParams(window.location.search);
+      const utm: Record<string, string> = {};
+      for (const k of [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'fbclid',
+        'ttclid',
+      ]) {
+        const v = qs.get(k);
+        if (v) utm[k] = v;
+      }
+      const res = await fetch(LEAD_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          fname,
+          source: 'ambassadeur',
+          utm,
+          meta: {
+            v: qs.get('v') || '',
+            ua: navigator.userAgent,
+            tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            locale: navigator.language,
+            referrer: document.referrer,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error(`http ${res.status}`);
+      setState('done');
+      trackFacebookEvent('Lead', { content_name: 'ambassadeur_lead' });
+      trackTikTokEvent('SubmitForm', { content_name: 'ambassadeur_lead' });
+    } catch {
+      setState('error');
+    }
+  };
+
+  return (
+    <form onSubmit={submit} className="w-full max-w-md mx-auto space-y-3">
+      <input
+        type="text"
+        value={fname}
+        onChange={(e) => setFname(e.target.value)}
+        placeholder="Ton prénom"
+        autoComplete="given-name"
+        className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent"
+      />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Ton email"
+        required
+        autoComplete="email"
+        className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent"
+      />
+      <button
+        type="submit"
+        disabled={state === 'sending'}
+        className="clay-btn clay-btn--primary w-full disabled:opacity-60"
+      >
+        {state === 'sending' ? 'Envoi…' : 'Je candidate →'}
+      </button>
+      {state === 'error' && (
+        <p className="text-sm text-[#d64545]">
+          Oups, l'envoi a échoué — réessaie ou écris-nous à contact@yummeal.app.
+        </p>
+      )}
+      <p className="text-sm text-gray-500 pt-1">
+        🔒 Ton email sert uniquement pour le programme ambassadeur. Aucune
+        revente de données.
+      </p>
+      <p className="text-xs text-gray-400">
+        Tu préfères le formulaire détaillé ?{' '}
+        <a
+          href={buildApplyUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-[#FF8C42]"
+        >
+          Candidature complète →
+        </a>
+      </p>
+    </form>
+  );
+}
+
+function StoreButtons() {
+  return (
+    <div className="flex flex-wrap justify-center gap-3 mt-8">
+      <a
+        href={STORE_URLS_DEFAUT.apple}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="clay-btn inline-flex items-center gap-2"
+      >
+        <Apple className="w-5 h-5" />
+        <span className="text-left leading-tight">
+          <small className="block text-xs opacity-70">Télécharge sur</small>
+          <b>App Store</b>
+        </span>
+      </a>
+      <a
+        href={STORE_URLS_DEFAUT.google}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="clay-btn inline-flex items-center gap-2"
+      >
+        <Play className="w-5 h-5" />
+        <span className="text-left leading-tight">
+          <small className="block text-xs opacity-70">Disponible sur</small>
+          <b>Google Play</b>
+        </span>
+      </a>
+    </div>
   );
 }
 
@@ -727,7 +874,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Candidate maintenant */}
-      <section className="py-16 md:py-20 bg-white">
+      <section id="inscription" className="py-16 md:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -742,37 +889,7 @@ const Ambassadeur: React.FC = () => {
               Inscription gratuite. On te répond par email sous 72h avec ton
               brief et l'accès à l'app offert.
             </p>
-            <ApplyButton />
-            <p className="text-sm text-gray-500 mt-6">
-              🔒 Candidature sans engagement — réponse personnalisée, aucune
-              revente de données.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 mt-8">
-              <a
-                href={STORE_URLS_DEFAUT.apple}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="clay-btn inline-flex items-center gap-2"
-              >
-                <Apple className="w-5 h-5" />
-                <span className="text-left leading-tight">
-                  <small className="block text-xs opacity-70">Télécharge sur</small>
-                  <b>App Store</b>
-                </span>
-              </a>
-              <a
-                href={STORE_URLS_DEFAUT.google}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="clay-btn inline-flex items-center gap-2"
-              >
-                <Play className="w-5 h-5" />
-                <span className="text-left leading-tight">
-                  <small className="block text-xs opacity-70">Disponible sur</small>
-                  <b>Google Play</b>
-                </span>
-              </a>
-            </div>
+            <LeadForm />
           </motion.div>
         </div>
       </section>
