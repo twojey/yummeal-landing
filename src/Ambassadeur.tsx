@@ -15,9 +15,9 @@ import {
 } from 'lucide-react';
 import CreatorsHeroImage from './creators-hero.webp';
 import CoursesImage from './hero.webp';
-import FeatFrigo from './assets-amb/feat-frigo.png';
-import FeatJournal from './assets-amb/feat-journal.png';
-import FeatEnvie from './assets-amb/feat-envie.png';
+import FeatFrigo from './assets-amb/feat-frigo.webp';
+import FeatJournal from './assets-amb/feat-journal.webp';
+import FeatEnvie from './assets-amb/feat-envie.webp';
 import DishFoutou from './assets-amb/dish-foutou.webp';
 import DishGratin from './assets-amb/dish-gratin.webp';
 import DishFrigo from './assets-amb/dish-frigo.webp';
