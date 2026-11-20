@@ -19,7 +19,7 @@ import FeatFrigo from './assets-amb/feat-frigo.png';
 import FeatJournal from './assets-amb/feat-journal.png';
 import FeatEnvie from './assets-amb/feat-envie.png';
 import DishFoutou from './assets-amb/dish-foutou.webp';
-import DishBurger from './assets-amb/dish-burger.webp';
+import DishGratin from './assets-amb/dish-gratin.webp';
 import DishFrigo from './assets-amb/dish-frigo.webp';
 import { trackFacebookEvent } from './utils/facebookPixel';
 import { trackTikTokEvent } from './utils/tiktokPixel';
@@ -36,7 +36,7 @@ const VARIANTS: Record<string, string> = {
   courses: 'Ne paye plus tes courses',
   recette: "Comment cette recette m'a payé mes vacances",
   cuisine: 'Comment je suis payée pour faire la cuisine',
-  burger: "Comment ce burger m'a rapporté 100€",
+  gratin: "Comment ce gratin m'a rapporté 100€",
   foutou: "Comment mon foutou banane m'a payé mes vacances",
   chakhchoukha: "Comment ma chakhchoukha m'a payé mes vacances",
   restes: 'Tu jettes tes restes ? Moi ils me paient.',
@@ -121,9 +121,9 @@ const TIKTOK_POSTS = [
     views: '47K vues',
   },
   {
-    image: DishBurger,
+    image: DishGratin,
     handle: '@les.recettes.de.lea',
-    caption: 'Ce burger maison m\u2019a rapporté 100€ (recette en commentaire)',
+    caption: 'Ce gratin maison m\u2019a rapporté 100€ (recette en commentaire)',
     song: 'Cooking Vibes - Kitchen Beats',
     likes: '12,4K',
     comments: '238',
@@ -170,7 +170,7 @@ const ANGLES = [
     detail: "L'angle économie direct : ta recette du jour rembourse ton caddie.",
   },
   {
-    hook: '« Comment ce burger m\u2019a rapporté 100€ »',
+    hook: '« Comment ce gratin m\u2019a rapporté 100€ »',
     detail: 'Un plat du quotidien + un chiffre précis = le combo qui arrête le scroll.',
   },
   {
