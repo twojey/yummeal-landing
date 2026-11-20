@@ -4,12 +4,17 @@ import {
   Smartphone,
   Clapperboard,
   Wallet,
-  Crown,
   Check,
   X,
+  Heart,
+  MessageCircle,
+  Share2,
+  Music2,
   Apple,
   Play,
 } from 'lucide-react';
+import CreatorsHeroImage from './creators-hero.webp';
+import CoursesImage from './hero.webp';
 import { trackFacebookEvent } from './utils/facebookPixel';
 import { trackTikTokEvent } from './utils/tiktokPixel';
 import { STORE_URLS_DEFAUT } from './config';
@@ -29,7 +34,6 @@ const VARIANTS: Record<string, string> = {
   foutou: "Comment mon foutou banane m'a payé mes vacances",
   chakhchoukha: "Comment ma chakhchoukha m'a payé mes vacances",
   restes: 'Tu jettes tes restes ? Moi ils me paient.',
-  '500': 'Une vidéo de ton frigo. Jusqu\u2019à 500€.',
 };
 
 const DEFAULT_VARIANT = 'frigo';
@@ -60,19 +64,19 @@ const PILLARS = [
     icon: Smartphone,
     title: 'Un smartphone suffit',
     description:
-      "On veut du vrai, pas du studio. Ton frigo, ta cuisine, ta recette du soir — c'est exactement ce qui marche.",
+      "Tu cuisines déjà tous les jours. Filme ce que tu fais — ton frigo, ta recette, le plat final — c'est exactement ce qui marche.",
   },
   {
     icon: Clapperboard,
-    title: 'Brief clair + zéro montage',
+    title: 'Brief clair + app offerte',
     description:
-      "Tu reçois un brief précis : angles, exemples, ce qu'on attend. Tu filmes tes rushs, on monte tout — coupes, sous-titres, son.",
+      "Tu reçois l'app gratuitement et un brief précis : angles, exemples, ce qu'on attend. Tu n'as plus qu'à cuisiner en filmant.",
   },
   {
     icon: Wallet,
-    title: 'Payée sur chaque vidéo',
+    title: '100€ dès 30 000 vues',
     description:
-      "Avance garantie dès la première vidéo + bonus sur les vues : jusqu'à 500€. Paiement automatisé chaque mois.",
+      'Ta vidéo atteint 30 000 vues → tu touches 100€. + 20% récurrent sur chaque abonné qui rejoint Yummeal grâce à toi.',
   },
 ];
 
@@ -85,17 +89,53 @@ const STEPS = [
   {
     title: 'Reçois ton brief',
     description:
-      "Accès à l'espace créateurs, exemples de vidéos qui cartonnent, et l'angle recette à traiter.",
+      "Accès à l'app offert, exemples de vidéos qui cartonnent, et l'angle recette à traiter.",
   },
   {
     title: 'Filme ta recette',
     description:
-      "15 à 45 secondes, format vertical : ton frigo, le scan, la recette trouvée, le plat final. On monte tout.",
+      '15 à 45 secondes, format vertical : ton frigo, le scan, la recette trouvée, le plat final. Ton vrai quotidien en cuisine.',
   },
   {
     title: 'Publie & encaisse',
     description:
-      "Vidéo en ligne → avance + bonus vues versés chaque mois. Si ton format cartonne, il devient un modèle (royalties).",
+      '30 000 vues → 100€. Sans plafond : 3 vidéos qui passent les 30k = 300€. Et 20% récurrent sur tes parrainages.',
+  },
+];
+
+const TIKTOK_POSTS = [
+  {
+    emoji: '🍲',
+    gradient: 'radial-gradient(120% 80% at 70% 15%, #ffe3c2 0%, #ffb877 45%, #e88434 100%)',
+    handle: '@cuisine.de.toii',
+    caption: 'Comment mon foutou banane m\u2019a payé mes vacances 🤯',
+    song: 'son original - cuisine.de.toii',
+    likes: '24,8K',
+    comments: '486',
+    shares: '1,9K',
+    views: '47K vues',
+  },
+  {
+    emoji: '🍔',
+    gradient: 'radial-gradient(120% 80% at 30% 20%, #ffd9c7 0%, #ff9d7a 50%, #e86a3d 100%)',
+    handle: '@les.recettes.de.lea',
+    caption: 'Ce burger maison m\u2019a rapporté 100€ (recette en commentaire)',
+    song: 'Cooking Vibes - Kitchen Beats',
+    likes: '12,4K',
+    comments: '238',
+    shares: '890',
+    views: '33K vues',
+  },
+  {
+    emoji: '🥗',
+    gradient: 'radial-gradient(120% 80% at 60% 20%, #e3f5d8 0%, #a8d98a 50%, #5d9c4a 100%)',
+    handle: '@frigo.malin',
+    caption: 'Ne paye plus tes courses : mon frigo me fait les menus 🥑',
+    song: 'son original - frigo.malin',
+    likes: '31,2K',
+    comments: '612',
+    shares: '2,4K',
+    views: '58K vues',
   },
 ];
 
@@ -110,7 +150,7 @@ const REFUSED = [
   "Montage de vidéos volées ou contenu d'un autre créateur",
   "Tu n'as jamais ouvert l'app (ça se sent — et ça se voit)",
   'Image floue, son inaudible, ou lecture d\u2019un script robotique',
-  'Plats truqués ou promesses exagérées — on montre des recettes qui marchent, pas des miracles',
+  'Vues achetées ou faux comptes — les 30 000 vues doivent être réelles',
 ];
 
 const ANGLES = [
@@ -132,7 +172,7 @@ const ANGLES = [
   },
   {
     hook: '« Comment cette recette m\u2019a payé mes vacances »',
-    detail: "Une seule recette filmée, un aller-retour au soleil.",
+    detail: 'Une seule recette filmée, un aller-retour au soleil.',
   },
   {
     hook: '« Tu jettes tes restes ? Moi ils me paient. »',
@@ -143,27 +183,27 @@ const ANGLES = [
 const FAQ = [
   {
     q: 'Il faut combien d\u2019abonnés ?',
-    a: 'Très peu. Ce qui compte, c\u2019est ta capacité à produire du contenu authentique — une communauté petite mais engagée suffit.',
+    a: 'Zéro. Ce sont les vues qui paient, pas les abonnés — TikTok peut pousser une vidéo à 30 000 vues même depuis un compte récent.',
   },
   {
     q: 'Comment et quand suis-je payée ?',
-    a: 'Tu touches une avance garantie sur chaque vidéo, puis un bonus sur les vues qualifiées (jusqu\u2019à 500€ par vidéo). Le paiement est automatisé chaque mois — pas de facture à gérer.',
+    a: '100€ dès qu\u2019une de tes vidéos validée atteint 30 000 vues. En plus, 20% récurrent sur chaque abonné qui rejoint Yummeal grâce à ton lien. Paiement mensuel.',
   },
   {
-    q: 'Je dois savoir monter des vidéos ?',
-    a: 'Non. Tu envoies tes rushs bruts, notre équipe fait le montage complet : coupes, sous-titres, sound design.',
+    q: 'Combien de vidéos puis-je publier ?',
+    a: 'Autant que tu veux — chaque vidéo qui passe les 30 000 vues est payée 100€, sans plafond. Les créateurs réguliers reçoivent des briefs prioritaires.',
+  },
+  {
+    q: 'Comment marchent les 20% récurrents ?',
+    a: 'Tu as un lien de parrainage. Chaque personne qui s\u2019abonne à Yummeal via ce lien te reverse 20% de son abonnement, tant qu\u2019elle reste abonnée.',
   },
   {
     q: 'Que devient ma vidéo ?',
-    a: 'Elle est publiée sur les réseaux de Yummeal et peut être utilisée en publicité (Meta, TikTok). C\u2019est le principe : ta recette, notre diffusion, tes vues rémunérées.',
-  },
-  {
-    q: 'C\u2019est quoi les royalties ?',
-    a: 'Si tu inventes un format qui cartonne et qu\u2019on le fait reproduire par d\u2019autres créateurs, tu touches 2 à 5% sur toutes les vidéos dérivées de ton idée. À vie.',
+    a: 'Tu la publies sur tes réseaux, et les meilleures peuvent être reprises en publicité Yummeal (Meta, TikTok). Ton contenu, tes vues, ta paie.',
   },
   {
     q: 'Je dois payer l\u2019app ?',
-    a: 'Non — Yummeal est gratuite à télécharger. Scanne ton frigo, découvre les recettes, filme ton vrai avis.',
+    a: 'Non — Yummeal est gratuite à télécharger. Scanne ton frigo, teste les recettes, filme ton vrai avis.',
   },
 ];
 
@@ -185,6 +225,62 @@ function ApplyButton({ className = '' }: { className?: string }) {
   );
 }
 
+function TikTokPost({ post }: { post: (typeof TIKTOK_POSTS)[number] }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-xl"
+      style={{ background: post.gradient }}
+    >
+      {/* onglet Pour toi */}
+      <div className="absolute top-3 left-0 right-0 text-center text-white/90 text-xs font-semibold z-10">
+        Suivis&nbsp;&nbsp;<span className="border-b-2 border-white pb-0.5">Pour toi</span>
+      </div>
+      {/* le plat filmé */}
+      <div className="absolute inset-0 flex items-center justify-center text-[72px]">
+        {post.emoji}
+      </div>
+      {/* rail droit façon TikTok */}
+      <div className="absolute right-2 bottom-20 z-10 flex flex-col items-center gap-4 text-white">
+        <div className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-lg">
+          👩🏿‍🍳
+        </div>
+        <div className="flex flex-col items-center gap-0.5">
+          <Heart className="w-6 h-6 fill-white" />
+          <span className="text-[10px] font-bold">{post.likes}</span>
+        </div>
+        <div className="flex flex-col items-center gap-0.5">
+          <MessageCircle className="w-6 h-6 fill-white" />
+          <span className="text-[10px] font-bold">{post.comments}</span>
+        </div>
+        <div className="flex flex-col items-center gap-0.5">
+          <Share2 className="w-6 h-6 fill-white" />
+          <span className="text-[10px] font-bold">{post.shares}</span>
+        </div>
+      </div>
+      {/* caption bas */}
+      <div className="absolute left-3 right-12 bottom-4 z-10 text-white">
+        <div className="text-xs font-bold">{post.handle}</div>
+        <div className="text-[11px] leading-snug mt-1 [text-shadow:0_1px_6px_rgba(0,0,0,.5)]">
+          {post.caption}
+        </div>
+        <div className="flex items-center gap-1.5 mt-2 text-[10px] opacity-90">
+          <Music2 className="w-3 h-3" />
+          <span className="truncate">{post.song}</span>
+        </div>
+      </div>
+      {/* badge vues → payée */}
+      <div className="absolute top-9 left-2 z-10 bg-[#4CAF50] text-white text-[11px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-lg rotate-[-6deg]">
+        {post.views} = 100€
+      </div>
+      {/* barre de progression */}
+      <div className="absolute left-0 bottom-0 h-0.5 w-2/3 bg-white/80 z-10" />
+    </motion.div>
+  );
+}
+
 const Ambassadeur: React.FC = () => {
   const title = heroTitle();
   return (
@@ -199,16 +295,16 @@ const Ambassadeur: React.FC = () => {
               viewport={{ once: true }}
             >
               <span className="inline-block font-heading text-sm font-semibold uppercase tracking-wide text-[#FF8C42] bg-white rounded-full px-4 py-1.5 mb-6 shadow-sm">
-                🎬 Créateur UGC Yummeal
+                🎬 Ambassadeur Yummeal
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6">
                 {title}
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                Pas besoin d'abonnés, pas besoin de matériel. Tu filmes ta
-                recette avec ton smartphone, on monte —{' '}
+                Tu fais déjà à manger tous les jours. Filme ta recette avec ton
+                smartphone, publie —{' '}
                 <b className="text-gray-800">
-                  avance garantie, jusqu'à 500€ la vidéo.
+                  100€ dès 30 000 vues + 20% récurrent sur tes parrainages.
                 </b>
               </p>
               <div className="flex flex-col items-start gap-3">
@@ -219,7 +315,7 @@ const Ambassadeur: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Mockup téléphone façon TikTok — 100% CSS */}
+            {/* Mockup téléphone façon TikTok — vraie image + overlay CSS */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -228,12 +324,16 @@ const Ambassadeur: React.FC = () => {
             >
               <div
                 className="relative w-[260px] max-w-[78vw] aspect-[9/16] rounded-[28px] border-[6px] border-[#2d1a0e] overflow-visible"
-                style={{
-                  background:
-                    'radial-gradient(120% 80% at 70% 15%, #ffe3c2 0%, #ffc78f 45%, #ff9e57 100%)',
-                  boxShadow: '0 24px 60px rgba(255,140,66,.35)',
-                }}
+                style={{ boxShadow: '0 24px 60px rgba(255,140,66,.35)' }}
               >
+                <img
+                  src={CreatorsHeroImage}
+                  alt="Créatrice filmant l'application Yummeal dans sa cuisine"
+                  className="absolute inset-0 w-full h-full object-cover rounded-[22px]"
+                  width={800}
+                  height={1400}
+                />
+                <div className="absolute inset-0 rounded-[22px] bg-gradient-to-t from-black/60 via-transparent to-black/20" />
                 {/* encoche caméra */}
                 <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[86px] h-[22px] bg-[#2d1a0e] rounded-xl z-10" />
                 {/* badge REC */}
@@ -245,10 +345,6 @@ const Ambassadeur: React.FC = () => {
                 <div className="absolute top-11 right-4 z-10 text-white text-xs font-bold bg-black/50 px-2.5 py-1 rounded-full">
                   00:23
                 </div>
-                {/* la recette filmée */}
-                <div className="absolute inset-0 flex items-center justify-center text-[84px]">
-                  🍲
-                </div>
                 {/* caption = l'accroche de la variante */}
                 <div className="absolute left-3.5 right-3.5 bottom-14 z-10 text-white text-[13px] font-bold [text-shadow:0_2px_8px_rgba(0,0,0,.6)]">
                   « {title} »
@@ -258,13 +354,13 @@ const Ambassadeur: React.FC = () => {
                 </div>
                 {/* barre de progression */}
                 <div className="absolute left-0 bottom-0 h-1 w-3/5 bg-[#FF8C42] z-10" />
-                {/* badge flottant +500€ */}
+                {/* badge flottant +100€ */}
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                   className="absolute top-[84px] -right-4 rotate-[8deg] bg-[#4CAF50] text-white font-extrabold text-xl px-4 py-2.5 rounded-2xl shadow-[0_10px_26px_rgba(76,175,80,.45)] z-20"
                 >
-                  +500€
+                  +100€
                 </motion.div>
               </div>
             </motion.div>
@@ -272,8 +368,50 @@ const Ambassadeur: React.FC = () => {
         </div>
       </section>
 
-      {/* 3 piliers */}
+      {/* D'abord : Yummeal, c'est quoi ? */}
       <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex justify-center order-last md:order-first"
+            >
+              <img
+                src={CoursesImage}
+                alt="Créatrice Yummeal avec son panier de courses fraîches"
+                className="w-full max-w-xs md:max-w-sm rounded-[1.5rem] hero-image"
+                width={800}
+                height={1400}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+                D'abord — Yummeal, c'est quoi ?
+              </h2>
+              <p className="text-lg text-gray-700 mb-4">
+                L'app qui transforme le contenu de ton frigo en recettes. Tu
+                photographies ce que tu as, elle te dit quoi cuisiner — plus de
+                « qu'est-ce qu'on mange ce soir ? », moins de gaspillage, moins
+                de courses.
+              </p>
+              <p className="text-gray-600">
+                Et le produit se filme tout seul : ouvrir son frigo, scanner,
+                trouver une recette, la cuisiner. C'est le quotidien de
+                n'importe qui — sauf que toi, tu es payée pour le filmer.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3 piliers */}
+      <section className="py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid sm:grid-cols-3 gap-6">
             {PILLARS.map(({ icon: Icon, title: t, description }) => (
@@ -299,7 +437,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Comment ça marche + money band */}
-      <section className="py-16 md:py-20">
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div>
@@ -334,19 +472,19 @@ const Ambassadeur: React.FC = () => {
                 className="clay-container bg-gradient-to-br from-[#FF8C42] to-[#FF5733] text-white"
               >
                 <div className="text-4xl md:text-5xl font-extrabold font-heading mb-4">
-                  Jusqu'à 500€ par vidéo
+                  100€ la vidéo à 30 000 vues
                 </div>
                 <p className="text-white/90">
-                  + une avance garantie sur chaque vidéo, même sans cartonner.
+                  + 20% récurrent sur chaque abonné parrainé, tant qu'il reste
+                  abonné.
                   <br />
                   <br />
                   <b className="text-white">
-                    Sans montage. Sans matériel. Sans plafond.
+                    Sans plafond. Sans montage. Sans matériel.
                   </b>
                   <br />
-                  Les créateurs réguliers débloquent des briefs prioritaires —
-                  et un format qui devient un modèle te rapporte des royalties
-                  de 2 à 5% à vie.
+                  Les créateurs réguliers débloquent des briefs prioritaires et
+                  des bonus.
                 </p>
               </motion.div>
               <motion.div
@@ -360,6 +498,24 @@ const Ambassadeur: React.FC = () => {
                 recette.
               </motion.div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Publications payées — mockups TikTok */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
+            Les vidéos qui sont payées ressemblent à ça
+          </h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            Des recettes du quotidien, filmées avec un téléphone. Chaque
+            publication qui passe 30 000 vues = 100€ versés.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 max-w-3xl mx-auto">
+            {TIKTOK_POSTS.map((post) => (
+              <TikTokPost key={post.handle} post={post} />
+            ))}
           </div>
         </div>
       </section>
@@ -418,8 +574,8 @@ const Ambassadeur: React.FC = () => {
             Exemples d'angles qui cartonnent
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            Inspire-toi de ces hooks — ou invente le tien. S'il devient un
-            format de référence, tu touches des royalties dessus.
+            Inspire-toi de ces hooks — ou invente le tien autour de tes propres
+            recettes.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {ANGLES.map(({ hook, detail }) => (
@@ -452,7 +608,7 @@ const Ambassadeur: React.FC = () => {
             </h2>
             <p className="text-gray-600 mb-8">
               Inscription gratuite. On te répond par email sous 72h avec ton
-              brief et l'accès à l'espace créateurs.
+              brief et l'accès à l'app offert.
             </p>
             <ApplyButton />
             <p className="text-sm text-gray-500 mt-6">
@@ -489,37 +645,8 @@ const Ambassadeur: React.FC = () => {
         </div>
       </section>
 
-      {/* Royalties */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="clay-container text-center"
-          >
-            <div
-              className="clay-icon inline-flex items-center justify-center bg-[#FF8C42] p-3 rounded-full shadow-lg mb-6"
-              style={{ width: '56px', height: '56px' }}
-            >
-              <Crown className="w-7 h-7 text-white" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-              Invente une recette de contenu, touche des royalties à vie
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Si ton format devient un carton et qu'on le fait reproduire par
-              d'autres créateurs, tu touches{' '}
-              <span className="font-semibold text-gray-800">2 à 5% de royalties</span>{' '}
-              sur toutes les vidéos dérivées de ton idée. Même en vacances, tant
-              que la communauté utilise ton concept, tu es payée.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* FAQ */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-16 md:py-20">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">
             Questions fréquentes
