@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Smartphone,
@@ -277,12 +277,41 @@ function ApplyButton({ className = '' }: { className?: string }) {
 /** Formulaire de candidature intégré — même mécanique que la page Skare :
  * prénom + email → capture-lead → lead en base + notif admin + mail de
  * réception (actif dès que le domaine Resend est vérifié). */
-function LeadForm() {
+function LeadForm({ source }: { source: string }) {
   const [fname, setFname] = useState('');
   const [email, setEmail] = useState('');
+  const [socials, setSocials] = useState({ instagram: '', tiktok: '', snapchat: '' });
+  const [photo, setPhoto] = useState<string | null>(null);
+  const [photoErr, setPhotoErr] = useState(false);
+  const hpRef = useRef<HTMLInputElement>(null);
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>(
     'idle',
   );
+
+  // Photo : lecture + compression côté client (JPEG ≤1000px, ~0.82) — même logique que Skare.
+  const onPhoto = (file: File | undefined) => {
+    if (!file || !/^image\//.test(file.type)) {
+      setPhoto(null);
+      setPhotoErr(true);
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1000 / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(img.src);
+      setPhoto(canvas.toDataURL('image/jpeg', 0.82));
+      setPhotoErr(false);
+    };
+    img.onerror = () => {
+      setPhoto(null);
+      setPhotoErr(true);
+    };
+    img.src = URL.createObjectURL(file);
+  };
 
   if (state === 'done') {
     return (
@@ -300,6 +329,8 @@ function LeadForm() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // honeypot : un bot qui remplit le champ caché est ignoré silencieusement
+    if (hpRef.current?.value) return;
     setState('sending');
     try {
       const qs = new URLSearchParams(window.location.search);
@@ -314,14 +345,21 @@ function LeadForm() {
         const v = qs.get(k);
         if (v) utm[k] = v;
       }
+      const cleanSocials: Record<string, string> = {};
+      for (const [k, v] of Object.entries(socials)) {
+        const handle = v.trim().replace(/^@/, '');
+        if (handle) cleanSocials[k] = handle;
+      }
       const res = await fetch(LEAD_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
           fname,
-          source: 'ambassadeur',
+          source,
+          photo,
           utm,
+          socials: cleanSocials,
           meta: {
             v: qs.get('v') || '',
             ua: navigator.userAgent,
@@ -333,12 +371,15 @@ function LeadForm() {
       });
       if (!res.ok) throw new Error(`http ${res.status}`);
       setState('done');
-      trackFacebookEvent('Lead', { content_name: 'ambassadeur_lead' });
+      trackFacebookEvent('Lead', { content_name: 'ambassadeur_lead', source });
       trackTikTokEvent('SubmitForm', { content_name: 'ambassadeur_lead' });
     } catch {
       setState('error');
     }
   };
+
+  const inputCls =
+    'w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent';
 
   return (
     <form onSubmit={submit} className="w-full max-w-md mx-auto space-y-3">
@@ -348,7 +389,7 @@ function LeadForm() {
         onChange={(e) => setFname(e.target.value)}
         placeholder="Ton prénom"
         autoComplete="given-name"
-        className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent"
+        className={inputCls}
       />
       <input
         type="email"
@@ -357,8 +398,80 @@ function LeadForm() {
         placeholder="Ton email"
         required
         autoComplete="email"
-        className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent"
+        className={inputCls}
       />
+      {/* honeypot anti-bot */}
+      <input
+        ref={hpRef}
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
+      <label className="block cursor-pointer">
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => onPhoto(e.target.files?.[0])}
+        />
+        <span
+          className={`flex items-center gap-3 px-5 py-3.5 rounded-xl border-2 border-dashed text-left transition-colors ${
+            photo
+              ? 'border-[#FF8C42] bg-[#FFF1E6]'
+              : 'border-gray-200 bg-white/80 hover:border-[#FF8C42]'
+          }`}
+        >
+          <span className="text-2xl">📷</span>
+          <span className="flex-1 min-w-0">
+            <b className="block text-sm font-semibold text-gray-800">
+              {photo ? 'Photo ajoutée ✓' : 'Ta photo '}
+              {!photo && (
+                <span className="font-normal text-gray-400">(optionnel)</span>
+              )}
+            </b>
+            {!photo && (
+              <small className="block text-xs text-gray-500">
+                Un selfie ou une capture de tes vidéos aide ta candidature
+              </small>
+            )}
+          </span>
+          {photo && (
+            <img
+              src={photo}
+              alt="Aperçu"
+              className="w-11 h-11 rounded-lg object-cover"
+            />
+          )}
+        </span>
+      </label>
+      {photoErr && (
+        <p className="text-sm text-[#d64545]">
+          Choisis une image (JPG ou PNG).
+        </p>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        {(
+          [
+            ['instagram', '📸 Instagram'],
+            ['tiktok', '🎵 TikTok'],
+            ['snapchat', '👻 Snapchat'],
+          ] as const
+        ).map(([key, ph]) => (
+          <input
+            key={key}
+            type="text"
+            value={socials[key]}
+            onChange={(e) =>
+              setSocials((s) => ({ ...s, [key]: e.target.value }))
+            }
+            placeholder={ph}
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/80 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C42] focus:border-transparent"
+          />
+        ))}
+      </div>
       <button
         type="submit"
         disabled={state === 'sending'}
@@ -768,7 +881,7 @@ const Ambassadeur: React.FC = () => {
             <p className="text-gray-600 text-sm mb-6">
               Prénom + email, c'est tout — réponse sous 72h.
             </p>
-            <LeadForm />
+            <LeadForm source="ambassadeur_mid" />
           </motion.div>
         </div>
       </section>
@@ -883,7 +996,7 @@ const Ambassadeur: React.FC = () => {
               Inscription gratuite. On te répond par email sous 72h avec ton
               brief et l'accès à l'app offert.
             </p>
-            <LeadForm />
+            <LeadForm source="ambassadeur_final" />
           </motion.div>
         </div>
       </section>
