@@ -483,7 +483,7 @@ function TikTokPost({ post }: { post: (typeof TIKTOK_POSTS)[number] }) {
 const Ambassadeur: React.FC = () => {
   const title = heroTitle();
   return (
-    <div>
+    <div className="pb-16 md:pb-0">
       {/* Hero — accroche en rupture + mockup vidéo façon TikTok */}
       <section className="pt-28 pb-16 md:pt-36 md:pb-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -568,7 +568,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* D'abord : Yummeal, c'est quoi ? */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <motion.div
@@ -610,7 +610,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Pourquoi les recettes : on cuisine tous les jours */}
-      <section className="py-16 md:py-20">
+      <section className="py-10 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
             Tu cuisines déjà tous les jours
@@ -619,14 +619,14 @@ const Ambassadeur: React.FC = () => {
             Voilà pourquoi les vidéos recettes sont le format le plus facile à
             produire — et celui qui rapporte.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="flex gap-4 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 lg:grid-cols-5 md:overflow-visible md:mx-0 md:px-0 md:snap-none">
             {RECETTE_ARGS.map(({ image, title: t, description }) => (
               <motion.div
                 key={t}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="clay-card !p-0 overflow-hidden flex flex-col"
+                className="clay-card !p-0 overflow-hidden flex flex-col w-[46%] shrink-0 snap-start md:w-auto md:shrink"
               >
                 <img
                   src={image}
@@ -645,16 +645,16 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* 3 piliers */}
-      <section className="py-16 md:py-20">
+      <section className="py-10 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="flex gap-4 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:mx-0 sm:px-0 sm:snap-none">
             {PILLARS.map(({ icon: Icon, image, title: t, description }) => (
               <motion.div
                 key={t}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="clay-card !p-0 overflow-hidden text-center flex flex-col items-center"
+                className="clay-card !p-0 overflow-hidden text-center flex flex-col items-center w-[80%] shrink-0 snap-start sm:w-auto sm:shrink"
               >
                 <div className="p-6 pb-0 flex flex-col items-center">
                   <div
@@ -672,7 +672,7 @@ const Ambassadeur: React.FC = () => {
                   loading="lazy"
                   width={576}
                   height={1024}
-                  className="w-full mt-6"
+                  className="w-full mt-6 max-h-[320px] object-cover object-top sm:max-h-none"
                 />
               </motion.div>
             ))}
@@ -681,7 +681,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Comment ça marche + money band */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div>
@@ -757,7 +757,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Publications payées — mockups TikTok */}
-      <section className="py-16 md:py-20">
+      <section className="py-10 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
             Les vidéos qui sont payées ressemblent à ça
@@ -766,16 +766,18 @@ const Ambassadeur: React.FC = () => {
             Des recettes du quotidien, filmées avec un téléphone. Chaque
             publication qui passe 30 000 vues = 100€ versés.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 max-w-3xl mx-auto">
+          <div className="flex gap-5 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:overflow-visible md:mx-auto md:px-0 md:snap-none max-w-3xl md:mx-auto">
             {TIKTOK_POSTS.map((post) => (
-              <TikTokPost key={post.handle} post={post} />
+              <div key={post.handle} className="w-[64%] shrink-0 snap-start md:w-auto md:shrink">
+                <TikTokPost post={post} />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Validé / Refusé */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">
             Ce qu'on valide — et ce qu'on refuse
@@ -822,7 +824,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Exemples d'angles qui cartonnent */}
-      <section className="py-16 md:py-20">
+      <section className="py-10 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
             Exemples d'angles qui cartonnent
@@ -849,7 +851,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* Candidate maintenant */}
-      <section id="inscription" className="py-16 md:py-20 bg-white">
+      <section id="inscription" className="py-10 md:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -870,7 +872,7 @@ const Ambassadeur: React.FC = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 md:py-20">
+      <section className="py-10 md:py-20">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-12">
             Questions fréquentes
@@ -890,6 +892,16 @@ const Ambassadeur: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Sticky CTA mobile — le pouce reste sur l'action principale */}
+      <div className="fixed bottom-3 inset-x-3 z-40 md:hidden">
+        <a
+          href="#inscription"
+          className="clay-btn clay-btn--primary w-full flex items-center justify-center text-base shadow-2xl"
+        >
+          Je candidate →
+        </a>
+      </div>
     </div>
   );
 };
