@@ -9,6 +9,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsAndConditions from './TermsAndConditions';
 import DeleteAccount from './DeleteAccount';
 import Creators from './Creators';
+import Ambassadeur from './Ambassadeur';
 import IngredientsIndexPage from './pages/IngredientsIndexPage';
 import IngredientCategoryPage from './pages/IngredientCategoryPage';
 import IngredientDetailPage from './pages/IngredientDetailPage';
@@ -81,7 +82,9 @@ function App() {
     document.title =
       location.pathname === '/creators'
         ? 'Yummeal Creators - Programme affiliés & UGC'
-        : 'Yummeal - Cuisine saine';
+        : location.pathname === '/ambassadeur'
+          ? 'Programme Ambassadeurs Yummeal - Contenu rémunéré'
+          : 'Yummeal - Cuisine saine';
   }, [location.pathname]);
 
   // Scrolle vers la section ciblée par le hash, y compris juste après une
@@ -221,6 +224,7 @@ function App() {
         <Route path="/fonctionnalites" element={<FonctionnalitesIndexPage />} />
         <Route path="/fonctionnalites/:slug" element={<FonctionnalitePage />} />
         <Route path="/creators" element={<Creators />} />
+        <Route path="/ambassadeur" element={<Ambassadeur />} />
         <Route path="/confidentialite" element={<PrivacyPolicy />} />
         <Route path="/cgu" element={<TermsAndConditions />} />
         <Route path="/supprimer-mon-compte" element={<DeleteAccount />} />
@@ -319,6 +323,7 @@ function App() {
                   <li><Link to="/fonctionnalites" className="text-gray-600 hover:text-[#FF8C42]">Fonctionnalités</Link></li>
                   <li><Link to="/a-propos" className="text-gray-600 hover:text-[#FF8C42]">À propos</Link></li>
                   <li><Link to="/creators" className="text-gray-600 hover:text-[#FF8C42]">Creators</Link></li>
+                  <li><Link to="/ambassadeur" className="text-gray-600 hover:text-[#FF8C42]">Ambassadeurs</Link></li>
                   <li><Link to="/confidentialite" className="text-gray-600 hover:text-[#FF8C42]">Politique de confidentialité</Link></li>
                   <li><Link to="/cgu" className="text-gray-600 hover:text-[#FF8C42]">CGU</Link></li>
                 </ul>

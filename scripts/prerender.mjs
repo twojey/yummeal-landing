@@ -5,13 +5,13 @@
 // donc dist/<route>/index.html est prioritaire sur le fallback CSR.
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const distDir = path.join(root, 'dist');
 
-const ssr = await import(path.join(root, 'dist-ssr', 'entry-server.js'));
+const ssr = await import(pathToFileURL(path.join(root, 'dist-ssr', 'entry-server.js')).href);
 const {
   render,
   ingredients,
@@ -87,6 +87,9 @@ const staticRoutes = [
   // pensee pour etre citee par d'autres sites plutot que pour le trafic direct.
   { path: '/statistiques-recettes', title: 'Statistiques du catalogue de recettes par difficulte - Yummeal', description: `Temps de preparation et calories medians par niveau de difficulte, calcules sur ${statistiquesRecettes._meta.total_recettes_analysees} recettes. Dataset telechargeable en CSV.`, jsonLd: [buildDatasetJsonLd({ path: '/statistiques-recettes', dateGeneration: statistiquesRecettes._meta.genere_le, nombreRecettes: statistiquesRecettes._meta.total_recettes_analysees, csvPath: '/datasets/statistiques-recettes-par-difficulte.csv' }), buildOrganizationJsonLd(), crumbs({ name: 'Statistiques du catalogue de recettes', path: '/statistiques-recettes' })] },
   { path: '/creators', title: 'Yummeal Creators - Programme affiliés & UGC', description: 'Rejoignez le programme Creators Yummeal : contenu UGC rémunéré à la performance.', jsonLd: crumbs({ name: 'Creators', path: '/creators' }) },
+  // Page "ambassadeurs" : mêmes paliers de rémunération que /creators mais
+  // accroches hero en rupture pilotées par ?v= (message-match pubs Meta/TikTok).
+  { path: '/ambassadeur', title: "Programme Ambassadeurs Yummeal - Vidéos rémunérées jusqu'à 500€", description: 'Devenez ambassadeur Yummeal : avance garantie par vidéo, jusqu\u2019à 500€ selon les vues, zéro montage, paiement mensuel automatisé.', jsonLd: crumbs({ name: 'Ambassadeurs', path: '/ambassadeur' }) },
   { path: '/confidentialite', title: 'Politique de confidentialité - Yummeal', description: 'Politique de confidentialité de l\'application Yummeal.', jsonLd: crumbs({ name: 'Confidentialité', path: '/confidentialite' }) },
   { path: '/cgu', title: 'Conditions générales d\'utilisation - Yummeal', description: 'Conditions générales d\'utilisation de l\'application Yummeal.', jsonLd: crumbs({ name: 'CGU', path: '/cgu' }) },
   // Page exigée par Apple et par Google Play. Elle n'était pas prérendue :
