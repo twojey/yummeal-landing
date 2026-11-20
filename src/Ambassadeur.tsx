@@ -21,6 +21,11 @@ import FeatEnvie from './assets-amb/feat-envie.webp';
 import DishFoutou from './assets-amb/dish-foutou.webp';
 import DishGratin from './assets-amb/dish-gratin.webp';
 import DishFrigo from './assets-amb/dish-frigo.webp';
+import RecCuisine from './assets-amb/rec-cuisine.webp';
+import RecBatch from './assets-amb/rec-batch.webp';
+import RecPlat from './assets-amb/rec-plat.webp';
+import RecPartage from './assets-amb/rec-partage.webp';
+import RecPrep from './assets-amb/rec-prep.webp';
 import { trackFacebookEvent } from './utils/facebookPixel';
 import { trackTikTokEvent } from './utils/tiktokPixel';
 import { STORE_URLS_DEFAUT } from './config';
@@ -139,6 +144,39 @@ const TIKTOK_POSTS = [
     comments: '612',
     shares: '2,4K',
     views: '58K vues',
+  },
+];
+
+const RECETTE_ARGS = [
+  {
+    image: RecCuisine,
+    title: 'Tu cuisines déjà tous les jours',
+    description:
+      "Le contenu existe déjà — il ne manque qu'appuyer sur record. Un téléphone posé sur le plan de travail suffit.",
+  },
+  {
+    image: RecBatch,
+    title: 'Du contenu infini',
+    description:
+      "Une recette par jour = une vidéo par jour. Jamais à court d'idées : l'app te souffle quoi cuisiner avec ce que tu as.",
+  },
+  {
+    image: RecPlat,
+    title: 'Un beau plat parle à tout le monde',
+    description:
+      "Pas besoin de mots ni d'abonnés : un plat appétissant arrête le scroll dans toutes les langues.",
+  },
+  {
+    image: RecPartage,
+    title: 'Tout le monde se demande « on mange quoi ? »',
+    description:
+      "Chaque personne qui a un frigo est une spectatrice potentielle. L'audience est littéralement massive.",
+  },
+  {
+    image: RecPrep,
+    title: 'Ton repas du soir peut payer ton resto',
+    description:
+      "Un dimanche de cuisine = des semaines de contenu. Chaque vidéo à 30 000 vues, c'est 100€ de plus.",
   },
 ];
 
@@ -451,6 +489,41 @@ const Ambassadeur: React.FC = () => {
             👆 Ce que tu montres dans tes vidéos : le scan du frigo, le planning
             de la semaine, les recettes qui donnent envie.
           </p>
+        </div>
+      </section>
+
+      {/* Pourquoi les recettes : on cuisine tous les jours */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight text-center mb-4">
+            Tu cuisines déjà tous les jours
+          </h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            Voilà pourquoi les vidéos recettes sont le format le plus facile à
+            produire — et celui qui rapporte.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {RECETTE_ARGS.map(({ image, title: t, description }) => (
+              <motion.div
+                key={t}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="clay-card !p-0 overflow-hidden flex flex-col"
+              >
+                <img
+                  src={image}
+                  alt={t}
+                  loading="lazy"
+                  className="w-full aspect-square object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-sm mb-1.5 leading-snug">{t}</h3>
+                  <p className="text-gray-600 text-xs leading-relaxed">{description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
