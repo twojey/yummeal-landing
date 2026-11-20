@@ -95,12 +95,17 @@ const STEPS = [
   {
     title: 'Candidate en 2 minutes',
     description:
-      "Remplis le formulaire de candidature. Notre équipe te répond personnellement sous 72h.",
+      'Remplis le formulaire : qui tu es, ta cuisine, tes réseaux (peu importe leur taille).',
   },
   {
-    title: 'Reçois ton brief',
+    title: 'On sélectionne les profils',
     description:
-      "Accès à l'app offert, exemples de vidéos qui cartonnent, et l'angle recette à traiter.",
+      "Programme sur sélection : on cherche des ambassadrices authentiques qui cuisinent vraiment. Pas besoin d'abonnés — la motivation et la sincérité comptent. Réponse sous 72h.",
+  },
+  {
+    title: 'Tu deviens ambassadrice officielle',
+    description:
+      "Accès à l'app offert, ton code parrainage, ton brief avec les angles qui cartonnent et l'espace créateurs.",
   },
   {
     title: 'Filme ta recette',
@@ -603,6 +608,16 @@ const Ambassadeur: React.FC = () => {
                   Les créateurs réguliers débloquent des briefs prioritaires et
                   des bonus.
                 </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="clay-card mt-4 text-sm"
+              >
+                🏅 <b>Programme sur sélection :</b> toutes les candidatures sont
+                étudiées — on privilégie les profils authentiques qui aiment
+                vraiment cuisiner, pas le nombre d'abonnés.
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
