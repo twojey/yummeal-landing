@@ -15,6 +15,9 @@ import {
 } from 'lucide-react';
 import CreatorsHeroImage from './creators-hero.webp';
 import CoursesImage from './hero.webp';
+import FeatFrigo from './assets-amb/feat-frigo.png';
+import FeatJournal from './assets-amb/feat-journal.png';
+import FeatEnvie from './assets-amb/feat-envie.png';
 import { trackFacebookEvent } from './utils/facebookPixel';
 import { trackTikTokEvent } from './utils/tiktokPixel';
 import { STORE_URLS_DEFAUT } from './config';
@@ -407,6 +410,44 @@ const Ambassadeur: React.FC = () => {
               </p>
             </motion.div>
           </div>
+
+          {/* Visuels produit — les arguments que tes vidéos mettent en scène */}
+          <div className="grid sm:grid-cols-3 gap-6 mt-14 max-w-4xl mx-auto">
+            {[
+              {
+                src: FeatFrigo,
+                alt: "Trouve les recettes qui matchent ton frigo — vidéos de recettes avec tes ingrédients",
+                rotate: 'sm:-rotate-3',
+              },
+              {
+                src: FeatJournal,
+                alt: "Organise tes repas facilement — planning de la semaine et suivi des calories",
+                rotate: 'sm:translate-y-4',
+              },
+              {
+                src: FeatEnvie,
+                alt: "Trouve des recettes qui te font envie — les meilleures recettes du net",
+                rotate: 'sm:rotate-3',
+              },
+            ].map(({ src, alt, rotate }) => (
+              <motion.img
+                key={alt}
+                src={src}
+                alt={alt}
+                loading="lazy"
+                width={576}
+                height={1024}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={`w-full rounded-2xl shadow-xl ${rotate} transition-transform hover:scale-[1.03]`}
+              />
+            ))}
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-10">
+            👆 Ce que tu montres dans tes vidéos : le scan du frigo, le planning
+            de la semaine, les recettes qui donnent envie.
+          </p>
         </div>
       </section>
 
